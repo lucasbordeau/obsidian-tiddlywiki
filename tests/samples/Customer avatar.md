@@ -1,5 +1,0 @@
----
-title: Customer avatar
----
-
-asdasd
