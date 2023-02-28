@@ -1,6 +1,8 @@
-import { App, Plugin, PluginSettingTab, Setting } from 'obsidian';
+import { App, Plugin, PluginSettingTab, Setting, } from 'obsidian';
 import * as path from 'path';
 import { convertJSONToTiddlers, convertTiddlersToObsidianMarkdown, writeObsidianMarkdownFiles } from 'services/TiddlyWikiToMarkdownService';
+
+import { exportAllMarkdownFilesToJSON } from 'services/MarkdownToTiddlyWikiService';
 
 export default class ObsidianTiddlyWikiPlugin extends Plugin {
 	async onload() {
@@ -61,12 +63,35 @@ class SampleSettingTab extends PluginSettingTab {
 
 		new Setting(containerEl)
 			.setName('Import JSON')
-			.setDesc('In TiddlyWiki Tools->Export all->JSON File')
+			.setDesc('To export from TiddlyWiki : Tools->Export all->JSON File')
 			.addButton(button => button
 				.setButtonText("Import .json").onClick(() => {
 					input.click()
+				}))
 
+		new Setting(containerEl)
+			.setName('Export JSON')
+			.setDesc('To import in TiddlyWiki : Tools->Import')
+			.addButton(button => button
+				.setButtonText("Export .json").onClick(async () => {
+					//@ts-ignore
+					const basePath = this.app.vault.adapter.basePath
+
+					const jsonExport = await exportAllMarkdownFilesToJSON(basePath)
+
+					downloadJsonAsFile(jsonExport, "test.json")
 				}))
 
 	}
+}
+
+function downloadJsonAsFile(jsonObject: any, fileName: string) {
+	const jsonString = JSON.stringify(jsonObject, null, 2);
+	const blob = new Blob([jsonString], { type: 'application/json' });
+	const url = URL.createObjectURL(blob);
+	const a = document.createElement('a');
+	a.href = url;
+	a.download = fileName;
+	a.click();
+	URL.revokeObjectURL(url);
 }
