@@ -3,6 +3,7 @@ import * as path from 'path';
 import { convertJSONToTiddlers, convertTiddlersToObsidianMarkdown, writeObsidianMarkdownFiles } from 'services/TiddlyWikiToMarkdownService';
 
 import { exportAllMarkdownFilesToJSON } from 'services/MarkdownToTiddlyWikiService';
+import { downloadJsonAsFile } from 'utils/downloadJsonAsFile';
 
 export default class ObsidianTiddlyWikiPlugin extends Plugin {
 	async onload() {
@@ -69,6 +70,8 @@ class SampleSettingTab extends PluginSettingTab {
 					input.click()
 				}))
 
+		containerEl.createEl('h2', { text: 'Export' });
+
 		new Setting(containerEl)
 			.setName('Export JSON')
 			.setDesc('To import in TiddlyWiki : Tools->Import')
@@ -85,13 +88,3 @@ class SampleSettingTab extends PluginSettingTab {
 	}
 }
 
-function downloadJsonAsFile(jsonObject: any, fileName: string) {
-	const jsonString = JSON.stringify(jsonObject, null, 2);
-	const blob = new Blob([jsonString], { type: 'application/json' });
-	const url = URL.createObjectURL(blob);
-	const a = document.createElement('a');
-	a.href = url;
-	a.download = fileName;
-	a.click();
-	URL.revokeObjectURL(url);
-}
