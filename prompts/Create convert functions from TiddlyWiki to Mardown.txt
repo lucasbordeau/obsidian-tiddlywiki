@@ -1,0 +1,6 @@
+Let's work step-by-step to use the previous answer to code a function that turns a JSON exported TiddlyWiki to an array of Obsidian markdown files, using TypeScript.
+
+1- I want you to create a first function that will take the json example, as a standard javascript File type, and convert it into an array of type Tiddler, with the same properties as in the JSON
+2- Code a second function that takes only the content text of a tiddler and convert the specific formatting of TiddlyWiki to Obsidian Markdown.
+3- Code a third function that takes an array of Tiddler and return an array of ObsidianMarkdown
+4- Code a fourth function that write an array of ObsidianMarkdown to multiple files in a passed directory path. 

@@ -1,0 +1,88 @@
+Here is a sample tiddlywiki file : 
+
+[img[test.jpg]]
+
+! Titre 1
+
+!! Titre 2
+
+!!! Titre 3
+
+https://github.com/lucasbordeau/obsidian-tiddlywiki
+
+Principes clés : 
+
+* [[Content marketing strategy]]
+* [[Funnel]]
+* [[Buyer's journey]]
+
+''Les différents axes à travailler : ''
+
+//Phase identification du prospect : //
+
+* [[Customer avatar]]
+* Keyword ''research''
+* Content calendar
+
+~~Phase attraction du prospect / canaux d'acquisition :~~
+
+* SEO Optimized Blog
+* Graphics
+* Presentation
+* Videos
+* Podcasts
+* Social media
+
+''Phase capture d'un prospect :''
+
+* Test CTA
+	* Lead magnet
+		* Thank you page
+
+Phase `d'entretien` d'un prospect / nurture : 
+
+* Email nurture / //supporting content//
+
+Phase de conversion : 
+
+# Branded content
+# Thank you page 
+# Email nurture => sales content
+# Sales event
+
+<<<
+Un grand pouvoir implique de grandes responsabilités
+<<<
+
+Comment coder ? 
+
+```typescript
+const a = 2;
+
+const b = a * 2;
+
+console.log(a + b);
+```
+
+
+You should understand everything related to text formatting.
+
+Here is a list : 
+
+- image: [img[test.jpg]]
+- bold: '' 
+- italic: // 
+- Underline: __ 
+- Strike­through: ~~ 
+- Headings: ! (multi level)
+- Unordered Lists: *
+- Ordered Lists: #
+- Quote Block
+- Code block
+
+The goal is to write a function that will translate TiddlyWiki tiddler into a Lexer format that we can use to convert into other file formats.
+
+We will work in TypeScript, use clean and self-explanatory code with regex and good naming.
+
+Code the function tiddlerToBlocks and use good typings.
+

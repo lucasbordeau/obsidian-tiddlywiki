@@ -1,0 +1,22 @@
+Write the function convertTiddlyWikiToMarkdown in TypeScript, that allows conversion between the two formats. Remember to export it.
+
+We'll break it down into multiple steps : 
+
+- Unordered Lists: * to - (multi level)
+- Ordered Lists: # to 1. (multi level)
+- Headings: ! to # (multi level)
+
+- bold: ''test'' to **test**
+- italic: //test// to _test_
+- Underline: __ to <u>
+
+- image: [img[test.jpg]] to ![[test.jpg]]
+- Quote Block: <<<\ntext\n<<< to > text
+
+Be careful with the order of the different replace calls are replacing converted formatting multiple times so we end with wrong formatting at the end, how could you find the right order so every formatting replace call just replaces once
+
+For example unordered list can replace bold markdown characters
+
+Check that beginning characters for headings are not in fact a block of formatting
+
+Take just a string as parameter of this function and return a string also.
