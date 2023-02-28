@@ -58,15 +58,17 @@ export async function writeObsidianMarkdownFiles(markdownArray: ObsidianMarkdown
 }
 
 export function convertTiddlyWikiToMarkdown(text: string): string {
+	let markdownText = text;
+
 	// Replace Quote Block
-	let markdownText = text.replace(/<<<\n?([\s\S]+?)\n?<<<\n?([\s\S]*?)(?=\n?<<<|\n?$)/g, (match, p1, p2) => {
+	markdownText = markdownText.replace(/<<<\n?([\s\S]+?)\n?<<<\n?([\s\S]*?)(?=\n?<<<|\n?$)/g, (match, p1, p2) => {
 		const quote = p1.split("\n").map((line: string) => `> ${line}`).join("\n") + "\n";
-		const remainingText = p2.trim() ? convertTiddlyWikiToMarkdown(p2) : "";
+		const remainingText = p2.trim() ? p2 : "";
 		return `${quote}${remainingText}`;
 	});
 
 	const lines = markdownText.split("\n");
-	let markdownLines = [];
+	const markdownLines = [];
 
 	for (let i = 0; i < lines.length; i++) {
 		const line = lines[i];
@@ -82,8 +84,26 @@ export function convertTiddlyWikiToMarkdown(text: string): string {
 			return p2.replace(/#/g, "1.") + p3;
 		});
 
-		// Replace Links
-		convertedLine = convertedLine.replace(/\[\[(.+?)\]\]/g, "[[$1]]");
+		// Replace Links 
+		convertedLine = convertedLine.replace(/\[\[(.+?)]]/g, (_, match) => {
+			const linkRegex = /([^\]|]+)(?:\|([^\]]+))?/;
+
+			const linkMatch = linkRegex.exec(match);
+			if (!linkMatch) return match;
+
+			let linkElement1 = linkMatch[1];
+			let linkElement2 = linkMatch[2];
+
+			// Replace any remaining /, \, or : characters with underscores
+			linkElement1 = linkElement1.replace(/[\/\:]/g, "_");
+			if (linkElement2) {
+				linkElement2 = linkElement2.replace(/[\/\:]/g, "_");
+			}
+
+			// Swap
+			return "[[" + (linkElement2 ? linkElement2 + "|" + linkElement1 : linkElement1) + "]]";
+		});
+
 
 		// Replace Bold
 		convertedLine = convertedLine.replace(/''(.+?)''/g, "**$1**");
@@ -108,3 +128,4 @@ export function convertTiddlyWikiToMarkdown(text: string): string {
 
 	return markdownLines.join("\n");
 }
+

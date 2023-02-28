@@ -11,14 +11,14 @@ https://github.com/lucasbordeau/obsidian-tiddlywiki
 Principes clés :
 
 - [[Content marketing strategy]]
-- [[Funnel]]
+- [[How to build a funnel 20_80|Funnel]]
 - [[Buyer's journey]]
 
 **Les différents axes à travailler :**
 
 _Phase identification du prospect :_
 
-- [[Customer avatar]]
+- [[Customer _ avatar]]
 - Keyword **research**
 - Content calendar
 
@@ -59,3 +59,6 @@ const b = a * 2;
 
 console.log(a + b);
 ```
+
+> Un grand pouvoir implique de **grandes** responsabilités
+> Un grand pouvoir implique de _grandes_ responsabilités 2

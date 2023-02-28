@@ -10,7 +10,6 @@ describe("convert", () => {
 
 		const convertedMarkdown = convertTiddlyWikiToMarkdown(tiddlerText)
 
-		console.log(convertedMarkdown)
 
 		expect(convertedMarkdown).toEqual(expectedMarkdown);
 	});
