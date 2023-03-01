@@ -1,7 +1,7 @@
 {
-	"name": "obsidian-sample-plugin",
+	"name": "tiddlywiki-import-export",
 	"version": "1.0.1",
-	"description": "This is a sample plugin for Obsidian (https://obsidian.md)",
+	"description": "Import/Export TiddlyWiki",
 	"main": "main.js",
 	"scripts": {
 		"test": "jest --config jest.config.js",
