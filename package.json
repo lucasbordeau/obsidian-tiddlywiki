@@ -1,6 +1,6 @@
 {
 	"name": "tiddlywiki-import-export",
-	"version": "1.0.2",
+	"version": "1.0.3",
 	"description": "Import/Export TiddlyWiki",
 	"main": "main.js",
 	"scripts": {
