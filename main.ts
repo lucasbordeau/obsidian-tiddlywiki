@@ -1,4 +1,4 @@
-import { App, Plugin, PluginSettingTab, Setting, } from 'obsidian';
+import { App, Plugin, PluginSettingTab, Setting, Notice } from 'obsidian';
 import * as path from 'path';
 import { convertJSONToTiddlers, convertTiddlersToObsidianMarkdown, writeObsidianMarkdownFiles } from 'services/TiddlyWikiToMarkdownService';
 
@@ -55,7 +55,7 @@ class SampleSettingTab extends PluginSettingTab {
 					const obsidianMarkdownArray = convertTiddlersToObsidianMarkdown(tiddlers);
 					writeObsidianMarkdownFiles(obsidianMarkdownArray, exportPath);
 
-					alert('Success !')
+					new Notice(`✅ Successfuly imported TiddlyWiki to ${exportPath}`, 10000)
 				}
 			}
 		})
