@@ -11,7 +11,7 @@ https://github.com/lucasbordeau/obsidian-tiddlywiki
 Principes clés :
 
 - [[Content marketing strategy]]
-- [[How to build a funnel 20_80|Funnel]]
+- [[How to build a funnel 20/80|Funnel]]
 - [[Buyer's journey]]
 
 **Les différents axes à travailler :**
