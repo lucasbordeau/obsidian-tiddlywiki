@@ -79,7 +79,7 @@ export function convertTiddlyWikiToMarkdown(text: string): string {
 
 	for (let i = 0; i < lines.length; i++) {
 		const line = lines[i];
-		if (line === "```") {
+		if (line.match(/^```[-a-z]*/)) {
 			in_code_block = !in_code_block;
 		}
 		// Ignore markup in code blocks
@@ -120,13 +120,15 @@ export function convertTiddlyWikiToMarkdown(text: string): string {
 				linkElement2 = linkElement1;
 			}
 
-			// Format link
+			// Format link: distinguish between internal and external links
+			let	optImg = p1 === "img" ? "!" : "";
+			// console.log(`Replace Links: $1: ${p1}, $2: ${linkElement1}, $3: ${linkElement2}`);
 			if (!linkElement2) {
-				if (p1 === "img") return `![[${linkElement1}]]`;
-				return `[[${linkElement1}]]`;
+				return `${optImg}[[${linkElement1}]]`;
+			} else if (linkElement2.includes("://")) {
+				return `${optImg}[${linkElement1}](${linkElement2})`;
 			} else {
-				if (p1 === "img") return `![${linkElement1}](${linkElement2})`;
-				return `[${linkElement1}](${linkElement2})`;
+				return `${optImg}[[${linkElement2}|${linkElement1}]]`;
 			}
 		});
 
