@@ -80,7 +80,27 @@ export function extractTagsFromMarkdownText(text: string): { tags: string[], new
 	return { tags: [...new Set(tags)], newText };
 }
 
+/**
+ * Converts a markdown string to a TiddlyWiki string.
+ * See the tests in tests/MarkdownToTiddlyWiki.test.ts for examples
+ * @param text  content of a markdown file
+ * @returns the content of the file converted to TiddlyWiki
+ */
 export function convertMarkdownToTiddlyWiki(text: string): string {
+	// Don't convert text in code blocks, surrounded by ```
+	let is_in_code_block = true;
+	let twText = text.split(/```/).map((block) => {
+		is_in_code_block = !is_in_code_block;
+		if (is_in_code_block) {
+			return block;
+		} else {
+			return convertMarkdownNotInACodeBlockToTiddlyWiki(block);
+		}
+	}).join('```');
+	return twText;
+}
+
+function convertMarkdownNotInACodeBlockToTiddlyWiki(text: string): string {
 	let twText = text;
 
 	// Replace Headings
@@ -96,7 +116,7 @@ export function convertMarkdownToTiddlyWiki(text: string): string {
 			return line;
 		}
 		const level = (match[1].replace(/\t/g, '    ').length / 2) + 1;
-		return '\t'.repeat(level - 1) + '*'.repeat(match[2].length) + match[3] + match[4];
+		return '*'.repeat(level) + match[3] + match[4];
 	}).join('\n');
 
 	// Replace Ordered Lists
@@ -105,23 +125,38 @@ export function convertMarkdownToTiddlyWiki(text: string): string {
 		if (!match) {
 			return line;
 		}
-		const level = (match[1].replace(/\t/g, '    ').length / 4) + 1;
+		const level = (match[1].replace(/\t/g, '    ').length / 3) + 1;
 		const prefix = '#'.repeat(level);
 		return prefix + match[3] + match[4];
 	}).join('\n');
 
-	// Replace Links
-	twText = twText.replace(/\[\[([^\]]+)\]\]/g, (match, p1) => {
-		const linkRegex = /((?:[^\[\]|\\]|\\.)+)(?:\|((?:[^\[\]|\\]|\\.)+))?/;
-		const linkMatch = linkRegex.exec(p1);
+	// Protect CamelCase words
+	twText = twText.replace(/([A-Z][a-z]+[A-Z][A-Za-z]*)/g, "~$1");
 
-		if (!linkMatch) return match;
+	// Replace Internal Links
+	twText = twText.replace(/(!?)\[\[([^\]]+)\]\]/g, (match, p0, p1) => {
+		const linkElement1 = p1.replace('~', '')
+		const optImg = p0 === '!' ? 'img' : '';
 
-		const linkElement1 = linkMatch[1];
-		const linkElement2 = linkMatch[2] ? linkMatch[2] : '';
+		// CamelCase links
+		if ( linkElement1.match(/^([A-Z][a-z]+[A-Z][A-Za-z]*)$/g) ) {
+			return `${linkElement1}`;
+		}
 
 		// Remove leading | character if there is no description
-		return `[[${linkElement2 ? `${linkElement2}|` : ''}${linkElement1}]]`;
+		return `[${optImg}[${linkElement1}]]`;
+	});
+
+	// Replace External Links
+	twText = twText.replace(/(!?)\[([^\[\]]+)\]\(([^()]+)\)/g, (match, p0, p1, p2) => {
+		const optImg = p0 === '!' ? 'img' : '';
+		const linkLabel = p1.replace('~', '')
+		const linkElement1 = p2.replace('~', '')
+		if ( linkLabel === linkElement1 ) {
+			return `[${optImg}[${linkElement1}]]`;
+		} else {
+			return `[${optImg}[${linkLabel}|${linkElement1}]]`;
+		}
 	});
 
 	// Replace Bold
