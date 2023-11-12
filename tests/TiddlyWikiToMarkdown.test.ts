@@ -21,7 +21,7 @@ export const markdownTestData: TiddlyToMarkdownTestData[] = [
     },
     {
         tiddlerText: "Title different from page: [[Displayed Link Title|Tiddler Title]]",
-        expectedMarkdown: "Title different from page: [Displayed Link Title](Tiddler Title)"
+        expectedMarkdown: "Title different from page: [[Tiddler Title|Displayed Link Title]]"
     },
     {
         tiddlerText: "Two images: [img[Logo.png]] and external [img[https://tiddlywiki.com/favicon.ico]]",
@@ -43,6 +43,14 @@ export const markdownTestData: TiddlyToMarkdownTestData[] = [
         tiddlerText: `A numbered list:\n# First list item\n# Second list item\n## A subitem\n# Third list item`,
         expectedMarkdown: `A numbered list:\n1. First list item\n1. Second list item\n   1. A subitem\n1. Third list item`
     },
+    {
+        tiddlerText: `* Test CTA\n** Lead magnet\n*** Thank you page`,
+        expectedMarkdown: `- Test CTA\n  - Lead magnet\n    - Thank you page`
+    },
+    {   // Distinguish between internal links with display text and external links
+        tiddlerText: `* [[How to build a funnel 20/80|Funnel]]\n* See [[Internal Links|https://help.obsidian.md/Linking+notes+and+files/Internal+links]]`,
+        expectedMarkdown: `- [[Funnel|How to build a funnel 20/80]]\n- See [Internal Links](https://help.obsidian.md/Linking+notes+and+files/Internal+links)`
+    }
 ];
 
 describe("convert ", () => {
