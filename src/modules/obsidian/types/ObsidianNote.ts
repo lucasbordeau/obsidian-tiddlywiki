@@ -1,4 +1,4 @@
-export type ObsidianMarkdown = {
+export type ObsidianNote = {
   title: string;
   content: string;
 };

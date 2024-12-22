@@ -1,14 +1,14 @@
 import { App, Notice, PluginSettingTab, Setting } from 'obsidian';
 import * as path from 'path';
-import {
-  convertJSONToTiddlers,
-  convertTiddlersToObsidianMarkdown,
-  writeObsidianMarkdownFiles,
-} from 'src/services/TiddlyWikiToMarkdownService';
+import { writeObsidianNotesToDirectory } from 'src/modules/obsidian/utils/writeObsidianNotesToDirectory';
+import { convertTiddlersToObsidianNotes } from 'src/services/convertTiddlersToObsidianNotes';
 
 import ObsidianTiddlyWikiPlugin from 'src/main';
-import { exportAllMarkdownFilesToJSON } from 'src/services/MarkdownToTiddlyWikiService';
-import { downloadJsonAsFile } from 'src/utils/downloadJsonAsFile';
+import { readFileObjectToJSON } from '../file-manipulation/utils/readFileObjectToJSON';
+import { convertObsidianNoteToTiddler } from '../format-converters/convertObsidianNoteToTiddler';
+import { getAllObsidianNotesInDirectory } from '../obsidian/utils/getAllObsidianNotesInDirectory';
+import { Tiddler } from '../tiddlywiki/types/Tiddler';
+import { convertTiddlersToTiddlyWikiJSON } from '../tiddlywiki/utils/convertTiddlersToTiddlyWikiJSON';
 
 export class ObsidianTiddlyWikiSettingsTab extends PluginSettingTab {
   plugin: ObsidianTiddlyWikiPlugin;
@@ -45,11 +45,17 @@ export class ObsidianTiddlyWikiSettingsTab extends PluginSettingTab {
       .addButton((button) =>
         button.setButtonText('Export .json').onClick(async () => {
           //@ts-ignore
-          const basePath = this.app.vault.adapter.basePath;
+          const obsidianDirectoryToExport = this.app.vault.adapter.basePath;
 
-          const jsonExport = await exportAllMarkdownFilesToJSON(basePath);
+          const obsidianNotes = getAllObsidianNotesInDirectory(
+            obsidianDirectoryToExport,
+          );
 
-          downloadJsonAsFile(jsonExport, 'test.json');
+          const tiddlers = obsidianNotes.map(convertObsidianNoteToTiddler);
+
+          const tiddlyWikiJSON = convertTiddlersToTiddlyWikiJSON(tiddlers);
+
+          this.triggerDownloadModalForJSON(tiddlyWikiJSON, 'test.json');
         }),
       );
   }
@@ -76,6 +82,20 @@ export class ObsidianTiddlyWikiSettingsTab extends PluginSettingTab {
       );
   }
 
+  private getImportPath() {
+    const currentDate = new Date().toISOString().replace(/:/g, '_');
+
+    const directoryName = `TiddlyWiki-Import-${currentDate}`;
+
+    const importPath = path.join(
+      //@ts-ignore
+      this.app.vault.adapter.basePath,
+      directoryName,
+    );
+
+    return importPath;
+  }
+
   private handleFileUploadInputChange = async (input: HTMLInputElement) => {
     if (input.files && input.files.length > 0) {
       for (let fileIndex = 0; fileIndex < input.files.length; fileIndex++) {
@@ -85,23 +105,16 @@ export class ObsidianTiddlyWikiSettingsTab extends PluginSettingTab {
           throw new Error('File is not defined');
         }
 
-        const currentDate = new Date().toISOString().replace(/:/g, '_');
+        const importPath = this.getImportPath();
 
-        const directoryPath = `TiddlyWiki-Import-${currentDate}`;
+        const tiddlers: Tiddler[] = await readFileObjectToJSON(file);
 
-        const exportPath = path.join(
-          //@ts-ignore
-          this.app.vault.adapter.basePath,
-          directoryPath,
-        );
+        const obsidianNotes = convertTiddlersToObsidianNotes(tiddlers);
 
-        const tiddlers = await convertJSONToTiddlers(file);
-        const obsidianMarkdownArray =
-          convertTiddlersToObsidianMarkdown(tiddlers);
-        writeObsidianMarkdownFiles(obsidianMarkdownArray, exportPath);
+        writeObsidianNotesToDirectory(obsidianNotes, importPath);
 
         new Notice(
-          `✅ Successfuly imported TiddlyWiki to ${exportPath}`,
+          `✅ Successfuly imported TiddlyWiki to ${importPath}`,
           10000,
         );
       }
@@ -140,5 +153,16 @@ export class ObsidianTiddlyWikiSettingsTab extends PluginSettingTab {
     });
 
     return form;
+  }
+
+  private triggerDownloadModalForJSON(jsonObject: any, fileName: string) {
+    const jsonString = JSON.stringify(jsonObject, null, 2);
+    const blob = new Blob([jsonString], { type: 'application/json' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = fileName;
+    a.click();
+    URL.revokeObjectURL(url);
   }
 }

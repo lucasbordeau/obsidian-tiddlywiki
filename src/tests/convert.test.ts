@@ -1,8 +1,8 @@
 import * as fs from 'fs';
 import * as path from 'path';
 
-import { convertMarkdownToTiddlyWiki } from '../services/MarkdownToTiddlyWikiService';
-import { convertTiddlyWikiToMarkdown } from '../services/TiddlyWikiToMarkdownService';
+import { convertObsidianNoteContentToTiddlerContent } from 'src/modules/format-converters/convertObsidianNoteContentToTiddlerContent';
+import { convertTiddlyWikiToMarkdown } from 'src/services/convertTiddlyWikiToMarkdown';
 
 describe('convert', () => {
   it('should convert a TiddlyWiki tiddler to Markdown', () => {
@@ -29,7 +29,7 @@ describe('convert', () => {
     );
     const markdown = fs.readFileSync(path.join(basePath, 'test.md'), 'utf-8');
 
-    const convertedTiddler = convertMarkdownToTiddlyWiki(markdown);
+    const convertedTiddler = convertObsidianNoteContentToTiddlerContent(markdown);
 
     console.log({ expectedTiddlerText, convertedTiddler, markdown });
 
