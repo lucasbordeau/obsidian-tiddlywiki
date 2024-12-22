@@ -1,18 +1,7 @@
 import * as fs from "fs";
 import * as path from "path";
-
-export interface Tiddler {
-	title: string;
-	text: string;
-	tags?: string;
-	created: string;
-	modified: string;
-}
-
-export type ObsidianMarkdown = {
-	title: string;
-	content: string
-}
+import { ObsidianMarkdown } from "src/modules/obsidian/types/ObsidianMarkdown";
+import { Tiddler } from "src/modules/tiddlywiki/types/Tiddler";
 
 export async function convertJSONToTiddlers(file: File): Promise<Tiddler[]> {
 	const fileReader = new FileReader();
@@ -51,7 +40,7 @@ export async function writeObsidianMarkdownFiles(markdownArray: ObsidianMarkdown
 	fs.mkdirSync(directoryPath, { recursive: true });
 
 	for (const markdownFile of markdownArray) {
-		const fileName = `${markdownFile.title}.md`.replace(/[\/\:\\]/g, '');
+		const fileName = `${markdownFile.title}.md`.replace(/[/:\\]/g, '');
 
 		fs.writeFileSync(path.join(directoryPath, fileName), markdownFile.content, 'utf-8');
 	}
@@ -95,9 +84,9 @@ export function convertTiddlyWikiToMarkdown(text: string): string {
 			let linkElement2 = linkMatch[2];
 
 			// Replace any remaining /, \, or : characters with underscores
-			linkElement1 = linkElement1.replace(/[\/\:]/g, "_");
+			linkElement1 = linkElement1.replace(/[/:]/g, "_");
 			if (linkElement2) {
-				linkElement2 = linkElement2.replace(/[\/\:]/g, "_");
+				linkElement2 = linkElement2.replace(/[/:]/g, "_");
 			}
 
 			// Swap

@@ -1,6 +1,8 @@
 import esbuild from "esbuild";
 import process from "process";
 import builtins from "builtin-modules";
+import dotenv from "dotenv";
+import copy from "esbuild-plugin-copy";
 
 const banner =
 `/*
@@ -9,13 +11,23 @@ if you want to view the source, please visit the github repository of this plugi
 */
 `;
 
+// Load .env file
+dotenv.config();
+
+const DEV_VAULT_PLUGIN_FOLDER = process.env.DEV_VAULT_PLUGIN_FOLDER;
+
+if (!DEV_VAULT_PLUGIN_FOLDER) {
+  console.error('Error: DEV_VAULT_PLUGIN_FOLDER is not defined in .env');
+  process.exit(1);
+}
+
 const prod = (process.argv[2] === "production");
 
 const context = await esbuild.context({
 	banner: {
 		js: banner,
 	},
-	entryPoints: ["main.ts"],
+	entryPoints: ["src/main.ts"],
 	bundle: true,
 	external: [
 		"obsidian",
@@ -38,6 +50,18 @@ const context = await esbuild.context({
 	sourcemap: prod ? false : "inline",
 	treeShaking: true,
 	outfile: "main.js",
+	plugins: [
+		copy({
+			// this is equal to process.cwd(), which means we use cwd path as base path to resolve `to` path
+			// if not specified, this plugin uses ESBuild.build outdir/outfile options as base path.
+			resolveFrom: 'cwd',
+			assets: {
+				from: ['./main.js'],
+				to: [DEV_VAULT_PLUGIN_FOLDER],
+			},
+			watch: true,
+		}),
+	],
 });
 
 if (prod) {

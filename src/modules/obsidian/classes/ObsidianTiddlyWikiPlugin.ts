@@ -1,17 +1,12 @@
-import { App, Plugin, PluginSettingTab, Setting, Notice } from 'obsidian';
+import { App,  PluginSettingTab, Setting, Notice } from 'obsidian';
 import * as path from 'path';
-import { convertJSONToTiddlers, convertTiddlersToObsidianMarkdown, writeObsidianMarkdownFiles } from 'services/TiddlyWikiToMarkdownService';
+import { convertJSONToTiddlers, convertTiddlersToObsidianMarkdown, writeObsidianMarkdownFiles } from 'src/services/TiddlyWikiToMarkdownService';
 
-import { exportAllMarkdownFilesToJSON } from 'services/MarkdownToTiddlyWikiService';
-import { downloadJsonAsFile } from 'utils/downloadJsonAsFile';
+import { exportAllMarkdownFilesToJSON } from 'src/services/MarkdownToTiddlyWikiService';
+import { downloadJsonAsFile } from 'src/utils/downloadJsonAsFile';
+import ObsidianTiddlyWikiPlugin from 'src/main';
 
-export default class ObsidianTiddlyWikiPlugin extends Plugin {
-	async onload() {
-		this.addSettingTab(new SampleSettingTab(this.app, this));
-	}
-}
-
-class SampleSettingTab extends PluginSettingTab {
+export class ObsidianTiddlyWikiSettingsTab extends PluginSettingTab {
 	plugin: ObsidianTiddlyWikiPlugin;
 
 	constructor(app: App, plugin: ObsidianTiddlyWikiPlugin) {
@@ -64,7 +59,7 @@ class SampleSettingTab extends PluginSettingTab {
 
 		new Setting(containerEl)
 			.setName('Import JSON')
-			.setDesc('To export from TiddlyWiki : Tools->Export all->JSON File')
+			.setDesc('You need to first export a JSON file from TiddlyWiki to import it here. In TiddlyWiki, go to Tools->Export all->JSON File')
 			.addButton(button => button
 				.setButtonText("Import .json").onClick(() => {
 					input.click()
@@ -74,7 +69,7 @@ class SampleSettingTab extends PluginSettingTab {
 
 		new Setting(containerEl)
 			.setName('Export JSON')
-			.setDesc('To import in TiddlyWiki : Tools->Import')
+			.setDesc('The JSON file exported from this plugin can then be imported in TiddlyWiki. In TiddlyWiki go to Tools->Import')
 			.addButton(button => button
 				.setButtonText("Export .json").onClick(async () => {
 					//@ts-ignore
@@ -87,4 +82,3 @@ class SampleSettingTab extends PluginSettingTab {
 
 	}
 }
-
