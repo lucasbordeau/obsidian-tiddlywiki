@@ -2,7 +2,7 @@ import * as fs from 'fs';
 import * as path from 'path';
 
 import { convertObsidianNoteContentToTiddlerContent } from 'src/modules/format-converters/convertObsidianNoteContentToTiddlerContent';
-import { convertTiddlyWikiToMarkdown } from 'src/services/convertTiddlyWikiToMarkdown';
+import { convertTiddlerContentToObsidianNoteContent } from 'src/modules/format-converters/convertTiddlerContentToObsidianNoteContent';
 
 describe('convert', () => {
   it('should convert a TiddlyWiki tiddler to Markdown', () => {
@@ -16,7 +16,7 @@ describe('convert', () => {
       'utf-8',
     );
 
-    const convertedMarkdown = convertTiddlyWikiToMarkdown(tiddlerText);
+    const convertedMarkdown = convertTiddlerContentToObsidianNoteContent(tiddlerText);
 
     expect(convertedMarkdown).toEqual(expectedMarkdown);
   });

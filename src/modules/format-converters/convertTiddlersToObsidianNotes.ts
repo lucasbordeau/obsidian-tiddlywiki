@@ -1,6 +1,6 @@
 import { ObsidianNote } from 'src/modules/obsidian/types/ObsidianNote';
 import { Tiddler } from 'src/modules/tiddlywiki/types/Tiddler';
-import { convertTiddlyWikiToMarkdown } from './convertTiddlyWikiToMarkdown';
+import { convertTiddlerContentToObsidianNoteContent } from './convertTiddlerContentToObsidianNoteContent';
 
 export function convertTiddlersToObsidianNotes(tiddlers: Tiddler[]) {
   const obsidianNotes: ObsidianNote[] = [];
@@ -9,7 +9,8 @@ export function convertTiddlersToObsidianNotes(tiddlers: Tiddler[]) {
     const frontMatter =
       `---\n` + `${tiddler.tags ? `tags: ${tiddler.tags}\n` : ''}` + `---\n`;
 
-    const content = frontMatter + convertTiddlyWikiToMarkdown(tiddler.text);
+    const content =
+      frontMatter + convertTiddlerContentToObsidianNoteContent(tiddler.text);
 
     obsidianNotes.push({
       content,

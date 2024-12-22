@@ -1,7 +1,7 @@
 import { App, Notice, PluginSettingTab, Setting } from 'obsidian';
 import * as path from 'path';
+import { convertTiddlersToObsidianNotes } from 'src/modules/format-converters/convertTiddlersToObsidianNotes';
 import { writeObsidianNotesToDirectory } from 'src/modules/obsidian/utils/writeObsidianNotesToDirectory';
-import { convertTiddlersToObsidianNotes } from 'src/services/convertTiddlersToObsidianNotes';
 
 import ObsidianTiddlyWikiPlugin from 'src/main';
 import { readFileObjectToJSON } from '../file-manipulation/utils/readFileObjectToJSON';

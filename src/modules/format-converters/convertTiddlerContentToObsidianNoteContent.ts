@@ -1,8 +1,10 @@
-export function convertTiddlyWikiToMarkdown(text: string): string {
-  let markdownText = text;
+export function convertTiddlerContentToObsidianNoteContent(
+  tiddlerContent: string,
+): string {
+  let obsidianNoteContent = tiddlerContent;
 
   // Replace Quote Block
-  markdownText = markdownText.replace(
+  obsidianNoteContent = obsidianNoteContent.replace(
     /<<<\n?([\s\S]+?)\n?<<<\n?([\s\S]*?)(?=\n?<<<|\n?$)/g,
     (match, p1, p2) => {
       const quote =
@@ -15,8 +17,8 @@ export function convertTiddlyWikiToMarkdown(text: string): string {
     },
   );
 
-  const lines = markdownText.split('\n');
-  const markdownLines = [];
+  const lines = obsidianNoteContent.split('\n');
+  const obsidianNoteLines = [];
 
   for (let i = 0; i < lines.length; i++) {
     const line = lines[i];
@@ -83,8 +85,8 @@ export function convertTiddlyWikiToMarkdown(text: string): string {
     // Replace Images
     convertedLine = convertedLine.replace(/\[img\[(.+?)\]\]/g, '![[$1]]');
 
-    markdownLines.push(convertedLine);
+    obsidianNoteLines.push(convertedLine);
   }
 
-  return markdownLines.join('\n');
+  return obsidianNoteLines.join('\n');
 }
