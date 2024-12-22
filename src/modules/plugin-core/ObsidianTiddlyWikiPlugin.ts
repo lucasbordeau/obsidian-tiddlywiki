@@ -8,7 +8,6 @@ import { readFileObjectToJSON } from '../file-manipulation/utils/readFileObjectT
 import { convertObsidianNoteToTiddler } from '../format-converters/convertObsidianNoteToTiddler';
 import { getAllObsidianNotesInDirectory } from '../obsidian/utils/getAllObsidianNotesInDirectory';
 import { Tiddler } from '../tiddlywiki/types/Tiddler';
-import { convertTiddlersToTiddlyWikiJSON } from '../tiddlywiki/utils/convertTiddlersToTiddlyWikiJSON';
 
 export class ObsidianTiddlyWikiSettingsTab extends PluginSettingTab {
   plugin: ObsidianTiddlyWikiPlugin;
@@ -53,9 +52,7 @@ export class ObsidianTiddlyWikiSettingsTab extends PluginSettingTab {
 
           const tiddlers = obsidianNotes.map(convertObsidianNoteToTiddler);
 
-          const tiddlyWikiJSON = convertTiddlersToTiddlyWikiJSON(tiddlers);
-
-          this.triggerDownloadModalForJSON(tiddlyWikiJSON, 'test.json');
+          this.triggerDownloadModalForJSON(tiddlers, 'test.json');
         }),
       );
   }
