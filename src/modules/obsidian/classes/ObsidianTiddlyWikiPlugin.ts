@@ -19,71 +19,25 @@ export class ObsidianTiddlyWikiSettingsTab extends PluginSettingTab {
   }
 
   display(): void {
-    const { containerEl } = this;
+    const { containerEl: pluginContainerElement } = this;
 
-    containerEl.empty();
+    this.renderPluginHeader(pluginContainerElement);
 
-    containerEl.createEl('h2', { text: 'Import' });
+    this.renderImportJsonButton(pluginContainerElement);
 
-    const form = containerEl.createEl('form', {
-      attr: { encType: 'multipart/form-data', hidden: true },
-    });
+    this.renderExportJsonButton(pluginContainerElement);
+  }
 
-    const input = containerEl.createEl('input');
+  private renderPluginHeader(pluginContainerElement: HTMLElement) {
+    pluginContainerElement.empty();
 
-    input.type = 'file';
-    input.id = 'file-upload';
-    input.multiple = false;
-    input.accept = '.json';
+    pluginContainerElement.createEl('h1', { text: 'Import / Export' });
+  }
 
-    input.addEventListener('change', async (event) => {
-      if (input.files && input.files.length > 0) {
-        for (let fileIndex = 0; fileIndex < input.files.length; fileIndex++) {
-          const file = input.files.item(fileIndex);
+  private renderExportJsonButton(pluginContainerElement: HTMLElement) {
+    pluginContainerElement.createEl('h2', { text: 'Export' });
 
-          if (!file) {
-            throw new Error('File is not defined');
-          }
-
-          const currentDate = new Date().toISOString().replace(/:/g, '_');
-
-          const directoryPath = `TiddlyWiki-Import-${currentDate}`;
-
-          const exportPath = path.join(
-            //@ts-ignore
-            this.app.vault.adapter.basePath,
-            directoryPath,
-          );
-
-          const tiddlers = await convertJSONToTiddlers(file);
-          const obsidianMarkdownArray =
-            convertTiddlersToObsidianMarkdown(tiddlers);
-          writeObsidianMarkdownFiles(obsidianMarkdownArray, exportPath);
-
-          new Notice(
-            `✅ Successfuly imported TiddlyWiki to ${exportPath}`,
-            10000,
-          );
-        }
-      }
-    });
-
-    form.appendChild(input);
-
-    new Setting(containerEl)
-      .setName('Import JSON')
-      .setDesc(
-        'You need to first export a JSON file from TiddlyWiki to import it here. In TiddlyWiki, go to Tools->Export all->JSON File',
-      )
-      .addButton((button) =>
-        button.setButtonText('Import .json').onClick(() => {
-          input.click();
-        }),
-      );
-
-    containerEl.createEl('h2', { text: 'Export' });
-
-    new Setting(containerEl)
+    new Setting(pluginContainerElement)
       .setName('Export JSON')
       .setDesc(
         'The JSON file exported from this plugin can then be imported in TiddlyWiki. In TiddlyWiki go to Tools->Import',
@@ -98,5 +52,93 @@ export class ObsidianTiddlyWikiSettingsTab extends PluginSettingTab {
           downloadJsonAsFile(jsonExport, 'test.json');
         }),
       );
+  }
+
+  private renderImportJsonButton(pluginContainerElement: HTMLElement) {
+    pluginContainerElement.createEl('h2', { text: 'Import' });
+
+    const uploadForm = this.createUploadFormContainer(pluginContainerElement);
+
+    const fileUploadInput = this.setupFileUploadInput(
+      pluginContainerElement,
+      uploadForm,
+    );
+
+    new Setting(pluginContainerElement)
+      .setName('Import JSON')
+      .setDesc(
+        'You need to first export a JSON file from TiddlyWiki to import it here. In TiddlyWiki, go to Tools->Export all->JSON File',
+      )
+      .addButton((button) =>
+        button.setButtonText('Import .json').onClick(() => {
+          fileUploadInput.click();
+        }),
+      );
+  }
+
+  private handleFileUploadInputChange = async (input: HTMLInputElement) => {
+    if (input.files && input.files.length > 0) {
+      for (let fileIndex = 0; fileIndex < input.files.length; fileIndex++) {
+        const file = input.files.item(fileIndex);
+
+        if (!file) {
+          throw new Error('File is not defined');
+        }
+
+        const currentDate = new Date().toISOString().replace(/:/g, '_');
+
+        const directoryPath = `TiddlyWiki-Import-${currentDate}`;
+
+        const exportPath = path.join(
+          //@ts-ignore
+          this.app.vault.adapter.basePath,
+          directoryPath,
+        );
+
+        const tiddlers = await convertJSONToTiddlers(file);
+        const obsidianMarkdownArray =
+          convertTiddlersToObsidianMarkdown(tiddlers);
+        writeObsidianMarkdownFiles(obsidianMarkdownArray, exportPath);
+
+        new Notice(
+          `✅ Successfuly imported TiddlyWiki to ${exportPath}`,
+          10000,
+        );
+      }
+    }
+  };
+
+  private setupFileUploadInput(
+    pluginContainerElement: HTMLElement,
+    form: HTMLFormElement,
+  ) {
+    const input = this.createFileInputElement(pluginContainerElement);
+
+    input.addEventListener('change', () =>
+      this.handleFileUploadInputChange(input),
+    );
+
+    form.appendChild(input);
+
+    return input;
+  }
+
+  private createFileInputElement(pluginContainerElement: HTMLElement) {
+    const input = pluginContainerElement.createEl('input');
+
+    input.type = 'file';
+    input.id = 'file-upload';
+    input.multiple = false;
+    input.accept = '.json';
+
+    return input;
+  }
+
+  private createUploadFormContainer(pluginContainerElement: HTMLElement) {
+    const form = pluginContainerElement.createEl('form', {
+      attr: { encType: 'multipart/form-data', hidden: true },
+    });
+
+    return form;
   }
 }
