@@ -19,19 +19,9 @@ export function convertObsidianNoteToTiddler(
     }
   }
 
-  console.log({
-    frontMatterMatch,
-    obsidianNote,
-  });
-
   const tagsFromText = extractTagsFromObsidianNote(obsidianNote);
 
   tags.push(...tagsFromText);
-
-  console.log({
-    obsidianNote,
-    tagsFromText,
-  });
 
   const tiddlerContent = convertObsidianNoteContentToTiddlerContent(
     obsidianNote.content,

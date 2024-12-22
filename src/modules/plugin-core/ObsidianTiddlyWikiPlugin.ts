@@ -64,21 +64,7 @@ export class ObsidianTiddlyWikiSettingsTab extends PluginSettingTab {
             .map(convertMediaFileToBase64Object)
             .map(convertBase64ObjectToTiddler);
 
-          console.log({
-            mediaTiddlers,
-          });
-
-          console.log({
-            mediaFiles,
-          });
-
-          console.log({ obsidianNotes });
-
           const tiddlers = obsidianNotes.map(convertObsidianNoteToTiddler);
-
-          console.log({
-            tiddlers,
-          });
 
           const tiddlersToExport = [...tiddlers, ...mediaTiddlers];
 
@@ -155,8 +141,6 @@ export class ObsidianTiddlyWikiSettingsTab extends PluginSettingTab {
 
           await writeFileObjectToFilePath(mediaFile, mediaFilePath);
         }
-
-        console.log({ tiddlers });
 
         const textTiddlers = tiddlers.filter(
           (tiddler) => !('type' in tiddler) || tiddler.type?.contains('text'),
