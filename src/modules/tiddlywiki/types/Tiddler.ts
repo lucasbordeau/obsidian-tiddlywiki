@@ -4,4 +4,5 @@ export type Tiddler = {
   tags?: string;
   created: string;
   modified: string;
+  type?: string;
 };
