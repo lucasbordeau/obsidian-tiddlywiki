@@ -12,6 +12,12 @@ export function convertObsidianNoteContentToTiddlerContent(
   // Remove front matter
   tiddlerContent = tiddlerContent.replace(/^---\n([\s\S]*?)---\n/, '');
 
+  // Replace markdown external links with TiddlyWiki links
+  tiddlerContent = tiddlerContent.replace(
+    /\[([^\]]+)\]\(([^)]+)\)/g,
+    '[[$2|$1]]',
+  );
+
   // Replace Unordered Lists
   tiddlerContent = tiddlerContent
     .split('\n')
