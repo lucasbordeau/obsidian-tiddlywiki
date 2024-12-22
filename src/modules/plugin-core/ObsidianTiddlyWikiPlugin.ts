@@ -1,13 +1,19 @@
+import * as fs from 'fs';
 import { App, Notice, PluginSettingTab, Setting } from 'obsidian';
 import * as path from 'path';
 import { convertTiddlersToObsidianNotes } from 'src/modules/format-converters/convertTiddlersToObsidianNotes';
 import { writeObsidianNotesToDirectory } from 'src/modules/obsidian/utils/writeObsidianNotesToDirectory';
 
 import ObsidianTiddlyWikiPlugin from 'src/main';
+import { convertBase64ToFileObject } from '../file-manipulation/utils/convertBase64ToFileObject';
+import { convertMediaFileToBase64Object } from '../file-manipulation/utils/convertMediaFileToBase64Object';
 import { readFileObjectToJSON } from '../file-manipulation/utils/readFileObjectToJSON';
+import { writeFileObjectToFilePath } from '../file-manipulation/utils/writeFileObjectToFilePath';
 import { convertObsidianNoteToTiddler } from '../format-converters/convertObsidianNoteToTiddler';
 import { getAllObsidianNotesInDirectory } from '../obsidian/utils/getAllObsidianNotesInDirectory';
+import { getMediaFilesInDirectory } from '../obsidian/utils/getMediaFilesInObsidianDirectory';
 import { Tiddler } from '../tiddlywiki/types/Tiddler';
+import { convertBase64ObjectToTiddler } from '../tiddlywiki/utils/convertBase64ObjectToTiddler';
 
 export class ObsidianTiddlyWikiSettingsTab extends PluginSettingTab {
   plugin: ObsidianTiddlyWikiPlugin;
@@ -50,9 +56,33 @@ export class ObsidianTiddlyWikiSettingsTab extends PluginSettingTab {
             obsidianDirectoryToExport,
           );
 
+          const mediaFiles = await getMediaFilesInDirectory(
+            obsidianDirectoryToExport,
+          );
+
+          const mediaTiddlers = mediaFiles
+            .map(convertMediaFileToBase64Object)
+            .map(convertBase64ObjectToTiddler);
+
+          console.log({
+            mediaTiddlers,
+          });
+
+          console.log({
+            mediaFiles,
+          });
+
+          console.log({ obsidianNotes });
+
           const tiddlers = obsidianNotes.map(convertObsidianNoteToTiddler);
 
-          this.triggerDownloadModalForJSON(tiddlers, 'test.json');
+          console.log({
+            tiddlers,
+          });
+
+          const tiddlersToExport = [...tiddlers, ...mediaTiddlers];
+
+          this.triggerDownloadModalForJSON(tiddlersToExport, 'test.json');
         }),
       );
   }
@@ -104,9 +134,35 @@ export class ObsidianTiddlyWikiSettingsTab extends PluginSettingTab {
 
         const importPath = this.getImportPath();
 
+        fs.mkdirSync(importPath, { recursive: true });
+
         const tiddlers: Tiddler[] = await readFileObjectToJSON(file);
 
-        const obsidianNotes = convertTiddlersToObsidianNotes(tiddlers);
+        const nonTextTiddlers = tiddlers.filter(
+          (tiddler) => 'type' in tiddler && !tiddler.type?.contains('text'),
+        );
+
+        const mediaFiles = nonTextTiddlers.map((nonTextTiddler) =>
+          convertBase64ToFileObject(
+            nonTextTiddler.text,
+            nonTextTiddler.title,
+            nonTextTiddler.type ?? 'text/plain',
+          ),
+        );
+
+        for (const mediaFile of mediaFiles) {
+          const mediaFilePath = path.join(importPath, mediaFile.name);
+
+          await writeFileObjectToFilePath(mediaFile, mediaFilePath);
+        }
+
+        console.log({ tiddlers });
+
+        const textTiddlers = tiddlers.filter(
+          (tiddler) => !('type' in tiddler) || tiddler.type?.contains('text'),
+        );
+
+        const obsidianNotes = convertTiddlersToObsidianNotes(textTiddlers);
 
         writeObsidianNotesToDirectory(obsidianNotes, importPath);
 

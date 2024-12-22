@@ -1,6 +1,6 @@
 import { ObsidianNote } from 'src/modules/obsidian/types/ObsidianNote';
 import { Tiddler } from 'src/modules/tiddlywiki/types/Tiddler';
-import { splitTagsAndTextFromObsidianNote } from '../obsidian/utils/splitTagsAndTextFromObsidianNote';
+import { extractTagsFromObsidianNote } from '../obsidian/utils/splitTagsAndTextFromObsidianNote';
 import { convertObsidianNoteContentToTiddlerContent } from './convertObsidianNoteContentToTiddlerContent';
 
 export function convertObsidianNoteToTiddler(
@@ -19,18 +19,29 @@ export function convertObsidianNoteToTiddler(
     }
   }
 
-  const { tags: tagsFromText, textWithoutTags } =
-    splitTagsAndTextFromObsidianNote(obsidianNote);
+  console.log({
+    frontMatterMatch,
+    obsidianNote,
+  });
+
+  const tagsFromText = extractTagsFromObsidianNote(obsidianNote);
 
   tags.push(...tagsFromText);
 
-  const tiddlerContent =
-    convertObsidianNoteContentToTiddlerContent(textWithoutTags);
+  console.log({
+    obsidianNote,
+    tagsFromText,
+  });
+
+  const tiddlerContent = convertObsidianNoteContentToTiddlerContent(
+    obsidianNote.content,
+  );
 
   const created = new Date().toISOString();
   const modified = created;
 
   return {
+    type: 'text',
     title: obsidianNote.title,
     text: tiddlerContent,
     tags: tags.join(' '),

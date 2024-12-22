@@ -6,8 +6,6 @@ export async function writeObsidianNotesToDirectory(
   obsidianNotes: ObsidianNote[],
   directoryPath: string,
 ) {
-  fs.mkdirSync(directoryPath, { recursive: true });
-
   for (const obsidianNote of obsidianNotes) {
     const fileName = `${obsidianNote.title}.md`.replace(/[/:\\]/g, '');
 

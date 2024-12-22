@@ -85,6 +85,9 @@ export function convertTiddlerContentToObsidianNoteContent(
     // Replace Images
     convertedLine = convertedLine.replace(/\[img\[(.+?)\]\]/g, '![[$1]]');
 
+    // Replace transclusion
+    convertedLine = convertedLine.replace(/{{(.+?)}}/g, '![[$1]]');
+
     obsidianNoteLines.push(convertedLine);
   }
 

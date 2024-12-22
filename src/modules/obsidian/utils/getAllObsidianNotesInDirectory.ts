@@ -24,12 +24,11 @@ export function getAllObsidianNotesInDirectory(
 
       obsidianNotes.push(...obsidianNotesInSubdirectory);
     } else if (path.extname(filePath) === '.md') {
-      // Parse only .md files
-      const fileContent = fs.readFileSync(filePath, 'utf-8');
+      const textNoteContent = fs.readFileSync(filePath, 'utf-8');
 
       const obsidianNote: ObsidianNote = {
         title: path.basename(filePath, '.md'),
-        content: fileContent,
+        content: textNoteContent,
       };
 
       obsidianNotes.push(obsidianNote);

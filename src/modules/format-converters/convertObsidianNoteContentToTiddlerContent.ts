@@ -9,6 +9,9 @@ export function convertObsidianNoteContentToTiddlerContent(
     return '!'.repeat(level) + ' ' + p1;
   });
 
+  // Remove front matter
+  tiddlerContent = tiddlerContent.replace(/^---\n([\s\S]*?)---\n/, '');
+
   // Replace Unordered Lists
   tiddlerContent = tiddlerContent
     .split('\n')
@@ -67,8 +70,8 @@ export function convertObsidianNoteContentToTiddlerContent(
   // Replace Underline
   tiddlerContent = tiddlerContent.replace(/<u>([^<]+)<\/u>/g, '__$1__');
 
-  // Replace Images
-  tiddlerContent = tiddlerContent.replace(/!\[\[([^\]]+)\]\]/g, '[img[$1]]');
+  // Replace trasnclusion
+  tiddlerContent = tiddlerContent.replace(/!\[\[([^\]]+)\]\]/g, '{{$1}}');
 
   // Replace Blockquote
   tiddlerContent = tiddlerContent
