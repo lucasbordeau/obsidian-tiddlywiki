@@ -1,108 +1,124 @@
 export function convertObsidianNoteContentToTiddlerContent(
   obsidianNoteContent: string,
 ): string {
-  let tiddlerContent = obsidianNoteContent;
+  const tiddlerContent = obsidianNoteContent;
 
-  // Replace Headings
-  tiddlerContent = tiddlerContent.replace(/^#+\s+(.*)$/gm, (match, p1) => {
-    const level = match.match(/^#+/)?.[0].length ?? 0;
-    return '!'.repeat(level) + ' ' + p1;
-  });
+  // Split by code blocks and external links
+  const parts = tiddlerContent.split(/(```[\s\S]*?```|\[.*?\]\([^)]+\))/);
 
-  // Remove front matter
-  tiddlerContent = tiddlerContent.replace(/^---\n([\s\S]*?)---\n/, '');
+  // Process only the parts that are outside of code blocks and links
+  for (let i = 0; i < parts.length; i++) {
+    // If it's not a code block or a link, apply the replacement
+    if (!parts[i].startsWith('```') && !parts[i].match(/\[.*?\]\([^)]+\)/)) {
+      // Replace Bold
+      parts[i] = parts[i].replace(/\*\*([^*]+)\*\*/g, "''$1''");
 
-  // Replace markdown external links with TiddlyWiki links
-  tiddlerContent = tiddlerContent.replace(
-    /\[([^\]]+)\]\(([^)]+)\)/g,
-    '[[$2|$1]]',
-  );
-
-  // Replace Unordered Lists
-  tiddlerContent = tiddlerContent
-    .split('\n')
-    .map((line) => {
-      const match = line.match(/^( *)(-+)( +)(.*)$/);
-      if (!match) {
-        return line;
-      }
-      const level = match[1].replace(/\t/g, '    ').length / 2 + 1;
-      return (
-        '\t'.repeat(level - 1) +
-        '*'.repeat(match[2].length) +
-        match[3] +
-        match[4]
+      // Replace Italic
+      parts[i] = parts[i].replace(
+        /(\b|[^\\])_(\S|\S.*?\S)_(\b|[^\\])/g,
+        '$1//$2//$3',
       );
-    })
-    .join('\n');
 
-  // Replace Ordered Lists
-  tiddlerContent = tiddlerContent
-    .split('\n')
-    .map((line) => {
-      const match = line.match(/^( *)(\d+)\.( +)(.*)$/);
-      if (!match) {
-        return line;
-      }
-      const level = match[1].replace(/\t/g, '    ').length / 4 + 1;
-      const prefix = '#'.repeat(level);
-      return prefix + match[3] + match[4];
-    })
-    .join('\n');
+      // Replace Underline
+      parts[i] = parts[i].replace(/<u>([^<]+)<\/u>/g, '__$1__');
 
-  // Replace Links
-  tiddlerContent = tiddlerContent.replace(/\[\[([^\]]+)\]\]/g, (match, p1) => {
-    const linkRegex = /((?:[^[\]|\\]|\\.)+)(?:\|((?:[^[\]|\\]|\\.)+))?/;
-    const linkMatch = linkRegex.exec(p1);
+      // Replace Blockquote
+      parts[i] = parts[i]
+        .split('\n')
+        .map((line, index, lines) => {
+          const match = line.match(/^> (.*)/);
+          if (!match) {
+            return line;
+          }
 
-    if (!linkMatch) return match;
+          // If this is the first line of the blockquote, add <<< before it
+          if (index === 0 || lines[index - 1].match(/^\s*$/)) {
+            line = `<<<\n${match[1]}`;
+          } else {
+            line = match[1];
+          }
 
-    const linkElement1 = linkMatch[1];
-    const linkElement2 = linkMatch[2] ? linkMatch[2] : '';
+          // If this is the last line of the blockquote, add >>> after it
+          if (index === lines.length - 1 || lines[index + 1].match(/^\s*$/)) {
+            line += '\n<<<';
+          }
 
-    // Remove leading | character if there is no description
-    return `[[${linkElement2 ? `${linkElement2}|` : ''}${linkElement1}]]`;
-  });
+          return line;
+        })
+        .join('\n');
 
-  // Replace Bold
-  tiddlerContent = tiddlerContent.replace(/\*\*([^*]+)\*\*/g, "''$1''");
+      // Replace transclusions
+      parts[i] = parts[i].replace(/!\[\[([^\]]+)\]\]/g, '{{$1}}');
 
-  // Replace Italic
-  tiddlerContent = tiddlerContent.replace(
-    /(\b|[^\\])_(\S|\S.*?\S)_(\b|[^\\])/g,
-    '$1//$2//$3',
-  );
+      // Replace Headings
+      parts[i] = parts[i].replace(/#+(.*)/gm, (match, p1) => {
+        const level = match.match(/#+/)?.[0].length ?? 0;
+        return '!'.repeat(level) + ' ' + p1;
+      });
 
-  // Replace Underline
-  tiddlerContent = tiddlerContent.replace(/<u>([^<]+)<\/u>/g, '__$1__');
+      // Replace ! with only one line ending and non white space character before with two line endings
+      // To prevent behavior with TiddlyWiki only recognizing two line endings as a new heading section
+      parts[i] = parts[i].replace(/(?<!\n)\n!(?!\n)/g, '\n\n!');
 
-  // Replace trasnclusion
-  tiddlerContent = tiddlerContent.replace(/!\[\[([^\]]+)\]\]/g, '{{$1}}');
+      // Remove front matter
+      parts[i] = parts[i].replace(/^---\n([\s\S]*?)---\n/, '');
 
-  // Replace Blockquote
-  tiddlerContent = tiddlerContent
-    .split('\n')
-    .map((line, index, lines) => {
-      const match = line.match(/^> (.*)/);
-      if (!match) {
-        return line;
-      }
+      // Replace Unordered Lists
+      parts[i] = parts[i]
+        .split('\n') // Split the text into lines
+        .map((line) => {
+          // Match lines that represent Markdown unordered list items
+          const match = line.match(/^(\t*)(-|\*)(.*)/);
+          if (!match) {
+            // Return the line unchanged if it doesn't match
+            return line;
+          }
 
-      // If this is the first line of the blockquote, add <<< before it
-      if (index === 0 || lines[index - 1].match(/^\s*$/)) {
-        line = `<<<\n${match[1]}`;
-      } else {
-        line = match[1];
-      }
+          console.log({
+            match,
+          });
 
-      // If this is the last line of the blockquote, add >>> after it
-      if (index === lines.length - 1 || lines[index + 1].match(/^\s*$/)) {
-        line += '\n<<<';
-      }
+          const [, tabs, , content] = match;
+          // Calculate the level based on the number of leading tabs
+          const level = (tabs ?? []).length + 1;
+          // Generate the TiddlyWiki-style list item
+          return '*'.repeat(level) + content;
+        })
+        .join('\n'); // Rejoin the processed lines back into a single string
 
-      return line;
-    })
-    .join('\n');
+      // Replace Ordered Lists
+      parts[i] = parts[i]
+        .split('\n')
+        .map((line) => {
+          const match = line.match(/^( *)(\d+)\.( +)(.*)$/);
+          if (!match) {
+            return line;
+          }
+          const level = match[1].replace(/\t/g, '    ').length / 4 + 1;
+          const prefix = '#'.repeat(level);
+          return prefix + match[3] + match[4];
+        })
+        .join('\n');
 
-  return tiddlerContent;
+      // Replace Links
+      parts[i] = parts[i].replace(/\[\[([^\]]+)\]\]/g, (match, p1) => {
+        const linkRegex = /((?:[^[\]|\\]|\\.)+)(?:\|((?:[^[\]|\\]|\\.)+))?/;
+        const linkMatch = linkRegex.exec(p1);
+
+        if (!linkMatch) return match;
+
+        const linkElement1 = linkMatch[1];
+        const linkElement2 = linkMatch[2] ? linkMatch[2] : '';
+
+        // Remove leading | character if there is no description
+        return `[[${linkElement2 ? `${linkElement2}|` : ''}${linkElement1}]]`;
+      });
+    } else {
+      // Replace markdown external links with TiddlyWiki links
+      parts[i] = parts[i].replace(/\[(.*?)\]\((.*?)\)/g, '[[$1|$2]]');
+    }
+  }
+
+  // Rejoin the parts back together
+  return parts.join('');
 }
