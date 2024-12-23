@@ -74,10 +74,6 @@ export function convertObsidianNoteContentToTiddlerContent(
             return line;
           }
 
-          console.log({
-            match,
-          });
-
           const [, tabs, , content] = match;
           // Calculate the level based on the number of leading tabs
           const level = (tabs ?? []).length + 1;
