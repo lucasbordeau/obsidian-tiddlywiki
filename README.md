@@ -6,7 +6,7 @@ Import and export from TiddlyWiki with JSON files.
 
 Just install it from the store.
 
-Or copy over `main.js`, `styles.css`, `manifest.json` to your vault `VaultFolder/.obsidian/plugins/your-plugin-id/`.
+Or copy over `main.js`, `manifest.json` to your vault `VaultFolder/.obsidian/plugins/your-plugin-id/`.
 
 ## How to dev
 
