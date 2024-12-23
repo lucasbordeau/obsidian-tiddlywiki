@@ -17,3 +17,6 @@ I couldn't manage to have the [hot-reload](https://github.com/pjeby/hot-reload) 
 ## Manually installing the plugin
 
 - Copy over `main.js`, `styles.css`, `manifest.json` to your vault `VaultFolder/.obsidian/plugins/your-plugin-id/`.
+
+## How to release
+
