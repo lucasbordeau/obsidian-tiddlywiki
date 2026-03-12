@@ -170,6 +170,21 @@ When adding new conversion logic, add corresponding tests with sample input/outp
 2. `npm run build` — final production build
 3. Distribute `main.js` + `manifest.json` to users (copy to `.obsidian/plugins/tiddlywiki-import-export/`)
 
+## Branch Naming
+
+Use standard prefixes for all branches:
+
+| Prefix | When to use |
+|---|---|
+| `feat/` | New features or capabilities |
+| `fix/` | Bug fixes |
+| `refactor/` | Code restructuring without behavior change |
+| `chore/` | Maintenance, dependency updates, config changes |
+| `docs/` | Documentation-only changes |
+| `test/` | Test-only changes |
+
+Examples: `feat/lexer-heading-tokens`, `fix/italic-regex-word-boundary`, `refactor/converter-pipeline`.
+
 ## What Not to Change
 
 - `manifest.json` plugin ID (`tiddlywiki-import-export`) — changing this breaks existing installations
