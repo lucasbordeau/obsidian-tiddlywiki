@@ -1,0 +1,10 @@
+! Note with front matter
+
+This content comes after the front matter.
+
+The front matter should be stripped during conversion to TiddlyWiki format.
+
+''Bold text'' and //italic text// still work normally.
+
+* List item one
+* List item two

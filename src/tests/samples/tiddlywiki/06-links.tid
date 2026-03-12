@@ -1,0 +1,36 @@
+[[Simple internal link]]
+
+[[Note with spaces]]
+
+[[Display text|link]]
+
+[[Note with path|path/to/note]]
+
+[[Simple external link|https://example.com]]
+
+[[External with path|https://example.com/path/to/page]]
+
+[[link in bold ''context'']]
+
+//Italic text with [[embedded link]]//
+
+''Bold text with [[display|embedded link]]''
+
+List with links:
+* [[link one]]
+* [[display two|link two]]
+* [[external|https://example.com]]
+
+Heading with link:
+!! [[Linked heading]]
+
+Blockquote with link:
+<<<
+[[display|Quoted link]] and [[external|https://example.com]]
+<<<
+
+[[link:with:colons]]
+
+[[link/with/slashes]]
+
+[[link_with_underscores]]

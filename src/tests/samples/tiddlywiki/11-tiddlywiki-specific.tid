@@ -1,0 +1,28 @@
+[img[simple-image.jpg]]
+
+[img[image with spaces.png]]
+
+[img[path/to/nested/image.gif]]
+
+Text before [img[inline-image.jpg]] text after
+
+* List item with [img[list-image.png]]
+** Nested list with [img[nested-image.svg]]
+
+<<<
+Blockquote with [img[quoted-image.jpg]]
+<<<
+
+''Bold with [img[bold-image.jpg]] inside''
+
+//Italic with [img[italic-image.png]] inside//
+
+Mixed ordered inside unordered list:
+*# Ordered item inside unordered
+*# Second ordered inside unordered
+**# Ordered inside level 2 unordered
+
+Mixed unordered inside ordered list:
+#* Unordered item inside ordered
+#* Second unordered inside ordered
+##* Unordered inside level 2 ordered

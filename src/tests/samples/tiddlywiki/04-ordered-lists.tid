@@ -1,0 +1,18 @@
+# First item
+# Second item
+# Third item
+
+# Level 1 first
+## Level 2 first
+## Level 2 second
+### Level 3 first
+### Level 3 second
+#### Level 4 first
+# Level 1 second
+
+# Item with ''bold text''
+# Item with //italic text//
+## Nested with __underline__
+### Double nested with [[display|link]]
+# Item with [[external link|https://example.com]]
+# Item with {{image.jpg}}

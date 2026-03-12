@@ -1,0 +1,72 @@
+! Heading with ''bold'', //italic//, and [[display|link]]
+
+!! Another heading with __underline__ and [[external|https://example.com]]
+
+Plain paragraph with ''bold containing //italic inside//'' and //italic containing ''bold inside''//.
+
+Also __underline with ''bold'' and //italic// inside__.
+
+* Level 1 with ''bold'' and //italic//
+** Level 2 with [[display|link]] and __underline__
+*** Level 3 with ''//bold italic//'' and [[external|https://example.com]]
+**** Level 4 with {{image.jpg}} and ''bold''
+***** Level 5 with //italic// and [[simple link]]
+* Back to level 1 with `inline code`
+** Level 2 with [[external link|https://example.com]] and [[display|internal]]
+*** Level 3 with __''underline bold''__ and {{nested.png}}
+
+# Ordered first with ''bold''
+## Ordered nested with //italic//
+### Ordered triple with __underline__ and [[link]]
+#### Ordered quadruple with {{deep.jpg}} and [[ext|https://example.com]]
+# Ordered second
+
+<<<
+Blockquote with ''bold'' and //italic// combined
+Second blockquote line with [[display|link]] and __underline__
+Third line with [[external|https://example.com]] and {{image.jpg}}
+<<<
+
+''Bold paragraph'' with //italic inside// and __underline inside__ followed by:
+
+* Mixed list after bold paragraph
+** With [[display text|nested link]] and ''bold''
+*** With //italic// and {{image-in-list.svg}}
+
+//Italic paragraph// with ''bold inline'' and __underline inline__ and [[display|link]].
+
+```typescript
+// Code block should preserve ALL syntax unchanged
+const **notBold** = _notItalic_;
+[[notALink]] and {{notATiddler}}
+> not a blockquote
+- not a list
+```
+
+After code: ''bold'', //italic//, __underline__.
+
+<<<
+Blockquote after code with ''bold'' text
+And [[display|link]] on second line
+Third line //italic// and __underline__
+<<<
+
+!! Section with everything
+
+!!! Sub-section
+
+* ''Bold item'' with //italic// and __underline__
+** [[display one|link one]] and [[link two]]
+*** [[ext one|https://one.example.com]] and [[ext two|https://two.example.com]]
+**** {{img-a.jpg}} then {{img-b.png}}
+***** Final level: ''//~__triple nested inline__~//''
+
+# ''Bold ordered'' with //italic//
+## [[see this|nested link]] and {{nested-img.gif}}
+### __underline__ and [[external|https://example.com/path]]
+
+<<<
+''Bold in quote'' with //italic//
+[[display|link in quote]] and {{image in quote.jpg}}
+Inline `code in quote` is also preserved
+<<<

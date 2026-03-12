@@ -1,0 +1,27 @@
+''bold text''
+
+//italic text//
+
+__underlined text__
+
+''bold with //italic inside//''
+
+//italic with ''bold inside''//
+
+__underline with ''bold'' inside__
+
+__underline with //italic// inside__
+
+''//bold italic combined//''
+
+''__bold underline__''
+
+//__italic underline__//
+
+''bold'' then //italic// then __underline__ in same line
+
+Inline `code` is preserved
+
+Text with ''bold'', //italic//, and __underline__ mixed together
+
+~~strikethrough is preserved as-is~~
