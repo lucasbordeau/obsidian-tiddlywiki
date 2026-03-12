@@ -2,6 +2,13 @@
 
 This file provides guidance for AI assistants working with this codebase.
 
+## AI Assistant Guidelines
+
+- **Do not mention AI tools in commits or PRs.** Commit messages, PR titles, PR descriptions, and code comments must not reference Claude, AI, or any AI assistant. Write them as if authored by a human developer.
+- **Do not add AI session URLs** (e.g. `https://claude.ai/...`) to commit messages or PR bodies.
+- **Do not set yourself as commit author.** Use the repository's existing git author configuration as-is.
+- **Keep commits focused and descriptive** — describe *what* changed and *why*, not *who* made the change.
+
 ## Project Overview
 
 **obsidian-tiddlywiki** is an Obsidian plugin (v1.1.0, desktop-only) that provides bidirectional import/export between Obsidian markdown vaults and TiddlyWiki JSON format. Users can export their entire vault as a TiddlyWiki-compatible JSON file and import TiddlyWiki JSON files back into Obsidian.
