@@ -1,0 +1,22 @@
+- Level 1 item A
+- Level 1 item B
+	- Level 2 item A
+	- Level 2 item B
+		- Level 3 item A
+		- Level 3 item B
+			- Level 4 item A
+			- Level 4 item B
+				- Level 5 item A
+- Level 1 item C
+
+- Item with **bold text**
+- Item with _italic text_
+- Item with <u>underline</u>
+- Item with [[link]]
+- Item with [[link|display text]]
+- Item with [external link](https://example.com)
+- Item with ![[image.jpg]]
+	- Nested item with **bold** and _italic_
+		- Double nested with [[link|display]] and <u>underline</u>
+			- Triple nested with **_bold italic_** combo
+				- Quadruple nested with ![[nested-image.png]] and [[ref|see here]]

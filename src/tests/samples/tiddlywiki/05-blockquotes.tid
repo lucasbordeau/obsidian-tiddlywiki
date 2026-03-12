@@ -1,0 +1,39 @@
+<<<
+Simple single-line blockquote
+<<<
+
+<<<
+Multi-line blockquote first line
+Multi-line blockquote second line
+Multi-line blockquote third line
+<<<
+
+<<<
+Blockquote with ''bold text''
+<<<
+
+<<<
+Blockquote with //italic text//
+<<<
+
+<<<
+Blockquote with __underline__
+<<<
+
+<<<
+Blockquote with ''bold'' and //italic// combined
+<<<
+
+<<<
+Blockquote with [[internal link]]
+<<<
+
+<<<
+Blockquote with [[external link|https://example.com]]
+<<<
+
+<<<
+Blockquote with ''bold'', //italic//, and __underline__ all mixed
+And a second line with [[display text|link]]
+Third line with {{image.jpg}}
+<<<

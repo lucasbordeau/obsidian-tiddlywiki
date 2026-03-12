@@ -1,0 +1,43 @@
+Regular text before code block.
+
+```javascript
+const x = 1;
+const y = x * 2;
+console.log(y);
+```
+
+Regular text after code block.
+
+**Bold before** code block.
+
+```typescript
+function greet(name: string): string {
+  return `Hello, ${name}!`;
+}
+```
+
+_Italic after_ code block.
+
+Text with inline `code snippet` preserved.
+
+```
+Plain code block without language
+with **markdown** that should NOT be converted
+_not italic_ and [[not a link]]
+```
+
+Multiple code blocks:
+
+```python
+def hello():
+    return "world"
+```
+
+Followed by more **bold** text.
+
+```bash
+echo "Hello World"
+grep -r "pattern" ./src
+```
+
+After all code: **bold**, _italic_, <u>underline</u>.

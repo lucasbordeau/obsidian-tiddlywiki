@@ -1,0 +1,62 @@
+Text with special chars: & < > " '
+
+[[link_with_underscores]]
+
+[[display|link/with/slashes]]
+
+[[display|link:with:colons]]
+
+''Bold at start of line''
+
+//Italic at start of line//
+
+__Underline at start of line__
+
+line ending with ''bold''
+
+line ending with //italic//
+
+line ending with __underline__
+
+''entire line is bold''
+
+//entire line is italic//
+
+__entire line is underline__
+
+''bold'' //italic// __underline__ [[link]] {{img.jpg}} [[ext|https://example.com]] all on one line
+
+* ''Bold entire item''
+* //Italic entire item//
+* __Underline entire item__
+* [[entire item is link]]
+* {{entire item is image}}
+
+<<<
+''Bold entire blockquote''
+<<<
+
+<<<
+//Italic entire blockquote//
+<<<
+
+# ''Bold ordered item''
+# //Italic ordered item//
+
+!! ''Bold entire heading''
+
+!!! //Italic entire heading//
+
+Paragraph before.
+
+```
+isolated code block
+```
+
+Paragraph after.
+
+''adjacent'' //formatting// __tokens__
+
+[[link1]][[link2]][[link3]]
+
+{{img1.jpg}}{{img2.png}}
