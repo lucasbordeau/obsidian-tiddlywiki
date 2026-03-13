@@ -1,4 +1,5 @@
 import { BlockToken, HeadingLevel } from './types';
+import { parseTiddlywikiInline } from './inlineLexer';
 
 // Matches TiddlyWiki headings: 1–6 `!` at line start followed by a space and text.
 // `![[transclusion]]` or `!word` do not match because they lack the trailing space.
@@ -13,7 +14,7 @@ export function lexTiddlywiki(content: string): BlockToken[] {
       tokens.push({
         type: 'heading',
         level: headingMatch[1].length as HeadingLevel,
-        rawText: headingMatch[2],
+        children: parseTiddlywikiInline(headingMatch[2]),
       });
       continue;
     }
@@ -23,7 +24,7 @@ export function lexTiddlywiki(content: string): BlockToken[] {
       continue;
     }
 
-    tokens.push({ type: 'paragraph', rawText: line });
+    tokens.push({ type: 'paragraph', children: parseTiddlywikiInline(line) });
   }
 
   return tokens;

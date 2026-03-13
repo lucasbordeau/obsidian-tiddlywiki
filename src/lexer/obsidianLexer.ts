@@ -1,4 +1,5 @@
 import { BlockToken, HeadingLevel } from './types';
+import { parseObsidianInline } from './inlineLexer';
 
 // Matches Obsidian headings: 1–6 `#` followed by a space and non-empty text.
 // `#tag` (no trailing space) is intentionally not matched — it is a hashtag.
@@ -13,7 +14,7 @@ export function lexObsidian(content: string): BlockToken[] {
       tokens.push({
         type: 'heading',
         level: headingMatch[1].length as HeadingLevel,
-        rawText: headingMatch[2],
+        children: parseObsidianInline(headingMatch[2]),
       });
       continue;
     }
@@ -23,7 +24,7 @@ export function lexObsidian(content: string): BlockToken[] {
       continue;
     }
 
-    tokens.push({ type: 'paragraph', rawText: line });
+    tokens.push({ type: 'paragraph', children: parseObsidianInline(line) });
   }
 
   return tokens;

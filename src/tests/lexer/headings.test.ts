@@ -20,28 +20,35 @@ describe('lexObsidian – heading tokens', () => {
     'parses "%s" as level-%i heading',
     (line, level, text) => {
       expect(lexObsidian(line)).toEqual([
-        { type: 'heading', level, rawText: text },
+        { type: 'heading', level, children: [{ type: 'text', value: text }] },
       ]);
     },
   );
 
-  it('preserves rawText verbatim including inline markdown', () => {
-    // Inline formatting is NOT converted by the heading lexer — it stays raw
-    // so a downstream inline parser can handle it in a future pass.
+  it('parses inline formatting inside heading text', () => {
     expect(lexObsidian('# Heading with **bold** and _italic_')).toEqual([
-      { type: 'heading', level: 1, rawText: 'Heading with **bold** and _italic_' },
+      {
+        type: 'heading',
+        level: 1,
+        children: [
+          { type: 'text', value: 'Heading with ' },
+          { type: 'bold', children: [{ type: 'text', value: 'bold' }] },
+          { type: 'text', value: ' and ' },
+          { type: 'italic', children: [{ type: 'text', value: 'italic' }] },
+        ],
+      },
     ]);
   });
 
   it('does not treat #tag (no space) as a heading', () => {
     expect(lexObsidian('#notaheading')).toEqual([
-      { type: 'paragraph', rawText: '#notaheading' },
+      { type: 'paragraph', children: [{ type: 'text', value: '#notaheading' }] },
     ]);
   });
 
   it('does not treat 7+ hashes as a heading', () => {
     expect(lexObsidian('####### too deep')).toEqual([
-      { type: 'paragraph', rawText: '####### too deep' },
+      { type: 'paragraph', children: [{ type: 'text', value: '####### too deep' }] },
     ]);
   });
 
@@ -55,20 +62,20 @@ describe('lexObsidian – heading tokens', () => {
 
   it('emits paragraph tokens for non-heading content', () => {
     expect(lexObsidian('Plain paragraph text')).toEqual([
-      { type: 'paragraph', rawText: 'Plain paragraph text' },
+      { type: 'paragraph', children: [{ type: 'text', value: 'Plain paragraph text' }] },
     ]);
   });
 
   it('tokenises a multi-line document with headings, blanks, and paragraphs', () => {
     const input = '# Title\n\nSome paragraph\n\n## Sub-section\n\nMore text';
     expect(lexObsidian(input)).toEqual([
-      { type: 'heading', level: 1, rawText: 'Title' },
+      { type: 'heading', level: 1, children: [{ type: 'text', value: 'Title' }] },
       { type: 'blank' },
-      { type: 'paragraph', rawText: 'Some paragraph' },
+      { type: 'paragraph', children: [{ type: 'text', value: 'Some paragraph' }] },
       { type: 'blank' },
-      { type: 'heading', level: 2, rawText: 'Sub-section' },
+      { type: 'heading', level: 2, children: [{ type: 'text', value: 'Sub-section' }] },
       { type: 'blank' },
-      { type: 'paragraph', rawText: 'More text' },
+      { type: 'paragraph', children: [{ type: 'text', value: 'More text' }] },
     ]);
   });
 
@@ -98,32 +105,41 @@ describe('lexTiddlywiki – heading tokens', () => {
     'parses "%s" as level-%i heading',
     (line, level, text) => {
       expect(lexTiddlywiki(line)).toEqual([
-        { type: 'heading', level, rawText: text },
+        { type: 'heading', level, children: [{ type: 'text', value: text }] },
       ]);
     },
   );
 
-  it('preserves rawText verbatim including inline wikitext', () => {
+  it('parses inline formatting inside heading text', () => {
     expect(lexTiddlywiki("! Heading with ''bold'' and //italic//")).toEqual([
-      { type: 'heading', level: 1, rawText: "Heading with ''bold'' and //italic//" },
+      {
+        type: 'heading',
+        level: 1,
+        children: [
+          { type: 'text', value: 'Heading with ' },
+          { type: 'bold', children: [{ type: 'text', value: 'bold' }] },
+          { type: 'text', value: ' and ' },
+          { type: 'italic', children: [{ type: 'text', value: 'italic' }] },
+        ],
+      },
     ]);
   });
 
   it('does not treat ![[transclusion]] as a heading', () => {
     expect(lexTiddlywiki('![[image.jpg]]')).toEqual([
-      { type: 'paragraph', rawText: '![[image.jpg]]' },
+      { type: 'paragraph', children: [{ type: 'text', value: '![[image.jpg]]' }] },
     ]);
   });
 
   it('does not treat !word (no space) as a heading', () => {
     expect(lexTiddlywiki('!notaheading')).toEqual([
-      { type: 'paragraph', rawText: '!notaheading' },
+      { type: 'paragraph', children: [{ type: 'text', value: '!notaheading' }] },
     ]);
   });
 
   it('does not treat 7+ bangs as a heading', () => {
     expect(lexTiddlywiki('!!!!!!! too deep')).toEqual([
-      { type: 'paragraph', rawText: '!!!!!!! too deep' },
+      { type: 'paragraph', children: [{ type: 'text', value: '!!!!!!! too deep' }] },
     ]);
   });
 
@@ -133,20 +149,20 @@ describe('lexTiddlywiki – heading tokens', () => {
 
   it('emits paragraph tokens for non-heading content', () => {
     expect(lexTiddlywiki('Plain paragraph text')).toEqual([
-      { type: 'paragraph', rawText: 'Plain paragraph text' },
+      { type: 'paragraph', children: [{ type: 'text', value: 'Plain paragraph text' }] },
     ]);
   });
 
   it('tokenises a multi-line document', () => {
     const input = '! Title\n\nSome paragraph\n\n!! Sub-section\n\nMore text';
     expect(lexTiddlywiki(input)).toEqual([
-      { type: 'heading', level: 1, rawText: 'Title' },
+      { type: 'heading', level: 1, children: [{ type: 'text', value: 'Title' }] },
       { type: 'blank' },
-      { type: 'paragraph', rawText: 'Some paragraph' },
+      { type: 'paragraph', children: [{ type: 'text', value: 'Some paragraph' }] },
       { type: 'blank' },
-      { type: 'heading', level: 2, rawText: 'Sub-section' },
+      { type: 'heading', level: 2, children: [{ type: 'text', value: 'Sub-section' }] },
       { type: 'blank' },
-      { type: 'paragraph', rawText: 'More text' },
+      { type: 'paragraph', children: [{ type: 'text', value: 'More text' }] },
     ]);
   });
 
@@ -176,7 +192,9 @@ describe('serializeObsidian', () => {
     'serialises level-%i heading with # markers',
     (level, expected) => {
       expect(
-        serializeObsidian([{ type: 'heading', level: level as 1, rawText: 'Hello' }]),
+        serializeObsidian([
+          { type: 'heading', level: level as 1, children: [{ type: 'text', value: 'Hello' }] },
+        ]),
       ).toBe(expected);
     },
   );
@@ -187,15 +205,15 @@ describe('serializeObsidian', () => {
 
   it('serialises paragraph as-is', () => {
     expect(
-      serializeObsidian([{ type: 'paragraph', rawText: 'Some text' }]),
+      serializeObsidian([{ type: 'paragraph', children: [{ type: 'text', value: 'Some text' }] }]),
     ).toBe('Some text');
   });
 
   it('joins multiple tokens with newlines', () => {
     const tokens: BlockToken[] = [
-      { type: 'heading', level: 1, rawText: 'Title' },
+      { type: 'heading', level: 1, children: [{ type: 'text', value: 'Title' }] },
       { type: 'blank' },
-      { type: 'paragraph', rawText: 'Body' },
+      { type: 'paragraph', children: [{ type: 'text', value: 'Body' }] },
     ];
     expect(serializeObsidian(tokens)).toBe('# Title\n\nBody');
   });
@@ -217,7 +235,9 @@ describe('serializeTiddlywiki', () => {
     'serialises level-%i heading with ! markers',
     (level, expected) => {
       expect(
-        serializeTiddlywiki([{ type: 'heading', level: level as 1, rawText: 'Hello' }]),
+        serializeTiddlywiki([
+          { type: 'heading', level: level as 1, children: [{ type: 'text', value: 'Hello' }] },
+        ]),
       ).toBe(expected);
     },
   );
@@ -228,15 +248,17 @@ describe('serializeTiddlywiki', () => {
 
   it('serialises paragraph as-is', () => {
     expect(
-      serializeTiddlywiki([{ type: 'paragraph', rawText: 'Some text' }]),
+      serializeTiddlywiki([
+        { type: 'paragraph', children: [{ type: 'text', value: 'Some text' }] },
+      ]),
     ).toBe('Some text');
   });
 
   it('joins multiple tokens with newlines', () => {
     const tokens: BlockToken[] = [
-      { type: 'heading', level: 1, rawText: 'Title' },
+      { type: 'heading', level: 1, children: [{ type: 'text', value: 'Title' }] },
       { type: 'blank' },
-      { type: 'paragraph', rawText: 'Body' },
+      { type: 'paragraph', children: [{ type: 'text', value: 'Body' }] },
     ];
     expect(serializeTiddlywiki(tokens)).toBe('! Title\n\nBody');
   });
@@ -259,9 +281,9 @@ describe('round-trip: Obsidian → TiddlyWiki', () => {
     expect(serializeTiddlywiki(lexObsidian(input))).toBe(expected);
   });
 
-  it('preserves paragraph content verbatim', () => {
+  it('converts inline bold in paragraphs', () => {
     const input = '# Title\n\nThis is a paragraph with **bold** text.';
-    const expected = '! Title\n\nThis is a paragraph with **bold** text.';
+    const expected = "! Title\n\nThis is a paragraph with ''bold'' text.";
     expect(serializeTiddlywiki(lexObsidian(input))).toBe(expected);
   });
 
@@ -325,9 +347,9 @@ describe('round-trip: TiddlyWiki → Obsidian', () => {
     expect(serializeObsidian(lexTiddlywiki(input))).toBe(expected);
   });
 
-  it('preserves paragraph content verbatim', () => {
+  it('converts inline bold in paragraphs', () => {
     const input = "! Title\n\nParagraph with ''bold'' text.";
-    const expected = "# Title\n\nParagraph with ''bold'' text.";
+    const expected = '# Title\n\nParagraph with **bold** text.';
     expect(serializeObsidian(lexTiddlywiki(input))).toBe(expected);
   });
 
