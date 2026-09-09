@@ -1,13 +1,15 @@
-import { ObsidianNote } from 'src/modules/obsidian/types/ObsidianNote';
+import { collectObsidianTags } from '../../conversion-core/codecs/collectObsidianTags';
+import { parseObsidianFrontMatter } from '../../conversion-core/codecs/parseObsidianFrontMatter';
+import { readObsidianTags } from '../../conversion-core/codecs/readObsidianTags';
+import { parseObsidian } from '../../conversion-core/markdown/parseObsidian';
+import { ObsidianNote } from '../types/ObsidianNote';
 
 export function extractTagsFromObsidianNote(note: ObsidianNote): string[] {
-  const tagRegex = /(^|\s)#([\w-]+)/g;
-
-  const extractedTags: string[] = [];
-
-  for (const match of note.content.matchAll(tagRegex)) {
-    extractedTags.push(match[2]); // Extract the tag without the hash (#)
+  const parsed = parseObsidianFrontMatter(note.content);
+  if (!parsed.value) {
+    return [];
   }
-
-  return [...new Set(extractedTags)];
+  const propertyTags = readObsidianTags(parsed.value.properties.tags);
+  const bodyTags = collectObsidianTags(parseObsidian(parsed.value.body));
+  return [...new Set([...propertyTags, ...bodyTags])];
 }

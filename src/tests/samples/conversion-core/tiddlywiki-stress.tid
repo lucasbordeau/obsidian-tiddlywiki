@@ -1,0 +1,37 @@
+!A compound ''heading //with [[a literal ''label''|Folder/Exact_Title:é]]//''
+
+Paragraph with `''not bold'' [[not link]]` and ``one ` literal`` and [ext[Mail|mailto:owner@example.org]].
+
+* ''Outer //inner __under__//''
+*# Ordered child with [ext[remote|https://example.org/a_(b)?x=1&y=2]]
+*#* Deep unordered with [[same|Folder/A]]
+*#*# Deeper ordered
+*#*#* Fifth depth
+*# Ordered sibling
+** Unordered sibling
+* Top sibling
+
+|!Name|!Meaning|!Code|
+|[[label|Folder/A]]|''bold //italic//''|`x|y`|
+|[ext[remote|https://example.org/?a=1&b=2]]|[img width=120 height=80 [A picture|assets/a.svg]]|``one ` delimiter``|
+
+<<<
+Quoted first paragraph.
+
+<<<<
+Nested quote with ''bold'' and a literal `<<<` marker.
+<<<<
+
+* Quoted list
+*# Quoted ordered child
+<<<
+
+```typescript
+const literal = "[[do not link]] and ''do not emphasize''";
+// URLs: https://example.org/a_(b)?x=1&y=2
+!not a heading
+*# not a list
+<script>alert('literal')</script>
+```
+
+<mark>semantic highlight with ''bold''</mark>, ^^upper^^ and ,,lower,,.

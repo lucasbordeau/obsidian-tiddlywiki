@@ -19,3 +19,6 @@ data.json
 .DS_Store
 
 .env
+
+dist/
+coverage/

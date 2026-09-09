@@ -1,0 +1,27 @@
+!Heading without space and ''strong //emphasis//''
+
+Prose with [[alias|Folder/Target#Part]], [[outside|https://example.org/a_(b)?q=1#fragment]] and `** // __`.
+
+* first ''strong //nested//''
+*# ordered [[alias|Folder/Target]]
+*#* deep [ext[remote|https://example.net/a_(b)]]
+*# second [img width="120" height="60"[assets/picture.svg]]
+* sibling {{Another Note}}
+
+<<<
+Quoted ''strong'' and `>`.
+
+* first
+** second [[alias|Folder/Target]]
+<<<
+
+|!Name | !Literal and link|
+|''strong'' | `a|b` and [[alias|Folder/Target]]|
+|//emphasis// | [[remote|https://example.org/a_(b)]]|
+
+```text
+[[identity **literal**]] [link](https://example.org)
+*# not a list; !NotAHeading; {{not a transclusion}}
+```
+
+End ''after //nested//'' with C#.
