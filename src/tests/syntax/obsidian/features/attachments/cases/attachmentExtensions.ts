@@ -1,0 +1,17 @@
+export const attachmentExtensions = [
+  'md',
+  'base',
+  'canvas',
+  'flac',
+  'm4a',
+  'mp3',
+  'ogg',
+  'wav',
+  'webm',
+  '3gp',
+  'mkv',
+  'mov',
+  'mp4',
+  'ogv',
+  'pdf',
+];

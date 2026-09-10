@@ -1,4 +1,4 @@
-import { convertText } from '../conversion-core/convertText';
+import { convertText } from '../conversion-core/conversion/convertText';
 
 export function convertObsidianNoteContentToTiddlerContent(
   content: string,

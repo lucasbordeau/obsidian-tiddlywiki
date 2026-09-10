@@ -1,0 +1,16 @@
+export const linkSources = [
+  '[[Note]]',
+  '[[Note.md]]',
+  '[[Folder/Note#Heading|Alias]]',
+  '[[#Local heading]]',
+  '[[Note#Parent#Child]]',
+  '[[Note#^block-12]]',
+  '[**rich** label](Folder/Note.md#Heading "title")',
+  '[spaces](Folder/Two%20Words.md)',
+  '[attachment](Reports/Study.pdf#page=4)',
+  '[web](https://example.org/a_(b)?x=1&y=2#part)',
+  '[email](mailto:person@example.org)',
+  '[vault](obsidian://open?vault=Lab&file=Note)',
+  '<https://example.org/a?q=1&b=2>',
+  '[reference][id]\n\n[id]: Folder/Note.md "title"',
+] as const;

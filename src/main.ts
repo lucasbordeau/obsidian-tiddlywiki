@@ -1,5 +1,5 @@
 import { Plugin } from 'obsidian';
-import { ObsidianTiddlyWikiSettingsTab } from './modules/plugin-core/ObsidianTiddlyWikiPlugin';
+import { ObsidianTiddlyWikiSettingsTab } from './modules/plugin-core/settings/ObsidianTiddlyWikiSettingsTab';
 
 export default class ObsidianTiddlyWikiPlugin extends Plugin {
   async onload() {

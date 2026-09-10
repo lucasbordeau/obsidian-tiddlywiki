@@ -5,6 +5,7 @@ export async function getFileDates(
 ): Promise<{ creationDate: Date; lastModifiedDate: Date }> {
   try {
     const stats = await stat(filePath);
+
     return {
       creationDate: stats.birthtime, // File creation date
       lastModifiedDate: stats.mtime, // Last modified date

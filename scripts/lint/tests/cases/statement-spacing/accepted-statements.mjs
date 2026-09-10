@@ -1,0 +1,15 @@
+export const acceptedStatements = [
+  'const value = 1;\nconst other = 2;',
+  'let value = 1;\nconst other = 2;\nvar last = 3;',
+  'import {\nvalue\n} from "a";\nimport other from "b";',
+  'if (ready) {\nrun();\n} else {\nfinish();\n}',
+  'try {\nrun();\n} catch (error) {\nreport(error);\n} finally {\nfinish();\n}',
+  'switch (ready) {\ncase 1: {\nreturnValue();\n}\ncase 2:\ncase 3: {\nreturnValue();\n}\n}',
+  'function value() {\nreturn 1;\n}',
+  'const value = 1;\n\n// leading\npublish(value);',
+  'const value = 1;\n// comment\n\npublish(value);',
+  'publish(first);\npublish(second);',
+  'const value = call\n(arg);',
+  'const value = `first\n\nsecond`;',
+  'const value = /a\\s+b/.test("a b");',
+];

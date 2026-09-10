@@ -16,7 +16,18 @@ The shared `no-compact-function-bodies` rule was added in both repositories:
 - Scoped `case` blocks may keep their opening brace on the case line.
 - Autofixes insert line breaks while retaining comments, literal contents and CRLF.
 
-`npm run lint` registers all three rules with the existing TypeScript/Prettier rules
+The shared `statement-spacing` rule inserts blank lines between structural steps:
+blocks, abrupt exits, declaration/operation boundaries and multiline statements.
+It preserves existing line endings and keeps comments attached to their statements.
+Consecutive imports and related single-line declarations can remain grouped.
+
+Apply the [semantic spacing skill](../skills/semantic-code-spacing/SKILL.md) to
+each edited file after autofixing. It identifies changes of purpose such as
+preparing a field map and appending the completed tiddler, and keeps related
+assignments and assertions together. Both the rule and the agent-neutral skill
+are distributed in `ts-app-helpers`.
+
+`npm run lint` registers all four rules with the existing TypeScript/Prettier rules
 and requires braces around control flow. It covers source, tests, scripts, local
 rules and top-level JavaScript configuration. Use `npm run lint -- --fix` to apply
 fixes and `npm run test:lint` to check rule behavior.

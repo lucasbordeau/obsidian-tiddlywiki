@@ -29,7 +29,7 @@ compatible ESM and CommonJS bundles to `dist/` and has no vault configuration.
 
 ## Source ownership
 
-See [conversion architecture](docs/development/conversion-engine.md).
+See [conversion architecture](./docs/development/conversion/architecture.md).
 Keep container codecs, dialect syntax, conversion planning and host IO separate.
 Import and export have their own serializers. The core uses no Obsidian, VS Code,
 TiddlyWiki runtime, DOM or filesystem globals.
@@ -41,7 +41,20 @@ stay with their owning parser or serializer. Keep reusable types in named files.
 Use a type guard for repeated nullish/shape validation. Preserve single quotes,
 two-space indentation, trailing commas and LF line endings.
 
-Local lint rules document their origin in [eslint-rules](eslint-rules/README.md).
+Group files by domain, then operation and feature as needed. Keep parser and
+serializer entry points focused on orchestration, with syntax handlers in their
+own feature folders. Keep context contracts close to their consumers and import
+implementation files directly. Tests follow the same domain hierarchy, with
+reusable fixture readers and assertions under `src/tests/support/`.
+
+Use blank lines to separate validation, preparation, state changes, and the final
+action. Keep related declarations, object assignments, and assertions together.
+Apply the [semantic spacing skill](./skills/semantic-code-spacing/SKILL.md) to each
+edited file after the linter inserts mechanically detectable statement spacing.
+In particular, separate preparing an object from appending, saving, or returning
+it. The skill and lint rule are shared with `ts-app-helpers`.
+
+Local lint rules document their origin in [eslint-rules](./eslint-rules/README.md).
 Build, lint and tests run with ordinary commands and require no assistant-specific
 tooling or private repository checkout.
 
