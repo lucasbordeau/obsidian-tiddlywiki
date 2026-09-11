@@ -13,8 +13,9 @@
     "format": "prettier --check \"src/**/*.ts\" \"scripts/**/*.mjs\" \"eslint-rules/**/*.mjs\" AGENTS.md CONTRIBUTING.md \"docs/development/**/*.md\" \"skills/**/*.md\"",
     "build:core": "node scripts/build/build-core.mjs",
     "test:lint": "node --test scripts/lint/tests/test-*.mjs",
+    "test:dev": "node --test scripts/build/test-*.mjs",
     "test:bundles": "node scripts/validation/test-core-bundles.mjs",
-    "check": "npm run typecheck && npm test -- --runInBand && npm run test:lint && npm run lint && npm run build:core && npm run test:bundles"
+    "check": "npm run typecheck && npm test -- --runInBand && npm run test:lint && npm run test:dev && npm run lint && npm run build:core && npm run test:bundles"
   },
   "keywords": [],
   "author": "",
@@ -43,7 +44,6 @@
   "dependencies": {
     "dotenv": "^16.4.7",
     "entities": "4.5.0",
-    "esbuild-plugin-copy": "^2.1.1",
     "markdown-it": "14.1.0",
     "mime-types": "^2.1.35",
     "yaml": "2.8.1"

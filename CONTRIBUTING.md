@@ -13,6 +13,7 @@ npm ci
 npm run typecheck
 npm test -- --runInBand
 npm run test:lint
+npm run test:dev
 npm run lint
 npm run build:core
 npm run test:bundles
@@ -22,9 +23,11 @@ npm run test:bundles
 source, tooling and contributor documentation. Syntax fixture contents are test
 inputs and must be edited deliberately rather than reformatted automatically.
 
-The original `npm run dev` and `npm run build` plugin scripts require
-`DEV_VAULT_PLUGIN_FOLDER` from `.env`. They copy the bundle into that development
-vault; use a disposable vault. The portable `build:core` command writes browser
+`npm run dev` requires `DEV_VAULT_PLUGIN_FOLDER` from `.env`. Each successful build
+copies the bundle, manifest and `.hotreload` marker into that development vault;
+use a disposable vault. See [hot reload setup](./README.md#how-to-dev).
+`npm run build` produces the release bundle without requiring a vault destination
+or copying files into a vault. The portable `build:core` command writes browser
 compatible ESM and CommonJS bundles to `dist/` and has no vault configuration.
 
 ## Source ownership

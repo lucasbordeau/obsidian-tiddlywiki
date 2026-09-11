@@ -19,6 +19,7 @@ data.json
 .DS_Store
 
 .env
+.dev-vault/
 
 dist/
 coverage/
