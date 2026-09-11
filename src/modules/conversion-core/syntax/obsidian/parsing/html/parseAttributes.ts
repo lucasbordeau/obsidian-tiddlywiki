@@ -1,4 +1,4 @@
-import type { HtmlAttributes } from '../../types/html/HtmlAttributes';
+import type { HtmlAttributes } from '../../types/HtmlAttributes';
 import { decodeHtml } from './decodeHtml';
 
 export function parseAttributes(source: string): HtmlAttributes | undefined {

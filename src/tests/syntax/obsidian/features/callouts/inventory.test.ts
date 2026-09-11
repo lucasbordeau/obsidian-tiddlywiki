@@ -1,6 +1,6 @@
 import { parseObsidian } from '../../../../../modules/conversion-core/syntax/obsidian/parsing/parseObsidian';
-import { stableRoundTrip } from '../../../../support/conversion/stableRoundTrip';
-import { calloutTypes } from './cases/calloutTypes';
+import { assertStableRoundTrip } from '../../../../support/assertStableRoundTrip';
+import { calloutTypes } from './calloutTypes';
 
 describe('official Obsidian feature inventory', () => {
   test.each(calloutTypes)(
@@ -13,7 +13,7 @@ describe('official Obsidian feature inventory', () => {
         callout: { type, fold: '-', title: 'Title alias' },
       });
 
-      stableRoundTrip(source);
+      assertStableRoundTrip(source);
     },
   );
 });

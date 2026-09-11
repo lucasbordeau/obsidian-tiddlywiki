@@ -1,5 +1,5 @@
-import type { SourceRange } from '../../../../model/source/SourceRange';
-import type { TiddlyWikiParsingContext } from './types/TiddlyWikiParsingContext';
+import type { SourceRange } from '../../../../model/SourceRange';
+import type { TiddlyWikiParsingContext } from './TiddlyWikiParsingContext';
 
 export function reportTiddlyWikiParsingWarning(
   this: TiddlyWikiParsingContext,

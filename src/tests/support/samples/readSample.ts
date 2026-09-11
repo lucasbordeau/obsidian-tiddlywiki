@@ -1,6 +1,6 @@
-import { samplePath } from './samplePath';
+import { getSamplePath } from './getSamplePath';
 import { readFileSync } from 'fs';
 
 export function readSample(...segments: string[]): string {
-  return readFileSync(samplePath(...segments), 'utf8');
+  return readFileSync(getSamplePath(...segments), 'utf8');
 }

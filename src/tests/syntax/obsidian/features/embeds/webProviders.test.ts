@@ -1,7 +1,7 @@
 import { parseObsidian } from '../../../../../modules/conversion-core/syntax/obsidian/parsing/parseObsidian';
 import { convertText } from '../../../../../modules/conversion-core/conversion/convertText';
-import { webEmbedSources } from './cases/webEmbedSources';
-import { ordinaryImageUrls } from './cases/ordinaryImageUrls';
+import { webEmbedSources } from './webEmbedSources';
+import { ordinaryImageUrls } from './ordinaryImageUrls';
 
 describe('Obsidian documented extensions and structural regressions', () => {
   test.each(webEmbedSources)(

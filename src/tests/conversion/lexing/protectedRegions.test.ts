@@ -1,5 +1,5 @@
 import { lexSource } from '../../../modules/conversion-core/lexing/lexSource';
-import { imageWidgetSources } from './cases/imageWidgetSources';
+import { imageWidgetSources } from './imageWidgetSources';
 
 describe('concrete source tokens', () => {
   test.each(imageWidgetSources)(

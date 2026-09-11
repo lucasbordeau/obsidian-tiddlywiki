@@ -1,6 +1,6 @@
 import { lexSource } from '../../../modules/conversion-core/lexing/lexSource';
-import { dialects } from './cases/dialects';
-import { adversarialSources } from './cases/adversarialSources';
+import { dialects } from './dialects';
+import { adversarialSources } from './adversarialSources';
 
 describe('concrete source tokens', () => {
   for (const dialect of dialects) {

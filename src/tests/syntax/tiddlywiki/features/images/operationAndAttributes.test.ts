@@ -1,7 +1,7 @@
 import { convertText } from '../../../../../modules/conversion-core/conversion/convertText';
 import { parseTiddlyWiki } from '../../../../../modules/conversion-core/syntax/tiddlywiki/parsing/parseTiddlyWiki';
-import { renderTiddlyWiki } from '../../../../support/runtime/tiddlywiki/renderTiddlyWiki';
-import { imageExtensions } from './cases/imageExtensions';
+import { renderTiddlyWiki } from '../../../../support/runtime/renderTiddlyWiki';
+import { imageExtensions } from './imageExtensions';
 
 describe('official TiddlyWiki feature inventory', () => {
   test.each(imageExtensions)(

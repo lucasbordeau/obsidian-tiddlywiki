@@ -1,18 +1,18 @@
-import type { ConversionOptions } from '../../../../conversion/types/ConversionOptions';
-import type { ParsedDocument } from '../../../../model/ast/documents/ParsedDocument';
+import type { ConversionOptions } from '../../../../conversion/ConversionOptions';
+import type { ParsedDocument } from '../../../../model/ParsedDocument';
 import { reportTiddlyWikiSerializationWarning } from './reportTiddlyWikiSerializationWarning';
-import { preserveTiddlyWikiForeignSource } from '../preservation/preserveTiddlyWikiForeignSource';
-import { serializeTiddlyWikiRawSource } from '../preservation/serializeTiddlyWikiRawSource';
+import { preserveTiddlyWikiForeignSource } from '../preserveTiddlyWikiForeignSource';
+import { serializeTiddlyWikiRawSource } from '../serializeTiddlyWikiRawSource';
 import { serializeTiddlyWikiBlocks } from '../blocks/serializeTiddlyWikiBlocks';
 import { serializeTiddlyWikiBlock } from '../blocks/serializeTiddlyWikiBlock';
-import { isSimpleTiddlyWikiList } from '../blocks/lists/isSimpleTiddlyWikiList';
-import { isTiddlyWikiLineQuote } from '../blocks/quotes/isTiddlyWikiLineQuote';
-import { serializeTiddlyWikiLineQuote } from '../blocks/quotes/serializeTiddlyWikiLineQuote';
-import { serializeTiddlyWikiNativeList } from '../blocks/lists/serializeTiddlyWikiNativeList';
-import { serializeTiddlyWikiHtmlList } from '../blocks/lists/serializeTiddlyWikiHtmlList';
+import { isSimpleTiddlyWikiList } from '../blocks/isSimpleTiddlyWikiList';
+import { isTiddlyWikiLineQuote } from '../blocks/isTiddlyWikiLineQuote';
+import { serializeTiddlyWikiLineQuote } from '../blocks/serializeTiddlyWikiLineQuote';
+import { serializeTiddlyWikiNativeList } from '../blocks/serializeTiddlyWikiNativeList';
+import { serializeTiddlyWikiHtmlList } from '../blocks/serializeTiddlyWikiHtmlList';
 import { serializeTiddlyWikiInlines } from '../inlines/serializeTiddlyWikiInlines';
 import { serializeTiddlyWikiInlineNode } from '../inlines/serializeTiddlyWikiInlineNode';
-import type { TiddlyWikiSerializationContext } from './types/TiddlyWikiSerializationContext';
+import type { TiddlyWikiSerializationContext } from './TiddlyWikiSerializationContext';
 
 export function createTiddlyWikiSerializationContext(
   document: ParsedDocument,

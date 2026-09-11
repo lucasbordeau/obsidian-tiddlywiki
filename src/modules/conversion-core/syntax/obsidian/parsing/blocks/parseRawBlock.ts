@@ -1,8 +1,8 @@
-import type { Token } from '../../types/parsing/Token';
-import type { ParseContext } from '../../types/parsing/ParseContext';
-import type { SourceRange } from '../../../../model/source/SourceRange';
-import type { BlockNode } from '../../../../model/ast/blocks/BlockNode';
-import { decodePreservedSource } from '../../../../preservation/source/encoding/decodePreservedSource';
+import type { Token } from '../../types/Token';
+import type { ParseContext } from '../../types/ParseContext';
+import type { SourceRange } from '../../../../model/SourceRange';
+import type { BlockNode } from '../../../../model/blocks/BlockNode';
+import { decodePreservedSource } from '../../../../preservation/source/decodePreservedSource';
 import { parseStaticHtmlInline } from '../html/parseStaticHtmlInline';
 import { collectInlineNodes } from '../inlines/collectInlineNodes';
 

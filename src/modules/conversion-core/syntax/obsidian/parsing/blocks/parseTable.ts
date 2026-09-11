@@ -1,8 +1,8 @@
-import type { Token } from '../../types/parsing/Token';
-import type { TokenCursor } from '../../types/parsing/TokenCursor';
-import type { BlockNode } from '../../../../model/ast/blocks/BlockNode';
-import type { InlineNode } from '../../../../model/ast/inlines/InlineNode';
-import { inlineChildren } from '../inlines/inlineChildren';
+import type { Token } from '../../types/Token';
+import type { TokenCursor } from '../../types/TokenCursor';
+import type { BlockNode } from '../../../../model/blocks/BlockNode';
+import type { InlineNode } from '../../../../model/inlines/InlineNode';
+import { collectInlineChildren } from '../inlines/collectInlineChildren';
 
 export function parseTable(tokens: Token[], cursor: TokenCursor): BlockNode {
   const header: InlineNode[][] = [];
@@ -33,7 +33,7 @@ export function parseTable(tokens: Token[], cursor: TokenCursor): BlockNode {
     const cellOpening = token.type === 'th_open' || token.type === 'td_open';
 
     if (cellOpening) {
-      currentCells.push(inlineChildren(tokens[cursor.position++]));
+      currentCells.push(collectInlineChildren(tokens[cursor.position++]));
 
       if (inHeader) {
         const alignment = /text-align:(left|right|center)/.exec(

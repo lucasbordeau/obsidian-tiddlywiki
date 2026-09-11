@@ -1,11 +1,11 @@
-import type { Token } from '../../types/parsing/Token';
-import type { TokenCursor } from '../../types/parsing/TokenCursor';
-import type { InlineCollector } from '../../types/parsing/InlineCollector';
-import type { InlineNode } from '../../../../model/ast/inlines/InlineNode';
+import type { Token } from '../../types/Token';
+import type { TokenCursor } from '../../types/TokenCursor';
+import type { InlineCollector } from '../../types/InlineCollector';
+import type { InlineNode } from '../../../../model/inlines/InlineNode';
 import { parseMarkdownImage } from './parseMarkdownImage';
 import { parseWikiToken } from './parseWikiToken';
-import { rawInline } from './rawInline';
-import { htmlInline } from './htmlInline';
+import { createRawInline } from './createRawInline';
+import { parseHtmlInline } from './parseHtmlInline';
 
 export function parseInlineToken(
   token: Token,
@@ -88,23 +88,23 @@ export function parseInlineToken(
       return { type: 'footnoteReference', identifier: token.content };
 
     case 'otw_inline_footnote':
-      return rawInline(token.content, 'Obsidian inline footnote');
+      return createRawInline(token.content, 'Obsidian inline footnote');
 
     case 'otw_web_embed':
-      return rawInline(token.content, 'Obsidian web embed');
+      return createRawInline(token.content, 'Obsidian web embed');
 
     case 'otw_comment':
-      return rawInline(token.content, 'Obsidian comment');
+      return createRawInline(token.content, 'Obsidian comment');
 
     case 'otw_block_identifier':
-      return rawInline(token.content, 'Obsidian block identifier');
+      return createRawInline(token.content, 'Obsidian block identifier');
 
     case 'html_inline':
     case 'otw_html':
-      return htmlInline(token.content);
+      return parseHtmlInline(token.content);
 
     default:
-      return rawInline(
+      return createRawInline(
         token.content || token.markup,
         `Markdown inline token ${token.type}`,
       );

@@ -1,5 +1,5 @@
-import type { HtmlCursor } from '../../types/html/HtmlCursor';
-import type { InlineNode } from '../../../../model/ast/inlines/InlineNode';
+import type { HtmlCursor } from '../../types/HtmlCursor';
+import type { InlineNode } from '../../../../model/inlines/InlineNode';
 import { parseElement } from './parseElement';
 import { decodeHtml } from './decodeHtml';
 

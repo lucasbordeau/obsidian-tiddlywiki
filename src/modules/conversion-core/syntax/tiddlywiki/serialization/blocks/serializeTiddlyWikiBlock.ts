@@ -1,10 +1,10 @@
-import type { BlockNode } from '../../../../model/ast/blocks/BlockNode';
-import type { TiddlyWikiSerializationContext } from '../context/types/TiddlyWikiSerializationContext';
-import { serializeTiddlyWikiCodeBlock } from './code/serializeTiddlyWikiCodeBlock';
-import { serializeTiddlyWikiQuoteBlock } from './quotes/serializeTiddlyWikiQuoteBlock';
-import { serializeTiddlyWikiListBlock } from './lists/serializeTiddlyWikiListBlock';
-import { serializeTiddlyWikiTable } from './tables/serializeTiddlyWikiTable';
-import { serializeTiddlyWikiFootnote } from './footnotes/serializeTiddlyWikiFootnote';
+import type { BlockNode } from '../../../../model/blocks/BlockNode';
+import type { TiddlyWikiSerializationContext } from '../context/TiddlyWikiSerializationContext';
+import { serializeTiddlyWikiCodeBlock } from './serializeTiddlyWikiCodeBlock';
+import { serializeTiddlyWikiQuoteBlock } from './serializeTiddlyWikiQuoteBlock';
+import { serializeTiddlyWikiListBlock } from './serializeTiddlyWikiListBlock';
+import { serializeTiddlyWikiTable } from './serializeTiddlyWikiTable';
+import { serializeTiddlyWikiFootnote } from './serializeTiddlyWikiFootnote';
 
 export function serializeTiddlyWikiBlock(
   this: TiddlyWikiSerializationContext,

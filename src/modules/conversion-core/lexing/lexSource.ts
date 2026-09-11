@@ -1,5 +1,5 @@
-import type { Dialect } from '../model/source/Dialect';
-import type { SyntaxToken } from '../model/source/SyntaxToken';
+import type { Dialect } from '../model/Dialect';
+import type { SyntaxToken } from '../model/SyntaxToken';
 import { scanNextToken } from './scanners/scanNextToken';
 
 /** Concrete UTF-16 source regions; every source character belongs to one token. */

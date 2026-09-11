@@ -1,12 +1,12 @@
-import type { InlineNode } from '../../../../model/ast/inlines/InlineNode';
-import type { SerializationContext } from '../../types/serialization/SerializationContext';
+import type { InlineNode } from '../../../../model/inlines/InlineNode';
+import type { SerializationContext } from '../../types/SerializationContext';
 import { escapeText } from '../escaping/escapeText';
-import { codeSpan } from '../code/codeSpan';
+import { serializeCodeSpan } from '../serializeCodeSpan';
 import { needsStaticFormatting } from '../formatting/needsStaticFormatting';
-import { renderHtmlInlines } from '../html/renderHtmlInlines';
+import { renderHtmlInlines } from '../renderHtmlInlines';
 import { renderLink } from '../links/renderLink';
 import { renderEmbed } from '../links/renderEmbed';
-import { emitRaw } from '../preservation/emitRaw';
+import { emitRaw } from '../emitRaw';
 
 export function renderInline(
   node: InlineNode,
@@ -17,7 +17,7 @@ export function renderInline(
     case 'text':
       return escapeText(node.value);
     case 'code':
-      return codeSpan(node.value);
+      return serializeCodeSpan(node.value);
     case 'strong': {
       if (needsStaticFormatting(node)) {
         return renderHtmlInlines([node], context);

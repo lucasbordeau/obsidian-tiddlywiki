@@ -1,9 +1,9 @@
-import type { Token } from '../../types/parsing/Token';
-import type { InlineNode } from '../../../../model/ast/inlines/InlineNode';
-import { wikiParts } from './wikiParts';
+import type { Token } from '../../types/Token';
+import type { InlineNode } from '../../../../model/inlines/InlineNode';
+import { parseWikiReferenceParts } from './parseWikiReferenceParts';
 
 export function parseWikiToken(token: Token): InlineNode {
-  const { target, alias } = wikiParts(token.content);
+  const { target, alias } = parseWikiReferenceParts(token.content);
 
   if (token.type === 'otw_wikilink') {
     return {

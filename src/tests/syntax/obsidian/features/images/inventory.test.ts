@@ -1,11 +1,11 @@
 import { convertText } from '../../../../../modules/conversion-core/conversion/convertText';
 import { parseObsidian } from '../../../../../modules/conversion-core/syntax/obsidian/parsing/parseObsidian';
-import { renderTiddlyWiki } from '../../../../support/runtime/tiddlywiki/renderTiddlyWiki';
-import { allInlines } from '../../../../support/ast/traversal/allInlines';
-import { stableRoundTrip } from '../../../../support/conversion/stableRoundTrip';
-import { imageExtensions } from './cases/imageExtensions';
-import { imageContexts } from './cases/imageContexts';
-import { markdownImageVariants } from './cases/markdownImageVariants';
+import { renderTiddlyWiki } from '../../../../support/runtime/renderTiddlyWiki';
+import { collectAllInlines } from '../../../../support/ast/collectAllInlines';
+import { assertStableRoundTrip } from '../../../../support/assertStableRoundTrip';
+import { imageExtensions } from './imageExtensions';
+import { imageContexts } from './imageContexts';
+import { markdownImageVariants } from './markdownImageVariants';
 
 describe('official Obsidian feature inventory', () => {
   describe.each(imageExtensions)('O-IMAGE: .%s', (extension) => {
@@ -19,7 +19,7 @@ describe('official Obsidian feature inventory', () => {
           `![[${target}${template.includes('| Preview') ? '\\|' : '|'}320x180]]`,
         );
 
-        const images = allInlines(parseObsidian(source).blocks).filter(
+        const images = collectAllInlines(parseObsidian(source).blocks).filter(
           (node) => node.type === 'embed',
         );
 
@@ -33,7 +33,7 @@ describe('official Obsidian feature inventory', () => {
           }),
         ]);
 
-        stableRoundTrip(source);
+        assertStableRoundTrip(source);
       },
     );
   });
@@ -41,13 +41,13 @@ describe('official Obsidian feature inventory', () => {
   test.each(markdownImageVariants)(
     'O-MARKDOWN-IMAGE: %s',
     (_description, source, expected) => {
-      const embeds = allInlines(parseObsidian(source as string).blocks).filter(
-        (node) => node.type === 'embed',
-      );
+      const embeds = collectAllInlines(
+        parseObsidian(source as string).blocks,
+      ).filter((node) => node.type === 'embed');
 
       expect(embeds).toEqual([expect.objectContaining(expected)]);
 
-      stableRoundTrip(source as string);
+      assertStableRoundTrip(source as string);
     },
   );
 

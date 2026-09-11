@@ -2,9 +2,9 @@ import { parseObsidian } from '../syntax/obsidian/parsing/parseObsidian';
 import { serializeObsidian } from '../syntax/obsidian/serialization/serializeObsidian';
 import { parseTiddlyWiki } from '../syntax/tiddlywiki/parsing/parseTiddlyWiki';
 import { serializeTiddlyWiki } from '../syntax/tiddlywiki/serialization/serializeTiddlyWiki';
-import type { ConversionOptions } from './types/ConversionOptions';
-import type { ConversionResult } from './types/ConversionResult';
-import type { Dialect } from '../model/source/Dialect';
+import type { ConversionOptions } from './ConversionOptions';
+import type { ConversionResult } from './ConversionResult';
+import type { Dialect } from '../model/Dialect';
 
 export function convertText(
   source: string,

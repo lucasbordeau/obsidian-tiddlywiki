@@ -1,17 +1,17 @@
-import type { InlineNode } from '../../../../model/ast/inlines/InlineNode';
-import type { SerializationContext } from '../../types/serialization/SerializationContext';
-import { targetLink } from './targetLink';
-import { plainLabel } from './plainLabel';
+import type { InlineNode } from '../../../../model/inlines/InlineNode';
+import type { SerializationContext } from '../../types/SerializationContext';
+import { resolveLinkTarget } from './resolveLinkTarget';
+import { getPlainLinkLabel } from './getPlainLinkLabel';
 import { escapeWikiPart } from '../escaping/escapeWikiPart';
-import { markdownDestination } from './markdownDestination';
-import { markdownTitle } from './markdownTitle';
+import { serializeMarkdownDestination } from './serializeMarkdownDestination';
+import { serializeMarkdownTitle } from './serializeMarkdownTitle';
 
 export function renderLink(
   node: Extract<InlineNode, { type: 'link' }>,
   context: SerializationContext,
 ): string {
-  const target = targetLink(node.target, 'link', context, node.external);
-  const label = plainLabel(node.label);
+  const target = resolveLinkTarget(node.target, 'link', context, node.external);
+  const label = getPlainLinkLabel(node.label);
 
   const useWikiLink =
     !node.external &&
@@ -29,5 +29,5 @@ export function renderLink(
     return `[[${encodedTarget}|${escapeWikiPart(label)}]]`;
   }
 
-  return `[${context.renderInlines(node.label)}](${markdownDestination(target)}${markdownTitle(node.title)})`;
+  return `[${context.renderInlines(node.label)}](${serializeMarkdownDestination(target)}${serializeMarkdownTitle(node.title)})`;
 }

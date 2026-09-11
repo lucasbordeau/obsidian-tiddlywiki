@@ -1,5 +1,5 @@
-import type { BlockNode } from '../../../../model/ast/blocks/BlockNode';
-import { longestRun } from '../code/longestRun';
+import type { BlockNode } from '../../../../model/blocks/BlockNode';
+import { getLongestDelimiterRun } from '../getLongestDelimiterRun';
 
 export function renderCode(
   block: Extract<BlockNode, { type: 'code' }>,
@@ -7,7 +7,7 @@ export function renderCode(
   const fenceCharacter = block.language.includes('`') ? '~' : '`';
 
   const fence = fenceCharacter.repeat(
-    Math.max(3, longestRun(block.value, fenceCharacter) + 1),
+    Math.max(3, getLongestDelimiterRun(block.value, fenceCharacter) + 1),
   );
 
   return `${fence}${block.language}\n${block.value}\n${fence}`;

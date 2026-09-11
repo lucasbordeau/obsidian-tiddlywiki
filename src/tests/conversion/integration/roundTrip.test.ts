@@ -1,8 +1,8 @@
 import { convertText } from '../../../modules/conversion-core/conversion/convertText';
 import { parseObsidian } from '../../../modules/conversion-core/syntax/obsidian/parsing/parseObsidian';
 import { parseTiddlyWiki } from '../../../modules/conversion-core/syntax/tiddlywiki/parsing/parseTiddlyWiki';
-import { Dialect } from '../../../modules/conversion-core/model/source/Dialect';
-import { semanticBlocks } from '../../support/ast/comparison/semanticBlocks';
+import { Dialect } from '../../../modules/conversion-core/model/Dialect';
+import { normalizeSemanticBlocks } from '../../support/ast/normalizeSemanticBlocks';
 import { readConversionSample as fixture } from '../../support/samples/readConversionSample';
 
 describe('cross-dialect conversion', () => {
@@ -15,7 +15,7 @@ describe('cross-dialect conversion', () => {
 
       const parser = dialect === 'obsidian' ? parseObsidian : parseTiddlyWiki;
       const target = dialect === 'obsidian' ? 'tiddlywiki' : 'obsidian';
-      const expected = semanticBlocks(parser(original).blocks);
+      const expected = normalizeSemanticBlocks(parser(original).blocks);
 
       let source = original;
 
@@ -23,7 +23,9 @@ describe('cross-dialect conversion', () => {
         const outgoing = convertText(source, dialect, target);
         const incoming = convertText(outgoing.text, target, dialect);
 
-        expect(semanticBlocks(parser(incoming.text).blocks)).toEqual(expected);
+        expect(normalizeSemanticBlocks(parser(incoming.text).blocks)).toEqual(
+          expected,
+        );
 
         source = incoming.text;
       }

@@ -1,8 +1,8 @@
-import type { Token } from '../../types/parsing/Token';
-import type { ParseContext } from '../../types/parsing/ParseContext';
-import type { BlockCollector } from '../../types/parsing/BlockCollector';
-import type { BlockNode } from '../../../../model/ast/blocks/BlockNode';
-import { removeRanges } from '../source/removeRanges';
+import type { Token } from '../../types/Token';
+import type { ParseContext } from '../../types/ParseContext';
+import type { BlockCollector } from '../../types/BlockCollector';
+import type { BlockNode } from '../../../../model/blocks/BlockNode';
+import { removeRanges } from '../removeRanges';
 
 export function parseFootnoteDefinition(
   token: Token,

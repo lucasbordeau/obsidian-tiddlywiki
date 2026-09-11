@@ -1,8 +1,8 @@
-import { stableRoundTrip } from '../../../../support/conversion/stableRoundTrip';
-import { mathAndFootnoteSources } from './cases/mathAndFootnoteSources';
+import { assertStableRoundTrip } from '../../../../support/assertStableRoundTrip';
+import { mathAndFootnoteSources } from './mathAndFootnoteSources';
 
 describe('official Obsidian feature inventory', () => {
   test.each(mathAndFootnoteSources)('O-MATH-FOOTNOTE: %s', (source) => {
-    stableRoundTrip(source);
+    assertStableRoundTrip(source);
   });
 });

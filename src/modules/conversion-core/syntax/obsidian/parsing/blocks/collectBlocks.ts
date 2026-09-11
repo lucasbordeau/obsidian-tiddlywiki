@@ -1,9 +1,9 @@
-import type { Token } from '../../types/parsing/Token';
-import type { TokenCursor } from '../../types/parsing/TokenCursor';
-import type { ParseContext } from '../../types/parsing/ParseContext';
-import type { BlockNode } from '../../../../model/ast/blocks/BlockNode';
-import { sourceRange } from '../source/sourceRange';
-import { inlineChildren } from '../inlines/inlineChildren';
+import type { Token } from '../../types/Token';
+import type { TokenCursor } from '../../types/TokenCursor';
+import type { ParseContext } from '../../types/ParseContext';
+import type { BlockNode } from '../../../../model/blocks/BlockNode';
+import { getTokenSourceRange } from '../getTokenSourceRange';
+import { collectInlineChildren } from '../inlines/collectInlineChildren';
 import { parseList } from './parseList';
 import { parseQuote } from './parseQuote';
 import { parseTable } from './parseTable';
@@ -25,7 +25,7 @@ export function collectBlocks(
       break;
     }
 
-    const range = sourceRange(token, context);
+    const range = getTokenSourceRange(token, context);
     let block: BlockNode | undefined;
 
     switch (token.type) {
@@ -33,7 +33,7 @@ export function collectBlocks(
         block = {
           type: 'heading',
           level: Number(token.tag.slice(1)),
-          children: inlineChildren(tokens[cursor.position++]),
+          children: collectInlineChildren(tokens[cursor.position++]),
         };
 
         cursor.position++;
@@ -42,7 +42,7 @@ export function collectBlocks(
       case 'paragraph_open':
         block = {
           type: 'paragraph',
-          children: inlineChildren(tokens[cursor.position++]),
+          children: collectInlineChildren(tokens[cursor.position++]),
         };
 
         cursor.position++;

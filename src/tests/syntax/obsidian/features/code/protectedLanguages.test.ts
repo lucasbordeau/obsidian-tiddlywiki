@@ -1,6 +1,6 @@
 import { parseObsidian } from '../../../../../modules/conversion-core/syntax/obsidian/parsing/parseObsidian';
-import { stableRoundTrip } from '../../../../support/conversion/stableRoundTrip';
-import { pluginFenceBodies } from './cases/pluginFenceBodies';
+import { assertStableRoundTrip } from '../../../../support/assertStableRoundTrip';
+import { pluginFenceBodies } from './pluginFenceBodies';
 
 describe('official Obsidian feature inventory', () => {
   test.each(pluginFenceBodies)(
@@ -12,7 +12,7 @@ describe('official Obsidian feature inventory', () => {
         expect.objectContaining({ type: 'code', language, value: literal }),
       ]);
 
-      const restored = stableRoundTrip(source);
+      const restored = assertStableRoundTrip(source);
 
       expect(parseObsidian(restored).blocks[0]).toMatchObject({
         type: 'code',

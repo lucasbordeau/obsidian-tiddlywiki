@@ -1,9 +1,9 @@
-import type { ParsedDocument } from '../../../model/ast/documents/ParsedDocument';
+import type { ParsedDocument } from '../../../model/ParsedDocument';
 import { createObsidianParser } from './createObsidianParser';
-import type { ConversionDiagnostic } from '../../../conversion/diagnostics/types/ConversionDiagnostic';
-import type { ParseContext } from '../types/parsing/ParseContext';
+import type { ConversionDiagnostic } from '../../../conversion/ConversionDiagnostic';
+import type { ParseContext } from '../types/ParseContext';
 import { collectBlocks } from './blocks/collectBlocks';
-import { collectPreservationDiagnostics } from './diagnostics/collectPreservationDiagnostics';
+import { collectPreservationDiagnostics } from './collectPreservationDiagnostics';
 import { lexSource } from '../../../lexing/lexSource';
 
 export function parseObsidian(source: string): ParsedDocument {

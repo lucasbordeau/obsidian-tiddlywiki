@@ -1,5 +1,5 @@
-import type { BlockNode } from '../../../../model/ast/blocks/BlockNode';
-import type { TiddlyWikiParsingContext } from './types/TiddlyWikiParsingContext';
+import type { BlockNode } from '../../../../model/blocks/BlockNode';
+import type { TiddlyWikiParsingContext } from './TiddlyWikiParsingContext';
 import { shiftTiddlyWikiSourceRanges } from './shiftTiddlyWikiSourceRanges';
 
 export function parseTiddlyWikiFragment(

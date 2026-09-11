@@ -1,8 +1,8 @@
 import { convertText } from '../../../../../modules/conversion-core/conversion/convertText';
 import { parseObsidian } from '../../../../../modules/conversion-core/syntax/obsidian/parsing/parseObsidian';
-import { allInlines } from '../../../../support/ast/traversal/allInlines';
-import { stableRoundTrip } from '../../../../support/conversion/stableRoundTrip';
-import { preservedHtmlSources } from './cases/preservedHtmlSources';
+import { collectAllInlines } from '../../../../support/ast/collectAllInlines';
+import { assertStableRoundTrip } from '../../../../support/assertStableRoundTrip';
+import { preservedHtmlSources } from './preservedHtmlSources';
 
 describe('official Obsidian feature inventory', () => {
   test.each(preservedHtmlSources)(
@@ -24,9 +24,9 @@ describe('official Obsidian feature inventory', () => {
 
       expect(incoming.text).toContain('Edited neighbor');
 
-      const expectedRaw = allInlines(parseObsidian(source).blocks).filter(
-        (node) => node.type === 'raw',
-      );
+      const expectedRaw = collectAllInlines(
+        parseObsidian(source).blocks,
+      ).filter((node) => node.type === 'raw');
 
       for (const raw of expectedRaw) {
         if (raw.type === 'raw') {
@@ -34,7 +34,7 @@ describe('official Obsidian feature inventory', () => {
         }
       }
 
-      stableRoundTrip(source);
+      assertStableRoundTrip(source);
     },
   );
 });

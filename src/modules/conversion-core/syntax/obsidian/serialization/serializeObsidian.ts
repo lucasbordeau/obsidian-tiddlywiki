@@ -1,8 +1,8 @@
-import type { ParsedDocument } from '../../../model/ast/documents/ParsedDocument';
-import type { ConversionOptions } from '../../../conversion/types/ConversionOptions';
-import type { SerializationResult } from '../../../conversion/types/SerializationResult';
-import type { ConversionDiagnostic } from '../../../conversion/diagnostics/types/ConversionDiagnostic';
-import type { SerializationContext } from '../types/serialization/SerializationContext';
+import type { ParsedDocument } from '../../../model/ParsedDocument';
+import type { ConversionOptions } from '../../../conversion/ConversionOptions';
+import type { SerializationResult } from '../../../conversion/SerializationResult';
+import type { ConversionDiagnostic } from '../../../conversion/ConversionDiagnostic';
+import type { SerializationContext } from '../types/SerializationContext';
 import { renderBlocks } from './blocks/renderBlocks';
 import { renderInlines } from './inlines/renderInlines';
 import { renderInline } from './inlines/renderInline';

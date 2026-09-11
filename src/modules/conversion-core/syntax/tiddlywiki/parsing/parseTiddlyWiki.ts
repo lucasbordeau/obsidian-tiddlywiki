@@ -1,4 +1,4 @@
-import type { ParsedDocument } from '../../../model/ast/documents/ParsedDocument';
+import type { ParsedDocument } from '../../../model/ParsedDocument';
 import { lexSource } from '../../../lexing/lexSource';
 import { createTiddlyWikiParsingContext } from './context/createTiddlyWikiParsingContext';
 

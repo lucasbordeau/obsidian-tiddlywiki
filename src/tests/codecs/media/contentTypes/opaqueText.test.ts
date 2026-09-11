@@ -1,8 +1,8 @@
-import { exportObsidianNote } from '../../../../modules/conversion-core/notes/export/exportObsidianNote';
-import { importTiddler } from '../../../../modules/conversion-core/notes/import/importTiddler';
-import { parseObsidianFrontMatter } from '../../../../modules/conversion-core/codecs/obsidian/frontmatter/parsing/parseObsidianFrontMatter';
-import { valueOf } from '../../../support/codecs/valueOf';
-import { textualCases } from './cases/textualCases';
+import { exportObsidianNote } from '../../../../modules/conversion-core/notes/exportObsidianNote';
+import { importTiddler } from '../../../../modules/conversion-core/notes/importTiddler';
+import { parseObsidianFrontMatter } from '../../../../modules/conversion-core/codecs/obsidian/parseObsidianFrontMatter';
+import { getCodecValue } from '../../../support/getCodecValue';
+import { textualCases } from './textualCases';
 
 describe('textual and extension content types', () => {
   it.each(textualCases)(
@@ -19,10 +19,13 @@ describe('textual and extension content types', () => {
       ).toBe(true);
 
       expect(
-        valueOf(parseObsidianFrontMatter(valueOf(imported).content)).body,
+        getCodecValue(parseObsidianFrontMatter(getCodecValue(imported).content))
+          .body,
       ).toBe(text);
 
-      expect(valueOf(exportObsidianNote(valueOf(imported)))).toEqual(original);
+      expect(
+        getCodecValue(exportObsidianNote(getCodecValue(imported))),
+      ).toEqual(original);
     },
   );
 });

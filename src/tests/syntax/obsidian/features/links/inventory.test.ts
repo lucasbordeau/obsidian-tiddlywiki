@@ -1,19 +1,19 @@
 import { parseObsidian } from '../../../../../modules/conversion-core/syntax/obsidian/parsing/parseObsidian';
-import { allInlines } from '../../../../support/ast/traversal/allInlines';
-import { stableRoundTrip } from '../../../../support/conversion/stableRoundTrip';
-import { linkSources } from './cases/linkSources';
+import { collectAllInlines } from '../../../../support/ast/collectAllInlines';
+import { assertStableRoundTrip } from '../../../../support/assertStableRoundTrip';
+import { linkSources } from './linkSources';
 
 describe('official Obsidian feature inventory', () => {
   test.each(linkSources)(
     'O-LINK: %s preserves destination and label semantics',
     (source) => {
       expect(
-        allInlines(parseObsidian(source).blocks).some(
+        collectAllInlines(parseObsidian(source).blocks).some(
           (node) => node.type === 'link',
         ),
       ).toBe(true);
 
-      stableRoundTrip(source);
+      assertStableRoundTrip(source);
     },
   );
 });

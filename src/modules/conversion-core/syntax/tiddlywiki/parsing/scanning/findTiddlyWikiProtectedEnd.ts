@@ -1,5 +1,5 @@
 import { TIDDLYWIKI_BARE_EXTERNAL_LINK } from '../../constants/TiddlyWikiBareExternalLink.const';
-import type { TiddlyWikiParsingContext } from '../context/types/TiddlyWikiParsingContext';
+import type { TiddlyWikiParsingContext } from '../context/TiddlyWikiParsingContext';
 
 export function findTiddlyWikiProtectedEnd(
   this: TiddlyWikiParsingContext,

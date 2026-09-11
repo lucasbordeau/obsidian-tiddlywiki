@@ -1,17 +1,17 @@
-import type { BlockNode } from '../../../../model/ast/blocks/BlockNode';
-import type { TiddlyWikiBlockState } from './types/TiddlyWikiBlockState';
-import type { TiddlyWikiParsingContext } from '../context/types/TiddlyWikiParsingContext';
-import { matchTiddlyWikiStyledOrTypedBlock } from './opaque/matchTiddlyWikiStyledOrTypedBlock';
-import { matchTiddlyWikiConditionalBlock } from './opaque/matchTiddlyWikiConditionalBlock';
-import { matchTiddlyWikiPreservationBlock } from './opaque/matchTiddlyWikiPreservationBlock';
-import { matchTiddlyWikiCodeBlock } from './code/matchTiddlyWikiCodeBlock';
-import { matchTiddlyWikiQuoteBlock } from './quotes/matchTiddlyWikiQuoteBlock';
-import { matchTiddlyWikiHeadingBlock } from './headings/matchTiddlyWikiHeadingBlock';
-import { matchTiddlyWikiThematicBreak } from './separators/matchTiddlyWikiThematicBreak';
-import { matchTiddlyWikiListBlock } from './lists/matchTiddlyWikiListBlock';
-import { matchTiddlyWikiTableBlock } from './tables/matchTiddlyWikiTableBlock';
-import { matchTiddlyWikiHtmlBlock } from './html/matchTiddlyWikiHtmlBlock';
-import { matchTiddlyWikiParagraphBlock } from './paragraphs/matchTiddlyWikiParagraphBlock';
+import type { BlockNode } from '../../../../model/blocks/BlockNode';
+import type { TiddlyWikiBlockState } from './TiddlyWikiBlockState';
+import type { TiddlyWikiParsingContext } from '../context/TiddlyWikiParsingContext';
+import { matchTiddlyWikiStyledOrTypedBlock } from './matchTiddlyWikiStyledOrTypedBlock';
+import { matchTiddlyWikiConditionalBlock } from './matchTiddlyWikiConditionalBlock';
+import { matchTiddlyWikiPreservationBlock } from './matchTiddlyWikiPreservationBlock';
+import { matchTiddlyWikiCodeBlock } from './matchTiddlyWikiCodeBlock';
+import { matchTiddlyWikiQuoteBlock } from './matchTiddlyWikiQuoteBlock';
+import { matchTiddlyWikiHeadingBlock } from './matchTiddlyWikiHeadingBlock';
+import { matchTiddlyWikiThematicBreak } from './matchTiddlyWikiThematicBreak';
+import { matchTiddlyWikiListBlock } from './matchTiddlyWikiListBlock';
+import { matchTiddlyWikiTableBlock } from './matchTiddlyWikiTableBlock';
+import { matchTiddlyWikiHtmlBlock } from './matchTiddlyWikiHtmlBlock';
+import { matchTiddlyWikiParagraphBlock } from './matchTiddlyWikiParagraphBlock';
 
 export function parseTiddlyWikiBlocks(
   this: TiddlyWikiParsingContext,

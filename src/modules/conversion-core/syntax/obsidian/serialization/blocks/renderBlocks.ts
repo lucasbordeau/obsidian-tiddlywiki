@@ -1,5 +1,5 @@
-import type { BlockNode } from '../../../../model/ast/blocks/BlockNode';
-import type { SerializationContext } from '../../types/serialization/SerializationContext';
+import type { BlockNode } from '../../../../model/blocks/BlockNode';
+import type { SerializationContext } from '../../types/SerializationContext';
 import { renderList } from './renderList';
 import { renderBlock } from './renderBlock';
 

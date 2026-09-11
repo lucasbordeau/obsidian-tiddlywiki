@@ -1,10 +1,10 @@
-import type { InlineNode } from '../../../../model/ast/inlines/InlineNode';
-import type { TiddlyWikiSerializationContext } from '../context/types/TiddlyWikiSerializationContext';
-import { escapeTiddlyWikiText } from '../escaping/escapeTiddlyWikiText';
-import { serializeTiddlyWikiInlineCode } from './code/serializeTiddlyWikiInlineCode';
-import { serializeTiddlyWikiHighlight } from './formatting/serializeTiddlyWikiHighlight';
-import { serializeTiddlyWikiLink } from './links/serializeTiddlyWikiLink';
-import { serializeTiddlyWikiEmbed } from './images/serializeTiddlyWikiEmbed';
+import type { InlineNode } from '../../../../model/inlines/InlineNode';
+import type { TiddlyWikiSerializationContext } from '../context/TiddlyWikiSerializationContext';
+import { escapeTiddlyWikiText } from '../escapeTiddlyWikiText';
+import { serializeTiddlyWikiInlineCode } from './serializeTiddlyWikiInlineCode';
+import { serializeTiddlyWikiHighlight } from './serializeTiddlyWikiHighlight';
+import { serializeTiddlyWikiLink } from './serializeTiddlyWikiLink';
+import { serializeTiddlyWikiEmbed } from './serializeTiddlyWikiEmbed';
 
 export function serializeTiddlyWikiInlineNode(
   this: TiddlyWikiSerializationContext,

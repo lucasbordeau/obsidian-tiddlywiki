@@ -1,19 +1,19 @@
-import { scanFence } from './code/scanFence';
-import { scanComment } from './comments/scanComment';
-import { scanInlineCode } from './code/scanInlineCode';
-import { scanWikiReference } from './links/scanWikiReference';
-import { scanTiddlyWikiImage } from './embeds/scanTiddlyWikiImage';
-import { scanMarkdownReference } from './links/scanMarkdownReference';
-import { scanTransclusion } from './transclusions/scanTransclusion';
-import { scanMacro } from './macros/scanMacro';
-import { scanHtmlTag } from './html/scanHtmlTag';
-import { scanEscape } from './escaping/scanEscape';
-import { scanBlockMarker } from './structure/scanBlockMarker';
-import { scanWhitespace } from './text/scanWhitespace';
-import { scanDelimiter } from './structure/scanDelimiter';
-import { scanPlainText } from './text/scanPlainText';
-import type { LexingContext } from '../context/LexingContext';
-import type { TokenMatch } from '../matches/TokenMatch';
+import { scanFence } from './scanFence';
+import { scanComment } from './scanComment';
+import { scanInlineCode } from './scanInlineCode';
+import { scanWikiReference } from './scanWikiReference';
+import { scanTiddlyWikiImage } from './scanTiddlyWikiImage';
+import { scanMarkdownReference } from './scanMarkdownReference';
+import { scanTransclusion } from './scanTransclusion';
+import { scanMacro } from './scanMacro';
+import { scanHtmlTag } from './scanHtmlTag';
+import { scanEscape } from './scanEscape';
+import { scanBlockMarker } from './scanBlockMarker';
+import { scanWhitespace } from './scanWhitespace';
+import { scanDelimiter } from './scanDelimiter';
+import { scanPlainText } from './scanPlainText';
+import type { LexingContext } from '../LexingContext';
+import type { TokenMatch } from '../TokenMatch';
 
 export function scanNextToken(context: LexingContext): TokenMatch {
   const matchedToken =

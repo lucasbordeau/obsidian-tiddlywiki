@@ -1,6 +1,6 @@
-import type { BlockNode } from '../../../../model/ast/blocks/BlockNode';
-import type { SerializationContext } from '../../types/serialization/SerializationContext';
-import type { InlineNode } from '../../../../model/ast/inlines/InlineNode';
+import type { BlockNode } from '../../../../model/blocks/BlockNode';
+import type { SerializationContext } from '../../types/SerializationContext';
+import type { InlineNode } from '../../../../model/inlines/InlineNode';
 import { escapeHtml } from '../escaping/escapeHtml';
 import { renderInline } from '../inlines/renderInline';
 import { escapeTablePipes } from '../escaping/escapeTablePipes';

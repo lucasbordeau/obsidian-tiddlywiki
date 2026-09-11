@@ -1,5 +1,5 @@
-import type { InlineNode } from '../../../../model/ast/inlines/InlineNode';
-import type { TiddlyWikiParsingContext } from '../context/types/TiddlyWikiParsingContext';
+import type { InlineNode } from '../../../../model/inlines/InlineNode';
+import type { TiddlyWikiParsingContext } from '../context/TiddlyWikiParsingContext';
 
 export function parseTiddlyWikiInlines(
   this: TiddlyWikiParsingContext,

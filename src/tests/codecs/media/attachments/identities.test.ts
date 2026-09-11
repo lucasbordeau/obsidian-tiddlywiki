@@ -1,9 +1,9 @@
-import { exportObsidianNote } from '../../../../modules/conversion-core/notes/export/exportObsidianNote';
-import { importTiddler } from '../../../../modules/conversion-core/notes/import/importTiddler';
-import { parseObsidianFrontMatter } from '../../../../modules/conversion-core/codecs/obsidian/frontmatter/parsing/parseObsidianFrontMatter';
-import { parseTiddlyWikiJson } from '../../../../modules/conversion-core/codecs/tiddlywiki/json/parsing/parseTiddlyWikiJson';
-import { serializeObsidianFrontMatter } from '../../../../modules/conversion-core/codecs/obsidian/frontmatter/serialization/serializeObsidianFrontMatter';
-import { valueOf } from '../../../support/codecs/valueOf';
+import { exportObsidianNote } from '../../../../modules/conversion-core/notes/exportObsidianNote';
+import { importTiddler } from '../../../../modules/conversion-core/notes/importTiddler';
+import { parseObsidianFrontMatter } from '../../../../modules/conversion-core/codecs/obsidian/parseObsidianFrontMatter';
+import { parseTiddlyWikiJson } from '../../../../modules/conversion-core/codecs/tiddlywiki/parseTiddlyWikiJson';
+import { serializeObsidianFrontMatter } from '../../../../modules/conversion-core/codecs/obsidian/serializeObsidianFrontMatter';
+import { getCodecValue } from '../../../support/getCodecValue';
 
 describe('attachment payload and MIME transport', () => {
   it('preserves textual SVG as UTF-8 source rather than treating it as base64', () => {
@@ -16,8 +16,8 @@ describe('attachment payload and MIME transport', () => {
       text: svg,
     };
 
-    const exported = valueOf(
-      exportObsidianNote(valueOf(importTiddler(original))),
+    const exported = getCodecValue(
+      exportObsidianNote(getCodecValue(importTiddler(original))),
     );
 
     expect(exported.text).toBe(svg);
@@ -36,10 +36,10 @@ describe('attachment payload and MIME transport', () => {
       { title: 'External asset', type: 'image/png', _canonical_uri: uri },
     ]);
 
-    const original = valueOf(parseTiddlyWikiJson(source))[0];
+    const original = getCodecValue(parseTiddlyWikiJson(source))[0];
 
-    const exported = valueOf(
-      exportObsidianNote(valueOf(importTiddler(original))),
+    const exported = getCodecValue(
+      exportObsidianNote(getCodecValue(importTiddler(original))),
     );
 
     expect(exported._canonical_uri).toBe(uri);
@@ -59,8 +59,8 @@ describe('attachment payload and MIME transport', () => {
       caption: 'Before',
     };
 
-    const note = valueOf(importTiddler(original));
-    const document = valueOf(parseObsidianFrontMatter(note.content));
+    const note = getCodecValue(importTiddler(original));
+    const document = getCodecValue(parseObsidianFrontMatter(note.content));
 
     document.properties.caption = 'After';
     document.properties.review = { approved: true, reviewers: ['Éva', '李'] };
@@ -70,13 +70,13 @@ describe('attachment payload and MIME transport', () => {
       content: serializeObsidianFrontMatter(document.properties, document.body),
     };
 
-    const exported = valueOf(exportObsidianNote(editedNote));
+    const exported = getCodecValue(exportObsidianNote(editedNote));
 
     expect(exported.caption).toBe('After');
     expect(Buffer.from(exported.text, 'base64').equals(binary)).toBe(true);
 
-    const returned = valueOf(
-      parseObsidianFrontMatter(valueOf(importTiddler(exported)).content),
+    const returned = getCodecValue(
+      parseObsidianFrontMatter(getCodecValue(importTiddler(exported)).content),
     );
 
     expect(returned.properties.review).toEqual({

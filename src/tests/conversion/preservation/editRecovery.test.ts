@@ -1,6 +1,6 @@
 import { convertText } from '../../../modules/conversion-core/conversion/convertText';
 import { parseObsidian } from '../../../modules/conversion-core/syntax/obsidian/parsing/parseObsidian';
-import { semanticBlocks } from '../../support/ast/comparison/semanticBlocks';
+import { normalizeSemanticBlocks } from '../../support/ast/normalizeSemanticBlocks';
 
 describe('cross-dialect conversion', () => {
   test.each([
@@ -14,9 +14,9 @@ describe('cross-dialect conversion', () => {
 
       const incoming = convertText(outgoing.text, 'tiddlywiki', 'obsidian');
 
-      expect(semanticBlocks(parseObsidian(incoming.text).blocks)).toEqual(
-        semanticBlocks(parseObsidian(source).blocks),
-      );
+      expect(
+        normalizeSemanticBlocks(parseObsidian(incoming.text).blocks),
+      ).toEqual(normalizeSemanticBlocks(parseObsidian(source).blocks));
 
       expect(incoming.text).not.toContain('"type":"');
     },

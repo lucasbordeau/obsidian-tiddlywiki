@@ -1,23 +1,23 @@
 import type { TiddlyWikiInlineMatch } from '../../types/TiddlyWikiInlineMatch';
-import type { TiddlyWikiParsingContext } from '../context/types/TiddlyWikiParsingContext';
-import { matchTiddlyWikiComment } from './comments/matchTiddlyWikiComment';
-import { matchTiddlyWikiInlineCode } from './code/matchTiddlyWikiInlineCode';
-import { matchTiddlyWikiWikiLink } from './links/matchTiddlyWikiWikiLink';
-import { matchTiddlyWikiImagePrefix } from './images/matchTiddlyWikiImagePrefix';
-import { matchTiddlyWikiFilteredTransclusion } from './transclusions/matchTiddlyWikiFilteredTransclusion';
-import { matchTiddlyWikiTransclusion } from './transclusions/matchTiddlyWikiTransclusion';
-import { matchTiddlyWikiMacroCall } from './transclusions/matchTiddlyWikiMacroCall';
-import { matchTiddlyWikiHtmlInline } from './html/matchTiddlyWikiHtmlInline';
-import { matchTiddlyWikiStyledInline } from './formatting/matchTiddlyWikiStyledInline';
-import { matchTiddlyWikiConditionalInline } from './transclusions/matchTiddlyWikiConditionalInline';
-import { matchTiddlyWikiVariableDisplay } from './transclusions/matchTiddlyWikiVariableDisplay';
-import { matchTiddlyWikiDash } from './text/matchTiddlyWikiDash';
-import { matchTiddlyWikiSystemLink } from './links/matchTiddlyWikiSystemLink';
-import { matchTiddlyWikiEntity } from './text/matchTiddlyWikiEntity';
-import { matchTiddlyWikiSuppressedLink } from './links/matchTiddlyWikiSuppressedLink';
-import { matchTiddlyWikiExternalLink } from './links/matchTiddlyWikiExternalLink';
-import { matchTiddlyWikiFormatting } from './formatting/matchTiddlyWikiFormatting';
-import { matchTiddlyWikiSoftBreak } from './text/matchTiddlyWikiSoftBreak';
+import type { TiddlyWikiParsingContext } from '../context/TiddlyWikiParsingContext';
+import { matchTiddlyWikiComment } from './matchTiddlyWikiComment';
+import { matchTiddlyWikiInlineCode } from './matchTiddlyWikiInlineCode';
+import { matchTiddlyWikiWikiLink } from './matchTiddlyWikiWikiLink';
+import { matchTiddlyWikiImagePrefix } from './matchTiddlyWikiImagePrefix';
+import { matchTiddlyWikiFilteredTransclusion } from './matchTiddlyWikiFilteredTransclusion';
+import { matchTiddlyWikiTransclusion } from './matchTiddlyWikiTransclusion';
+import { matchTiddlyWikiMacroCall } from './matchTiddlyWikiMacroCall';
+import { matchTiddlyWikiHtmlInline } from './matchTiddlyWikiHtmlInline';
+import { matchTiddlyWikiStyledInline } from './matchTiddlyWikiStyledInline';
+import { matchTiddlyWikiConditionalInline } from './matchTiddlyWikiConditionalInline';
+import { matchTiddlyWikiVariableDisplay } from './matchTiddlyWikiVariableDisplay';
+import { matchTiddlyWikiDash } from './matchTiddlyWikiDash';
+import { matchTiddlyWikiSystemLink } from './matchTiddlyWikiSystemLink';
+import { matchTiddlyWikiEntity } from './matchTiddlyWikiEntity';
+import { matchTiddlyWikiSuppressedLink } from './matchTiddlyWikiSuppressedLink';
+import { matchTiddlyWikiExternalLink } from './matchTiddlyWikiExternalLink';
+import { matchTiddlyWikiFormatting } from './matchTiddlyWikiFormatting';
+import { matchTiddlyWikiSoftBreak } from './matchTiddlyWikiSoftBreak';
 
 export function matchTiddlyWikiInline(
   this: TiddlyWikiParsingContext,

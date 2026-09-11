@@ -1,8 +1,8 @@
 import { parseTiddlyWiki } from '../../../../../modules/conversion-core/syntax/tiddlywiki/parsing/parseTiddlyWiki';
 import { serializeTiddlyWiki } from '../../../../../modules/conversion-core/syntax/tiddlywiki/serialization/serializeTiddlyWiki';
-import { renderTiddlyWiki } from '../../../../support/runtime/tiddlywiki/renderTiddlyWiki';
-import { semanticBlocks } from '../../../../support/ast/comparison/semanticBlocks';
-import { nativeCases } from './cases/nativeCases';
+import { renderTiddlyWiki } from '../../../../support/runtime/renderTiddlyWiki';
+import { normalizeSemanticBlocks } from '../../../../support/ast/normalizeSemanticBlocks';
+import { nativeCases } from './nativeCases';
 
 describe('official TiddlyWiki feature inventory', () => {
   test.each(nativeCases)(
@@ -16,9 +16,9 @@ describe('official TiddlyWiki feature inventory', () => {
 
       expect(outgoing.text).not.toContain('<!--otw:');
 
-      expect(semanticBlocks(parseTiddlyWiki(outgoing.text).blocks)).toEqual(
-        semanticBlocks(original.blocks),
-      );
+      expect(
+        normalizeSemanticBlocks(parseTiddlyWiki(outgoing.text).blocks),
+      ).toEqual(normalizeSemanticBlocks(original.blocks));
 
       expect(await renderTiddlyWiki(outgoing.text)).toBe(
         await renderTiddlyWiki(source),

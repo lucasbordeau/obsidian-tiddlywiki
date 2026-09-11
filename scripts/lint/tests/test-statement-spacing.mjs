@@ -1,6 +1,6 @@
-import { separatedStatements } from './cases/statement-spacing/separated-statements.mjs';
-import { acceptedStatements } from './cases/statement-spacing/accepted-statements.mjs';
-import { controlFlowSources } from './cases/statement-spacing/control-flow-sources.mjs';
+import { separatedStatements } from './cases/separated-statements.mjs';
+import { acceptedStatements } from './cases/accepted-statements.mjs';
+import { controlFlowSources } from './cases/control-flow-sources.mjs';
 import assert from 'node:assert/strict';
 import { describe, it } from 'node:test';
 import { Linter } from 'eslint';
@@ -8,8 +8,8 @@ import { format } from 'prettier';
 import vm from 'node:vm';
 import tsParser from '@typescript-eslint/parser';
 import ts from 'typescript';
-import statementSpacing from '../../../eslint-rules/readability/statement-spacing.mjs';
-import noCompactFunctionBodies from '../../../eslint-rules/readability/no-compact-function-bodies.mjs';
+import statementSpacing from '../../../eslint-rules/statement-spacing.mjs';
+import noCompactFunctionBodies from '../../../eslint-rules/no-compact-function-bodies.mjs';
 
 const config = [
   {

@@ -1,9 +1,9 @@
-import type { Token } from '../../types/parsing/Token';
-import type { TokenCursor } from '../../types/parsing/TokenCursor';
-import type { ParseContext } from '../../types/parsing/ParseContext';
-import type { BlockCollector } from '../../types/parsing/BlockCollector';
-import type { BlockNode } from '../../../../model/ast/blocks/BlockNode';
-import { inlinePlainText } from '../inlines/inlinePlainText';
+import type { Token } from '../../types/Token';
+import type { TokenCursor } from '../../types/TokenCursor';
+import type { ParseContext } from '../../types/ParseContext';
+import type { BlockCollector } from '../../types/BlockCollector';
+import type { BlockNode } from '../../../../model/blocks/BlockNode';
+import { getInlinePlainText } from '../inlines/getInlinePlainText';
 
 export function parseQuote(
   tokens: Token[],
@@ -47,7 +47,7 @@ export function parseQuote(
 
   const titleEnd = titleNodes.findIndex((node) => node.type === 'break');
   const title = titleEnd === -1 ? titleNodes : titleNodes.slice(0, titleEnd);
-  const titleText = inlinePlainText(title);
+  const titleText = getInlinePlainText(title);
   const hasFormattedTitle = title.some((node) => node.type !== 'text');
 
   quote.callout = { type: calloutMatch[1], title: titleText };

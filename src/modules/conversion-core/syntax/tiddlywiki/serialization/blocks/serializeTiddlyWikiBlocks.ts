@@ -1,5 +1,5 @@
-import type { BlockNode } from '../../../../model/ast/blocks/BlockNode';
-import type { TiddlyWikiSerializationContext } from '../context/types/TiddlyWikiSerializationContext';
+import type { BlockNode } from '../../../../model/blocks/BlockNode';
+import type { TiddlyWikiSerializationContext } from '../context/TiddlyWikiSerializationContext';
 
 export function serializeTiddlyWikiBlocks(
   this: TiddlyWikiSerializationContext,

@@ -1,10 +1,10 @@
-import type { Token } from '../../types/parsing/Token';
-import type { TokenCursor } from '../../types/parsing/TokenCursor';
-import type { ParseContext } from '../../types/parsing/ParseContext';
-import type { BlockCollector } from '../../types/parsing/BlockCollector';
-import type { BlockNode } from '../../../../model/ast/blocks/BlockNode';
-import type { ListItem } from '../../../../model/ast/lists/ListItem';
-import { sourceRange } from '../source/sourceRange';
+import type { Token } from '../../types/Token';
+import type { TokenCursor } from '../../types/TokenCursor';
+import type { ParseContext } from '../../types/ParseContext';
+import type { BlockCollector } from '../../types/BlockCollector';
+import type { BlockNode } from '../../../../model/blocks/BlockNode';
+import type { ListItem } from '../../../../model/ListItem';
+import { getTokenSourceRange } from '../getTokenSourceRange';
 import { collectInlineNodes } from '../inlines/collectInlineNodes';
 
 export function parseList(
@@ -48,7 +48,7 @@ export function parseList(
     );
 
     const entry: ListItem = { blocks };
-    const range = sourceRange(entryToken, context);
+    const range = getTokenSourceRange(entryToken, context);
 
     if (range) {
       entry.range = range;

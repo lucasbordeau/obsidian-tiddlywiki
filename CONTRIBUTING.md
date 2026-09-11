@@ -34,18 +34,27 @@ Keep container codecs, dialect syntax, conversion planning and host IO separate.
 Import and export have their own serializers. The core uses no Obsidian, VS Code,
 TiddlyWiki runtime, DOM or filesystem globals.
 
-Follow the applicable `ts-apps-helper` conventions: one independently importable
-artifact per file; domain-specific names; named complex predicates; named promise
-collections; explicit payload assembly. Small private implementation helpers may
-stay with their owning parser or serializer. Keep reusable types in named files.
+Follow the applicable `ts-apps-helper` conventions: domain-specific names; named
+complex predicates; named promise collections; explicit payload assembly. Keep
+small related helpers with their owning implementation. Extract a separate file
+when an artifact is independently reused or its size warrants it. Keep reusable
+types in named files.
 Use a type guard for repeated nullish/shape validation. Preserve single quotes,
 two-space indentation, trailing commas and LF line endings.
 
-Group files by domain, then operation and feature as needed. Keep parser and
-serializer entry points focused on orchestration, with syntax handlers in their
-own feature folders. Keep context contracts close to their consumers and import
-implementation files directly. Tests follow the same domain hierarchy, with
-reusable fixture readers and assertions under `src/tests/support/`.
+Start function names and their utility filenames with a verb describing the
+operation: `findMarkdownLinkEnd`, `getInlinePlainText`, `parseHtmlInline`,
+`serializeCodeSpan`. Predicates use forms such as `is`, `has`, `are` or `supports`.
+Keep names required by external APIs, such as Obsidian's `onload` and ESLint's AST
+visitors. Types, constants, data collections and test suites use descriptive nouns.
+
+Group files by domain, adding operation folders when they hold a substantial,
+coherent set of files. Keep small groups flat; avoid single-file category layers
+and mirrored `types`, `utils` or `cases` folders for every feature. Parser and
+serializer entry points coordinate their handlers. Keep context contracts close
+to their consumers and import implementation files directly. Tests follow the
+same domains, with case collections beside their suites and reusable fixture
+readers and assertions under `src/tests/support/`.
 
 Use blank lines to separate validation, preparation, state changes, and the final
 action. Keep related declarations, object assignments, and assertions together.

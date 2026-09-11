@@ -1,5 +1,5 @@
 import type { TiddlyWikiRangedNode } from '../../types/TiddlyWikiRangedNode';
-import type { TiddlyWikiSerializationContext } from './types/TiddlyWikiSerializationContext';
+import type { TiddlyWikiSerializationContext } from './TiddlyWikiSerializationContext';
 
 export function reportTiddlyWikiSerializationWarning(
   this: TiddlyWikiSerializationContext,

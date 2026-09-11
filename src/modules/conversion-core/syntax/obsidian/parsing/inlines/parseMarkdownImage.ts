@@ -1,14 +1,14 @@
-import type { Token } from '../../types/parsing/Token';
-import type { InlineNode } from '../../../../model/ast/inlines/InlineNode';
-import { inlinePlainText } from './inlinePlainText';
+import type { Token } from '../../types/Token';
+import type { InlineNode } from '../../../../model/inlines/InlineNode';
+import { getInlinePlainText } from './getInlinePlainText';
 import { isObsidianWebEmbed } from '../../rules/inline/isObsidianWebEmbed';
-import { rawInline } from './rawInline';
+import { createRawInline } from './createRawInline';
 
 export function parseMarkdownImage(
   token: Token,
   children: InlineNode[],
 ): InlineNode {
-  const alt = inlinePlainText(children);
+  const alt = getInlinePlainText(children);
 
   const embed: InlineNode = {
     type: 'embed',
@@ -27,7 +27,7 @@ export function parseMarkdownImage(
     const titleSuffix =
       title === null ? '' : ` "${title.replace(/"/g, '\\"')}"`;
 
-    return rawInline(
+    return createRawInline(
       `![${token.content}](<${embed.target}>${titleSuffix})`,
       'Obsidian web embed',
     );

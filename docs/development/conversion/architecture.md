@@ -33,20 +33,21 @@ conversion/                       Conversion entry point, options and diagnostic
 lexing/
   scanners/                       Ordered token recognizers
   boundaries/                     Delimiter, attribute, code and reference readers
-  context/                        Shared scanner inputs
+  LexingContext.ts                Shared scanner inputs
 model/
-  ast/{blocks,inlines,lists}/      Node unions and individual node contracts
-  ast/documents/                  Parsed document contract
-  source/                         Dialects, tokens and source ranges
+  {blocks,inlines}/               Node unions and individual node contracts
+  ParsedDocument.ts               Parsed document contract
+  ListItem.ts                     Shared list item contract
+  Dialect.ts, SyntaxToken.ts,      Dialects, tokens and source ranges
+  SourceRange.ts
 syntax/{obsidian,tiddlywiki}/
   parsing/{blocks,inlines,html}/  Feature handlers and parser orchestration
   serialization/{blocks,inlines}/ Feature handlers and output orchestration
 codecs/
-  obsidian/frontmatter/           YAML parsing and serialization
-  tiddlywiki/{json,tid}/           Container parsing and serialization
-  tiddlywiki/fields/               Tiddler field contract
-notes/{export,import,content}/     Note adapters and body routing
-metadata/{tags,timestamps,fields}/ Metadata interpretation and encoding
+  obsidian/                       YAML parsing, serialization and document type
+  tiddlywiki/                     JSON and .tid codecs, tiddler field contract
+notes/                            Note adapters and body routing
+metadata/                         Tags, timestamps and field encoding
 preservation/
   source/                         Unsupported-source capsules
   metadata/                       Snapshot records and edit-aware restoration
@@ -54,20 +55,22 @@ validation/                       Shared value guards
 ```
 
 Each dialect owns its context, recognition rules, escaping and preservation
-helpers alongside its handlers. Entry points coordinate those handlers; leaf
-files own individual syntax operations. Shared contracts use type-only imports.
+helpers alongside its handlers. Related handlers share a folder, and small groups
+stay flat. Functions and utility files start with an operation verb. Shared
+contracts use type-only imports.
 Internal consumers import the owning file directly; `src/conversion.ts` remains
 the public package entry point.
 
-The host settings tab lives in `src/modules/plugin-core/settings/`, with separate
-`rendering`, `forms`, `actions`, `downloads` and `paths` folders. Tooling is grouped
-under `scripts/{build,lint,validation}/`, and local ESLint rules are grouped by
-the convention they enforce.
+The host settings tab and its rendering, form, action and path helpers live
+together in `src/modules/plugin-core/settings/`. Tooling is grouped under
+`scripts/{build,lint,validation}/`, and local ESLint rules live directly in
+`eslint-rules/`.
 
 Tests mirror responsibilities under `src/tests/`: `syntax` holds dialect and
 feature cases, `conversion` holds lexer, integration and preservation checks,
 and `codecs` holds containers, metadata and media. Shared assertions, renderer
-access and fixture readers live in `support`. Test inputs remain in `samples`.
+access and fixture readers live in `support`. Case collections sit beside their
+test suites. Test inputs remain in `samples`.
 
 ## API contracts
 

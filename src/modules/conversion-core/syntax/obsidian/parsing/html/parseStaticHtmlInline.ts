@@ -1,4 +1,4 @@
-import type { InlineNode } from '../../../../model/ast/inlines/InlineNode';
+import type { InlineNode } from '../../../../model/inlines/InlineNode';
 import { parseChildren } from './parseChildren';
 
 export function parseStaticHtmlInline(

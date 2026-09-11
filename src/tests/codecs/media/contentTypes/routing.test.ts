@@ -1,11 +1,11 @@
-import { exportObsidianNote } from '../../../../modules/conversion-core/notes/export/exportObsidianNote';
-import { importTiddler } from '../../../../modules/conversion-core/notes/import/importTiddler';
-import { parseObsidianFrontMatter } from '../../../../modules/conversion-core/codecs/obsidian/frontmatter/parsing/parseObsidianFrontMatter';
-import { parseTiddlyWikiJson } from '../../../../modules/conversion-core/codecs/tiddlywiki/json/parsing/parseTiddlyWikiJson';
-import { TiddlerFields } from '../../../../modules/conversion-core/codecs/tiddlywiki/fields/types/TiddlerFields';
-import { valueOf } from '../../../support/codecs/valueOf';
-import { wikitextContentTypes } from './cases/wikitextContentTypes';
-import { invalidContentTypes } from './cases/invalidContentTypes';
+import { exportObsidianNote } from '../../../../modules/conversion-core/notes/exportObsidianNote';
+import { importTiddler } from '../../../../modules/conversion-core/notes/importTiddler';
+import { parseObsidianFrontMatter } from '../../../../modules/conversion-core/codecs/obsidian/parseObsidianFrontMatter';
+import { parseTiddlyWikiJson } from '../../../../modules/conversion-core/codecs/tiddlywiki/parseTiddlyWikiJson';
+import { TiddlerFields } from '../../../../modules/conversion-core/codecs/tiddlywiki/TiddlerFields';
+import { getCodecValue } from '../../../support/getCodecValue';
+import { wikitextContentTypes } from './wikitextContentTypes';
+import { invalidContentTypes } from './invalidContentTypes';
 
 describe('textual and extension content types', () => {
   it.each(['text/x-markdown', 'text/markdown'])(
@@ -21,10 +21,13 @@ describe('textual and extension content types', () => {
       expect(imported.diagnostics).toEqual([]);
 
       expect(
-        valueOf(parseObsidianFrontMatter(valueOf(imported).content)).body,
+        getCodecValue(parseObsidianFrontMatter(getCodecValue(imported).content))
+          .body,
       ).toBe(text);
 
-      expect(valueOf(exportObsidianNote(valueOf(imported)))).toEqual(original);
+      expect(
+        getCodecValue(exportObsidianNote(getCodecValue(imported))),
+      ).toEqual(original);
     },
   );
 
@@ -40,13 +43,13 @@ describe('textual and extension content types', () => {
         original.type = type;
       }
 
-      const note = valueOf(importTiddler(original));
+      const note = getCodecValue(importTiddler(original));
 
-      expect(valueOf(parseObsidianFrontMatter(note.content)).body).toContain(
-        '# Heading',
-      );
+      expect(
+        getCodecValue(parseObsidianFrontMatter(note.content)).body,
+      ).toContain('# Heading');
 
-      expect(valueOf(exportObsidianNote(note))).toEqual(original);
+      expect(getCodecValue(exportObsidianNote(note))).toEqual(original);
     },
   );
 

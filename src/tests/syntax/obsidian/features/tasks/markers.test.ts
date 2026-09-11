@@ -1,7 +1,7 @@
 import { parseObsidian } from '../../../../../modules/conversion-core/syntax/obsidian/parsing/parseObsidian';
 import { convertText } from '../../../../../modules/conversion-core/conversion/convertText';
-import { semanticBlocks as normalizedSemanticBlocks } from '../../../../support/ast/comparison/semanticBlocks';
-import { completedTaskMarkers } from './cases/completedTaskMarkers';
+import { normalizeSemanticBlocks as normalizedSemanticBlocks } from '../../../../support/ast/normalizeSemanticBlocks';
+import { completedTaskMarkers } from './completedTaskMarkers';
 
 describe('Obsidian documented extensions and structural regressions', () => {
   test.each(completedTaskMarkers)(

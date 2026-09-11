@@ -1,9 +1,9 @@
 import { convertText } from '../../../../../modules/conversion-core/conversion/convertText';
 import { parseObsidian } from '../../../../../modules/conversion-core/syntax/obsidian/parsing/parseObsidian';
-import { allInlines } from '../../../../support/ast/traversal/allInlines';
-import { stableRoundTrip } from '../../../../support/conversion/stableRoundTrip';
-import { attachmentExtensions } from './cases/attachmentExtensions';
-import { embeddedSectionTargets } from './cases/embeddedSectionTargets';
+import { collectAllInlines } from '../../../../support/ast/collectAllInlines';
+import { assertStableRoundTrip } from '../../../../support/assertStableRoundTrip';
+import { attachmentExtensions } from './attachmentExtensions';
+import { embeddedSectionTargets } from './embeddedSectionTargets';
 
 describe('official Obsidian feature inventory', () => {
   test.each(attachmentExtensions)(
@@ -12,7 +12,7 @@ describe('official Obsidian feature inventory', () => {
       const target = `Attachments/été report (v2).${extension}`;
       const source = `[[${target}|Download **literal alias**]]\n\n> [!example]- Preview\n> ![[${target}]]\n>\n> - [x] File is linked`;
 
-      const references = allInlines(parseObsidian(source).blocks).filter(
+      const references = collectAllInlines(parseObsidian(source).blocks).filter(
         (node) => node.type === 'link' || node.type === 'embed',
       );
 
@@ -23,7 +23,7 @@ describe('official Obsidian feature inventory', () => {
         ]),
       );
 
-      stableRoundTrip(source);
+      assertStableRoundTrip(source);
     },
   );
 
@@ -35,7 +35,7 @@ describe('official Obsidian feature inventory', () => {
       const outgoing = convertText(source, 'obsidian', 'tiddlywiki');
 
       expect(outgoing.diagnostics.length).toBeGreaterThan(0);
-      expect(stableRoundTrip(source)).toContain(target);
+      expect(assertStableRoundTrip(source)).toContain(target);
     },
   );
 });

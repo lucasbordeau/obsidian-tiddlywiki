@@ -1,6 +1,6 @@
-import type { ConversionOptions } from '../../../conversion/types/ConversionOptions';
-import type { ParsedDocument } from '../../../model/ast/documents/ParsedDocument';
-import type { SerializationResult } from '../../../conversion/types/SerializationResult';
+import type { ConversionOptions } from '../../../conversion/ConversionOptions';
+import type { ParsedDocument } from '../../../model/ParsedDocument';
+import type { SerializationResult } from '../../../conversion/SerializationResult';
 import { createTiddlyWikiSerializationContext } from './context/createTiddlyWikiSerializationContext';
 
 export function serializeTiddlyWiki(

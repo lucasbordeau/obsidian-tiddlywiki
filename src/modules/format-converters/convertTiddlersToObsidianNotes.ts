@@ -1,6 +1,6 @@
-import { importTiddler } from '../conversion-core/notes/import/importTiddler';
-import { ObsidianNote } from '../obsidian/types/ObsidianNote';
-import { Tiddler } from '../tiddlywiki/types/Tiddler';
+import { importTiddler } from '../conversion-core/notes/importTiddler';
+import { ObsidianNote } from '../obsidian/ObsidianNote';
+import { Tiddler } from '../tiddlywiki/Tiddler';
 
 export function convertTiddlersToObsidianNotes(
   tiddlers: Tiddler[],

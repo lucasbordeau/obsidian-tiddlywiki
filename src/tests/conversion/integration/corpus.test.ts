@@ -2,16 +2,16 @@ import { readdirSync } from 'fs';
 import { convertText } from '../../../modules/conversion-core/conversion/convertText';
 import { parseObsidian } from '../../../modules/conversion-core/syntax/obsidian/parsing/parseObsidian';
 import { parseTiddlyWiki } from '../../../modules/conversion-core/syntax/tiddlywiki/parsing/parseTiddlyWiki';
-import { Dialect } from '../../../modules/conversion-core/model/source/Dialect';
-import { semanticBlocks } from '../../support/ast/comparison/semanticBlocks';
-import { samplePath } from '../../support/samples/samplePath';
+import { Dialect } from '../../../modules/conversion-core/model/Dialect';
+import { normalizeSemanticBlocks } from '../../support/ast/normalizeSemanticBlocks';
+import { getSamplePath } from '../../support/samples/getSamplePath';
 import { readSample } from '../../support/samples/readSample';
 
 describe('cross-dialect conversion', () => {
   describe.each<Dialect>(['obsidian', 'tiddlywiki'])(
     'existing %s sample corpus',
     (dialect) => {
-      const directory = samplePath(dialect);
+      const directory = getSamplePath(dialect);
       const filenames = readdirSync(directory).sort();
 
       test.each(filenames)(
@@ -26,8 +26,8 @@ describe('cross-dialect conversion', () => {
           const converted = convertText(source, dialect, target);
           const restored = convertText(converted.text, target, dialect);
 
-          expect(semanticBlocks(parser(restored.text).blocks)).toEqual(
-            semanticBlocks(parser(source).blocks),
+          expect(normalizeSemanticBlocks(parser(restored.text).blocks)).toEqual(
+            normalizeSemanticBlocks(parser(source).blocks),
           );
         },
       );

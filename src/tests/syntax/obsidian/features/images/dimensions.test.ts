@@ -1,8 +1,8 @@
 import { parseObsidian } from '../../../../../modules/conversion-core/syntax/obsidian/parsing/parseObsidian';
 import { serializeObsidian } from '../../../../../modules/conversion-core/syntax/obsidian/serialization/serializeObsidian';
-import { blocksOf } from '../../../../support/syntax/obsidian/blocksOf';
-import { stripSourceRanges as semanticBlocks } from '../../../../support/ast/comparison/stripSourceRanges';
-import { markdownImageDimensions } from './cases/markdownImageDimensions';
+import { parseObsidianBlocks } from '../../../../support/parseObsidianBlocks';
+import { stripSourceRanges as semanticBlocks } from '../../../../support/ast/stripSourceRanges';
+import { markdownImageDimensions } from './markdownImageDimensions';
 
 describe('Obsidian documented extensions and structural regressions', () => {
   test.each(markdownImageDimensions)(
@@ -37,12 +37,12 @@ describe('Obsidian documented extensions and structural regressions', () => {
       '<img src="chart.svg" alt="250" title="An actual numeric label">',
     );
 
-    expect(blocksOf(serializeObsidian(document).text)).toEqual(
+    expect(parseObsidianBlocks(serializeObsidian(document).text)).toEqual(
       semanticBlocks(document.blocks),
     );
 
-    expect(blocksOf(serializeObsidian(document).text)).toMatchObject([
-      { children: [{ alt: '250', title: 'An actual numeric label' }] },
-    ]);
+    expect(parseObsidianBlocks(serializeObsidian(document).text)).toMatchObject(
+      [{ children: [{ alt: '250', title: 'An actual numeric label' }] }],
+    );
   });
 });

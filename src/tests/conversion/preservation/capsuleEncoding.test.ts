@@ -1,6 +1,6 @@
-import { decodePreservedSource } from '../../../modules/conversion-core/preservation/source/encoding/decodePreservedSource';
-import { encodePreservedSource } from '../../../modules/conversion-core/preservation/source/encoding/encodePreservedSource';
-import { invalidCapsules } from './cases/invalidCapsules';
+import { decodePreservedSource } from '../../../modules/conversion-core/preservation/source/decodePreservedSource';
+import { encodePreservedSource } from '../../../modules/conversion-core/preservation/source/encodePreservedSource';
+import { invalidCapsules } from './invalidCapsules';
 
 describe('inert preservation capsules', () => {
   test('round trips Unicode, comment terminators, quotes and nested capsule-like input', () => {

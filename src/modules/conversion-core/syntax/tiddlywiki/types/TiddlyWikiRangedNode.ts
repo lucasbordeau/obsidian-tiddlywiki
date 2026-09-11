@@ -1,4 +1,4 @@
-import type { BlockNode } from '../../../model/ast/blocks/BlockNode';
-import type { InlineNode } from '../../../model/ast/inlines/InlineNode';
+import type { BlockNode } from '../../../model/blocks/BlockNode';
+import type { InlineNode } from '../../../model/inlines/InlineNode';
 
 export type TiddlyWikiRangedNode = BlockNode | InlineNode;

@@ -1,15 +1,15 @@
-import { convertTiddlerBody } from '../../../../modules/conversion-core/notes/content/conversion/convertTiddlerBody';
-import { exportObsidianNote } from '../../../../modules/conversion-core/notes/export/exportObsidianNote';
-import { importTiddler } from '../../../../modules/conversion-core/notes/import/importTiddler';
-import { parseObsidianFrontMatter } from '../../../../modules/conversion-core/codecs/obsidian/frontmatter/parsing/parseObsidianFrontMatter';
-import { parseTiddlyWikiJson } from '../../../../modules/conversion-core/codecs/tiddlywiki/json/parsing/parseTiddlyWikiJson';
-import { parseTidFile } from '../../../../modules/conversion-core/codecs/tiddlywiki/tid/parsing/parseTidFile';
-import { serializeTiddlyWikiJson } from '../../../../modules/conversion-core/codecs/tiddlywiki/json/serialization/serializeTiddlyWikiJson';
-import { serializeTidFile } from '../../../../modules/conversion-core/codecs/tiddlywiki/tid/serialization/serializeTidFile';
-import { TiddlerFields } from '../../../../modules/conversion-core/codecs/tiddlywiki/fields/types/TiddlerFields';
+import { convertTiddlerBody } from '../../../../modules/conversion-core/notes/convertTiddlerBody';
+import { exportObsidianNote } from '../../../../modules/conversion-core/notes/exportObsidianNote';
+import { importTiddler } from '../../../../modules/conversion-core/notes/importTiddler';
+import { parseObsidianFrontMatter } from '../../../../modules/conversion-core/codecs/obsidian/parseObsidianFrontMatter';
+import { parseTiddlyWikiJson } from '../../../../modules/conversion-core/codecs/tiddlywiki/parseTiddlyWikiJson';
+import { parseTidFile } from '../../../../modules/conversion-core/codecs/tiddlywiki/parseTidFile';
+import { serializeTiddlyWikiJson } from '../../../../modules/conversion-core/codecs/tiddlywiki/serializeTiddlyWikiJson';
+import { serializeTidFile } from '../../../../modules/conversion-core/codecs/tiddlywiki/serializeTidFile';
+import { TiddlerFields } from '../../../../modules/conversion-core/codecs/tiddlywiki/TiddlerFields';
 import { readSampleBytes } from '../../../support/samples/readSampleBytes';
-import { attachmentCases } from './cases/attachmentCases';
-import { valueOf } from '../../../support/codecs/valueOf';
+import { attachmentCases } from './attachmentCases';
+import { getCodecValue } from '../../../support/getCodecValue';
 
 describe('attachment payload and MIME transport', () => {
   it.each(attachmentCases)(
@@ -29,24 +29,24 @@ describe('attachment payload and MIME transport', () => {
         caption: `Illustration ${extension}`,
       };
 
-      const parsedContainer = valueOf(
-        parseTiddlyWikiJson(valueOf(serializeTiddlyWikiJson([original]))),
+      const parsedContainer = getCodecValue(
+        parseTiddlyWikiJson(getCodecValue(serializeTiddlyWikiJson([original]))),
       );
 
-      const note = valueOf(importTiddler(parsedContainer[0]));
+      const note = getCodecValue(importTiddler(parsedContainer[0]));
 
-      expect(valueOf(parseObsidianFrontMatter(note.content)).body).toBe(
+      expect(getCodecValue(parseObsidianFrontMatter(note.content)).body).toBe(
         original.text,
       );
 
-      const exported = valueOf(exportObsidianNote(note));
+      const exported = getCodecValue(exportObsidianNote(note));
 
       expect(exported).toEqual(original);
       expect(Buffer.from(exported.text, 'base64').equals(binary)).toBe(true);
 
-      const tid = valueOf(serializeTidFile(exported));
+      const tid = getCodecValue(serializeTidFile(exported));
 
-      expect(valueOf(parseTidFile(tid))).toEqual(original);
+      expect(getCodecValue(parseTidFile(tid))).toEqual(original);
     },
   );
 
@@ -59,8 +59,8 @@ describe('attachment payload and MIME transport', () => {
       text: binary.toString('base64'),
     };
 
-    const exported = valueOf(
-      exportObsidianNote(valueOf(importTiddler(original))),
+    const exported = getCodecValue(
+      exportObsidianNote(getCodecValue(importTiddler(original))),
     );
 
     expect(Buffer.from(exported.text, 'base64').equals(binary)).toBe(true);
@@ -75,8 +75,8 @@ describe('attachment payload and MIME transport', () => {
       text: binary.toString('base64'),
     };
 
-    const parsed = valueOf(
-      parseTiddlyWikiJson(valueOf(serializeTiddlyWikiJson([original]))),
+    const parsed = getCodecValue(
+      parseTiddlyWikiJson(getCodecValue(serializeTiddlyWikiJson([original]))),
     )[0];
 
     const importedBody = convertTiddlerBody(parsed.text, parsed.type, true);

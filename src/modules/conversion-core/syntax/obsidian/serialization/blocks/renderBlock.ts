@@ -1,10 +1,10 @@
-import type { BlockNode } from '../../../../model/ast/blocks/BlockNode';
-import type { SerializationContext } from '../../types/serialization/SerializationContext';
+import type { BlockNode } from '../../../../model/blocks/BlockNode';
+import type { SerializationContext } from '../../types/SerializationContext';
 import { renderInlines } from '../inlines/renderInlines';
 import { renderCode } from './renderCode';
 import { renderList } from './renderList';
 import { renderTable } from './renderTable';
-import { emitRaw } from '../preservation/emitRaw';
+import { emitRaw } from '../emitRaw';
 import { escapeText } from '../escaping/escapeText';
 
 export function renderBlock(

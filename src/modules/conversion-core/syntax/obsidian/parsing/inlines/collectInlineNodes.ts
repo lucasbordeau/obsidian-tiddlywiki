@@ -1,6 +1,6 @@
-import type { Token } from '../../types/parsing/Token';
-import type { TokenCursor } from '../../types/parsing/TokenCursor';
-import type { InlineNode } from '../../../../model/ast/inlines/InlineNode';
+import type { Token } from '../../types/Token';
+import type { TokenCursor } from '../../types/TokenCursor';
+import type { InlineNode } from '../../../../model/inlines/InlineNode';
 import { parseInlineToken } from './parseInlineToken';
 
 export function collectInlineNodes(

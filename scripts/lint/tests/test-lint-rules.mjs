@@ -2,8 +2,8 @@ import assert from 'node:assert/strict';
 import { describe, it } from 'node:test';
 import { Linter } from 'eslint';
 import vm from 'node:vm';
-import { createEslint } from '../config/create-eslint.mjs';
-import noCompactFunctionBodies from '../../../eslint-rules/readability/no-compact-function-bodies.mjs';
+import { createEslint } from '../create-eslint.mjs';
+import noCompactFunctionBodies from '../../../eslint-rules/no-compact-function-bodies.mjs';
 
 const config = [
   {

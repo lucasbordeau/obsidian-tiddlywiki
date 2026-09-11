@@ -1,0 +1,27 @@
+import type { InlineNode } from '../../../model/inlines/InlineNode';
+import type { BlockNode } from '../../../model/blocks/BlockNode';
+import type { SerializationContext } from '../types/SerializationContext';
+import { emitDiagnostic } from './emitDiagnostic';
+import { encodePreservedSource } from '../../../preservation/source/encodePreservedSource';
+
+export function emitRaw(
+  node: Extract<InlineNode | BlockNode, { type: 'raw' }>,
+  context: SerializationContext,
+): string {
+  if (node.dialect === 'obsidian') {
+    return node.value;
+  }
+
+  emitDiagnostic(
+    context,
+    'PRESERVED_SOURCE',
+    `${node.reason} is retained as TiddlyWiki source in a preservation comment.`,
+    node.range,
+  );
+
+  return encodePreservedSource({
+    dialect: node.dialect,
+    value: node.value,
+    reason: node.reason,
+  });
+}

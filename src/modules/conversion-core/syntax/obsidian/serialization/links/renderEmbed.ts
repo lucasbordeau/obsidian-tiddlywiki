@@ -1,12 +1,12 @@
-import type { InlineNode } from '../../../../model/ast/inlines/InlineNode';
-import type { SerializationContext } from '../../types/serialization/SerializationContext';
-import { emitRaw } from '../preservation/emitRaw';
-import { renderHtmlInlines } from '../html/renderHtmlInlines';
-import { targetLink } from './targetLink';
+import type { InlineNode } from '../../../../model/inlines/InlineNode';
+import type { SerializationContext } from '../../types/SerializationContext';
+import { emitRaw } from '../emitRaw';
+import { renderHtmlInlines } from '../renderHtmlInlines';
+import { resolveLinkTarget } from './resolveLinkTarget';
 import { escapeWikiPart } from '../escaping/escapeWikiPart';
 import { escapeText } from '../escaping/escapeText';
-import { markdownDestination } from './markdownDestination';
-import { markdownTitle } from './markdownTitle';
+import { serializeMarkdownDestination } from './serializeMarkdownDestination';
+import { serializeMarkdownTitle } from './serializeMarkdownTitle';
 
 export function renderEmbed(
   node: Extract<InlineNode, { type: 'embed' }>,
@@ -51,7 +51,7 @@ export function renderEmbed(
     return renderHtmlInlines([node], context);
   }
 
-  const target = targetLink(node.target, 'embed', context, external);
+  const target = resolveLinkTarget(node.target, 'embed', context, external);
 
   const useWikiEmbed =
     node.kind === 'note' ||
@@ -69,5 +69,5 @@ export function renderEmbed(
     return `![[${escapeWikiPart(target)}${alias ? `|${escapeWikiPart(alias)}` : ''}]]`;
   }
 
-  return `![${escapeText(node.alt)}](${markdownDestination(target)}${markdownTitle(node.title)})`;
+  return `![${escapeText(node.alt)}](${serializeMarkdownDestination(target)}${serializeMarkdownTitle(node.title)})`;
 }

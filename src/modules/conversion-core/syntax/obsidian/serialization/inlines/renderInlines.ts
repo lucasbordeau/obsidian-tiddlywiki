@@ -1,5 +1,5 @@
-import type { InlineNode } from '../../../../model/ast/inlines/InlineNode';
-import type { SerializationContext } from '../../types/serialization/SerializationContext';
+import type { InlineNode } from '../../../../model/inlines/InlineNode';
+import type { SerializationContext } from '../../types/SerializationContext';
 import { isAsteriskFormatting } from '../formatting/isAsteriskFormatting';
 import { escapeText } from '../escaping/escapeText';
 import { renderInline } from './renderInline';

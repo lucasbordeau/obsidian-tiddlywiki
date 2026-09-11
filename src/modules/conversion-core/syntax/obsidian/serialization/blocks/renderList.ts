@@ -1,5 +1,5 @@
-import type { BlockNode } from '../../../../model/ast/blocks/BlockNode';
-import type { SerializationContext } from '../../types/serialization/SerializationContext';
+import type { BlockNode } from '../../../../model/blocks/BlockNode';
+import type { SerializationContext } from '../../types/SerializationContext';
 
 export function renderList(
   block: Extract<BlockNode, { type: 'list' }>,

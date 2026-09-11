@@ -1,3 +1,3 @@
-import type { InlineNode } from '../../../model/ast/inlines/InlineNode';
+import type { InlineNode } from '../../../model/inlines/InlineNode';
 
 export type TiddlyWikiInlineMatch = { node: InlineNode; end: number };

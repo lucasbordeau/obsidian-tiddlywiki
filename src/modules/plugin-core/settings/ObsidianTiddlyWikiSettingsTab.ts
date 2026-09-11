@@ -1,9 +1,9 @@
 import type { App } from 'obsidian';
 import { PluginSettingTab } from 'obsidian';
 import type ObsidianTiddlyWikiPlugin from '../../../main';
-import { renderPluginHeader } from './rendering/renderPluginHeader';
-import { renderImportJsonButton } from './rendering/renderImportJsonButton';
-import { renderExportJsonButton } from './rendering/renderExportJsonButton';
+import { renderPluginHeader } from './renderPluginHeader';
+import { renderImportJsonButton } from './renderImportJsonButton';
+import { renderExportJsonButton } from './renderExportJsonButton';
 
 export class ObsidianTiddlyWikiSettingsTab extends PluginSettingTab {
   plugin: ObsidianTiddlyWikiPlugin;

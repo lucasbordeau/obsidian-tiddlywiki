@@ -1,8 +1,8 @@
-import type { HtmlCursor } from '../../types/html/HtmlCursor';
-import type { HtmlChildrenParser } from '../../types/html/HtmlChildrenParser';
-import type { InlineNode } from '../../../../model/ast/inlines/InlineNode';
+import type { HtmlCursor } from '../../types/HtmlCursor';
+import type { HtmlChildrenParser } from '../../types/HtmlChildrenParser';
+import type { InlineNode } from '../../../../model/inlines/InlineNode';
 import { parseAttributes } from './parseAttributes';
-import { attributesAllowed } from './attributesAllowed';
+import { areHtmlAttributesAllowed } from './areHtmlAttributesAllowed';
 
 const formatTypes = {
   strong: 'strong',
@@ -44,7 +44,7 @@ export function parseElement(
   }
 
   if (tag === 'img') {
-    const supportedAttributes = attributesAllowed(attributes, [
+    const supportedAttributes = areHtmlAttributesAllowed(attributes, [
       'src',
       'alt',
       'title',
@@ -85,7 +85,7 @@ export function parseElement(
   }
 
   if (tag === 'a') {
-    const supportedAttributes = attributesAllowed(attributes, [
+    const supportedAttributes = areHtmlAttributesAllowed(attributes, [
       'href',
       'title',
     ]);
