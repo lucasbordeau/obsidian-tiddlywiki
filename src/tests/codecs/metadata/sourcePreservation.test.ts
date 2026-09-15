@@ -2,6 +2,7 @@ import { exportObsidianNote } from '../../../modules/conversion-core/notes/expor
 import { importTiddler } from '../../../modules/conversion-core/notes/importTiddler';
 import { parseObsidianFrontMatter } from '../../../modules/conversion-core/codecs/obsidian/parseObsidianFrontMatter';
 import { serializeObsidianFrontMatter } from '../../../modules/conversion-core/codecs/obsidian/serializeObsidianFrontMatter';
+import { extractPreservationComment } from '../../../modules/conversion-core/preservation/metadata/extractPreservationComment';
 import { getCodecValue } from '../../support/getCodecValue';
 import { opaqueContentTypes } from './opaqueContentTypes';
 
@@ -16,8 +17,13 @@ describe('metadata-aware, edit-aware interchange', () => {
 
     const imported = getCodecValue(importTiddler(original));
     const document = getCodecValue(parseObsidianFrontMatter(imported.content));
+    const preservedBody = extractPreservationComment(document.body);
 
-    expect(document.body).toBe('# **Already Markdown**\n\n`//literal//`\n');
+    expect(preservedBody.body).toBe(
+      '# **Already Markdown**\n\n`//literal//`\n',
+    );
+
+    expect(document.properties['tiddlywiki-import-export']).toBeUndefined();
     expect(document.properties.aliases).toEqual(['Native alias']);
 
     expect(getCodecValue(exportObsidianNote(imported))).toEqual(original);
@@ -61,10 +67,13 @@ describe('metadata-aware, edit-aware interchange', () => {
         ),
       ).toBe(true);
 
-      expect(
-        getCodecValue(parseObsidianFrontMatter(getCodecValue(result).content))
-          .body,
-      ).toBe(original.text);
+      const document = getCodecValue(
+        parseObsidianFrontMatter(getCodecValue(result).content),
+      );
+
+      expect(extractPreservationComment(document.body).body).toBe(
+        original.text,
+      );
 
       expect(getCodecValue(exportObsidianNote(getCodecValue(result)))).toEqual(
         original,

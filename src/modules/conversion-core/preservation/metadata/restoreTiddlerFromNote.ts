@@ -20,7 +20,7 @@ export function restoreTiddlerFromNote(
   title: string,
   document: FrontMatterDocument,
   record: PreservationRecord,
-  preservationKey: string,
+  preservationKey: string | undefined,
 ): CodecResult<TiddlerFields> {
   const sourceEntries = Object.entries(record.sourceProperties);
 
@@ -45,7 +45,7 @@ export function restoreTiddlerFromNote(
   fields.title = title;
 
   const currentEntries = Object.entries(document.properties).filter(
-    ([name]) => name !== preservationKey,
+    ([name]) => preservationKey === undefined || name !== preservationKey,
   );
 
   const currentProperties = Object.fromEntries(currentEntries);

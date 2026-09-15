@@ -3,6 +3,7 @@ import { importTiddler } from '../../../modules/conversion-core/notes/importTidd
 import { parseTidFile } from '../../../modules/conversion-core/codecs/tiddlywiki/parseTidFile';
 import { parseObsidianFrontMatter } from '../../../modules/conversion-core/codecs/obsidian/parseObsidianFrontMatter';
 import { serializeObsidianFrontMatter } from '../../../modules/conversion-core/codecs/obsidian/serializeObsidianFrontMatter';
+import { extractPreservationComment } from '../../../modules/conversion-core/preservation/metadata/extractPreservationComment';
 import { getCodecValue } from '../../support/getCodecValue';
 import { readMetadataSample as fixture } from '../../support/samples/readMetadataSample';
 
@@ -12,6 +13,7 @@ describe('metadata-aware, edit-aware interchange', () => {
 
     const note = getCodecValue(importTiddler(original));
     const document = getCodecValue(parseObsidianFrontMatter(note.content));
+    const preservedBody = extractPreservationComment(document.body);
 
     document.properties.tags = ['North_America', 'café_2', 'new-tag'];
     document.properties['custom-field'] = 'changed';
@@ -22,7 +24,10 @@ describe('metadata-aware, edit-aware interchange', () => {
       title: note.title,
       content: serializeObsidianFrontMatter(
         document.properties,
-        '# Changed\n\n**New body**\n',
+        document.body.replace(
+          preservedBody.body,
+          '# Changed\n\n**New body**\n',
+        ),
       ),
     };
 
@@ -39,7 +44,9 @@ describe('metadata-aware, edit-aware interchange', () => {
       parseObsidianFrontMatter(getCodecValue(importTiddler(exported)).content),
     );
 
-    expect(returned.body).toBe('# Changed\n\n**New body**\n');
+    const returnedBody = extractPreservationComment(returned.body).body;
+
+    expect(returnedBody).toBe('# Changed\n\n**New body**\n');
     expect(returned.properties.added).toEqual({ nested: [1, true, 'edited'] });
   });
 

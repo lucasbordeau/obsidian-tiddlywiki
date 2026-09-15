@@ -2,6 +2,7 @@ import { exportObsidianNote } from '../../../modules/conversion-core/notes/expor
 import { importTiddler } from '../../../modules/conversion-core/notes/importTiddler';
 import { parseObsidianFrontMatter } from '../../../modules/conversion-core/codecs/obsidian/parseObsidianFrontMatter';
 import { serializeObsidianFrontMatter } from '../../../modules/conversion-core/codecs/obsidian/serializeObsidianFrontMatter';
+import { extractPreservationComment } from '../../../modules/conversion-core/preservation/metadata/extractPreservationComment';
 import { PRESERVATION_FIELD } from '../../../modules/conversion-core/preservation/metadata/PreservationField.const';
 import { getCodecValue } from '../../support/getCodecValue';
 
@@ -15,9 +16,9 @@ describe('field and preservation boundaries', () => {
 
     const note = getCodecValue(importTiddler(exported));
 
-    expect(getCodecValue(parseObsidianFrontMatter(note.content)).body).toBe(
-      exported.text,
-    );
+    const document = getCodecValue(parseObsidianFrontMatter(note.content));
+
+    expect(extractPreservationComment(document.body).body).toBe(exported.text);
   });
 
   it('does not restore stale wikitext after a metadata MIME change', () => {
@@ -29,6 +30,7 @@ describe('field and preservation boundaries', () => {
 
     const note = getCodecValue(importTiddler(original));
     const document = getCodecValue(parseObsidianFrontMatter(note.content));
+    const preservedBody = extractPreservationComment(document.body);
 
     document.properties.type = 'text/plain';
 
@@ -43,7 +45,7 @@ describe('field and preservation boundaries', () => {
     );
 
     expect(exported.type).toBe('text/plain');
-    expect(exported.text).toBe(document.body);
+    expect(exported.text).toBe(preservedBody.body);
   });
 
   it('ignores an unknown preservation schema and keeps its value as user metadata', () => {
@@ -60,9 +62,9 @@ describe('field and preservation boundaries', () => {
 
     const note = getCodecValue(importTiddler(original));
 
-    expect(getCodecValue(parseObsidianFrontMatter(note.content)).body).toBe(
-      'Current',
-    );
+    const document = getCodecValue(parseObsidianFrontMatter(note.content));
+
+    expect(extractPreservationComment(document.body).body).toBe('Current');
 
     expect(getCodecValue(exportObsidianNote(note))).toEqual(original);
   });

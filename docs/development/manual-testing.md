@@ -54,7 +54,8 @@ in the repository.
 
 All sample navigation and media references have real targets. Check heading
 levels, formatting, nested lists, tables, literal code, link destinations,
-image display, audio playback, tags, and `manual-origin` / `manual-status` fields.
+external video links, image display, audio playback, tags, and `manual-origin` /
+`manual-status` fields.
 
 The preservation examples have explicit markers. `TW-MACRO-KEEP` renders in the
 source wiki and should render again after export back to TiddlyWiki.

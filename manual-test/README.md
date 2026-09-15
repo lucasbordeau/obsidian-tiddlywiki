@@ -40,7 +40,7 @@ wiki. Follow their links and compare the same documents after each conversion:
 - **Formatting:** two heading levels, bold, italic, strikethrough, nested bullet
   and numbered lists, a two-column table, a quote, and literal code.
 - **Links and media:** the labelled link returns to the start document, the
-  external link opens, the image appears, and the audio player plays.
+  external and video links open, the image appears, and the audio player plays.
 - **Metadata:** `manual-test` and the origin tag remain present. The start
   document retains `manual-origin` and `manual-status`.
 - **Preservation:** the Obsidian source comment contains the marker
@@ -69,5 +69,5 @@ regenerates both `import.json` and the self-contained `source.html`.
 For a larger, independently maintained example, import
 `tiddlywiki/official-introduction.json`. It contains the textual slides from the
 official TiddlyWiki 5.4.1 Introduction edition. The adjacent
-`OFFICIAL-INTRODUCTION-SOURCE.md` records its exact provenance and BSD license;
-upstream images and audio are intentionally excluded.
+`OFFICIAL-INTRODUCTION-SOURCE.md` records its exact provenance and BSD license.
+The audio used by the `Audio` slide is included; upstream images are excluded.

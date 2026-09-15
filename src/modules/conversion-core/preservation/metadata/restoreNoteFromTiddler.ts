@@ -1,15 +1,14 @@
 import { applyTiddlerFieldEdits } from './applyTiddlerFieldEdits';
+import { prependPreservationComment } from './prependPreservationComment';
 import { areMetadataValuesEqual } from './areMetadataValuesEqual';
 import type { CodecResult } from '../../codecs/CodecResult';
 import { convertTiddlerBody } from '../../notes/convertTiddlerBody';
 import { createCodecDiagnostic } from '../../codecs/createCodecDiagnostic';
 
 import { getTiddlerProperties } from '../../metadata/getTiddlerProperties';
-import { getPreservationKey } from './getPreservationKey';
 import type { MarkdownNote } from '../../notes/MarkdownNote';
 import { normalizeObsidianTags } from '../../metadata/normalizeObsidianTags';
 import { parseTiddlyWikiTags } from '../../metadata/parseTiddlyWikiTags';
-import { PRESERVATION_PROPERTY } from './PreservationProperty.const';
 import type { PreservationRecord } from './PreservationRecord';
 import { serializeObsidianFrontMatter } from '../../codecs/obsidian/serializeObsidianFrontMatter';
 import type { TiddlerFields } from '../../codecs/tiddlywiki/TiddlerFields';
@@ -75,13 +74,17 @@ export function restoreNoteFromTiddler(
       originalTags,
     };
 
-    properties[getPreservationKey(properties, PRESERVATION_PROPERTY)] =
-      nextRecord;
+    const bodyWithPreservation = prependPreservationComment(body, nextRecord);
+
+    const content = serializeObsidianFrontMatter(
+      properties,
+      bodyWithPreservation,
+    );
 
     return {
       value: {
         title: tiddler.title,
-        content: serializeObsidianFrontMatter(properties, body),
+        content,
       },
       diagnostics,
     };

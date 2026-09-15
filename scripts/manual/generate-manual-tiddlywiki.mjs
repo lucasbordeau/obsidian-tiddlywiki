@@ -26,13 +26,14 @@ const temporaryDirectory = await mkdtemp(
 );
 
 async function generateOfficialIntroduction() {
-  const slidesDirectory = path.join(
+  const introductionDirectory = path.join(
     tiddlyWikiDirectory,
     'editions',
     'introduction',
     'tiddlers',
-    'slides',
   );
+
+  const slidesDirectory = path.join(introductionDirectory, 'slides');
 
   const slideEntries = await readdir(slidesDirectory, { withFileTypes: true });
 
@@ -68,6 +69,15 @@ async function generateOfficialIntroduction() {
 
     introductionTiddlers.push(parsedTiddlers[0]);
   }
+
+  const audioPath = path.join(introductionDirectory, 'audio', 'TiddlyWiki.mp3');
+  const audio = await readFile(audioPath);
+
+  introductionTiddlers.push({
+    title: 'TiddlyWiki.mp3',
+    type: 'audio/mp3',
+    text: audio.toString('base64'),
+  });
 
   const introductionPath = path.join(
     manualTestDirectory,
@@ -115,7 +125,7 @@ try {
   console.log('Updated the self-contained manual-test/tiddlywiki/source.html.');
 
   console.log(
-    `Updated official-introduction.json with ${introductionTiddlerCount} BSD-licensed tiddlers.`,
+    `Updated official-introduction.json with ${introductionTiddlerCount} BSD-licensed tiddlers and media files.`,
   );
 } finally {
   await rm(temporaryDirectory, { recursive: true, force: true });

@@ -1,6 +1,7 @@
 import { parseObsidian } from '../../../../modules/conversion-core/syntax/obsidian/parsing/parseObsidian';
 import { serializeObsidian } from '../../../../modules/conversion-core/syntax/obsidian/serialization/serializeObsidian';
 import { ParsedDocument } from '../../../../modules/conversion-core/model/ParsedDocument';
+import { parseTiddlyWiki } from '../../../../modules/conversion-core/syntax/tiddlywiki/parsing/parseTiddlyWiki';
 import { parseObsidianBlocks } from '../../../support/parseObsidianBlocks';
 
 describe('Obsidian documented extensions and structural regressions', () => {
@@ -54,6 +55,32 @@ describe('Obsidian documented extensions and structural regressions', () => {
         { value: ' literal marker' },
       ],
     });
+  });
+
+  test('keeps punctuation adjacent to formatting readable', () => {
+    const source = "''Bold'', //italic//; ~~strike~~: done!";
+
+    const converted = serializeObsidian(parseTiddlyWiki(source));
+
+    expect(converted.text).toBe('**Bold**, _italic_; ~~strike~~: done\\!');
+    expect(converted.text).not.toMatch(/&#\d+;/);
+  });
+
+  test('protects formatting boundaries next to word characters', () => {
+    const source = "prefix''Bold''suffix";
+
+    const converted = serializeObsidian(parseTiddlyWiki(source));
+
+    expect(parseObsidianBlocks(converted.text)).toEqual([
+      {
+        type: 'paragraph',
+        children: [
+          { type: 'text', value: 'prefix' },
+          { type: 'strong', children: [{ type: 'text', value: 'Bold' }] },
+          { type: 'text', value: 'suffix' },
+        ],
+      },
+    ]);
   });
 
   test.each([true, false])(

@@ -1,6 +1,7 @@
 import { exportObsidianNote } from '../../../../modules/conversion-core/notes/exportObsidianNote';
 import { importTiddler } from '../../../../modules/conversion-core/notes/importTiddler';
 import { parseObsidianFrontMatter } from '../../../../modules/conversion-core/codecs/obsidian/parseObsidianFrontMatter';
+import { extractPreservationComment } from '../../../../modules/conversion-core/preservation/metadata/extractPreservationComment';
 import { parseTiddlyWikiJson } from '../../../../modules/conversion-core/codecs/tiddlywiki/parseTiddlyWikiJson';
 import { TiddlerFields } from '../../../../modules/conversion-core/codecs/tiddlywiki/TiddlerFields';
 import { getCodecValue } from '../../../support/getCodecValue';
@@ -20,10 +21,11 @@ describe('textual and extension content types', () => {
 
       expect(imported.diagnostics).toEqual([]);
 
-      expect(
-        getCodecValue(parseObsidianFrontMatter(getCodecValue(imported).content))
-          .body,
-      ).toBe(text);
+      const document = getCodecValue(
+        parseObsidianFrontMatter(getCodecValue(imported).content),
+      );
+
+      expect(extractPreservationComment(document.body).body).toBe(text);
 
       expect(
         getCodecValue(exportObsidianNote(getCodecValue(imported))),

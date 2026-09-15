@@ -4,6 +4,10 @@ import { isAsteriskFormatting } from '../formatting/isAsteriskFormatting';
 import { escapeText } from '../escaping/escapeText';
 import { renderInline } from './renderInline';
 
+function requiresFormattingBoundaryProtection(character: string): boolean {
+  return !/[\s\p{P}]/u.test(character);
+}
+
 export function renderInlines(
   nodes: InlineNode[],
   context: SerializationContext,
@@ -38,7 +42,7 @@ export function renderInlines(
         const protectStart =
           isAsteriskFormatting(previous) &&
           characters.length > 0 &&
-          !/\s/.test(characters[0]);
+          requiresFormattingBoundaryProtection(characters[0]);
 
         if (protectStart) {
           prefix = `&#${characters.shift()?.codePointAt(0)};`;
@@ -47,7 +51,9 @@ export function renderInlines(
         const protectEnd =
           isAsteriskFormatting(next) &&
           characters.length > 0 &&
-          !/\s/.test(characters[characters.length - 1]);
+          requiresFormattingBoundaryProtection(
+            characters[characters.length - 1],
+          );
 
         if (protectEnd) {
           suffix = `&#${characters.pop()?.codePointAt(0)};`;

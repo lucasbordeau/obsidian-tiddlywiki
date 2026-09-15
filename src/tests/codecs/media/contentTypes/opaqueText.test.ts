@@ -1,6 +1,7 @@
 import { exportObsidianNote } from '../../../../modules/conversion-core/notes/exportObsidianNote';
 import { importTiddler } from '../../../../modules/conversion-core/notes/importTiddler';
 import { parseObsidianFrontMatter } from '../../../../modules/conversion-core/codecs/obsidian/parseObsidianFrontMatter';
+import { extractPreservationComment } from '../../../../modules/conversion-core/preservation/metadata/extractPreservationComment';
 import { getCodecValue } from '../../../support/getCodecValue';
 import { textualCases } from './textualCases';
 
@@ -18,10 +19,11 @@ describe('textual and extension content types', () => {
         ),
       ).toBe(true);
 
-      expect(
-        getCodecValue(parseObsidianFrontMatter(getCodecValue(imported).content))
-          .body,
-      ).toBe(text);
+      const document = getCodecValue(
+        parseObsidianFrontMatter(getCodecValue(imported).content),
+      );
+
+      expect(extractPreservationComment(document.body).body).toBe(text);
 
       expect(
         getCodecValue(exportObsidianNote(getCodecValue(imported))),

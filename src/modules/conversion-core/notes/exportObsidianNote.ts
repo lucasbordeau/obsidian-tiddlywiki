@@ -3,6 +3,7 @@ import type { CodecResult } from '../codecs/CodecResult';
 import { collectObsidianTags } from '../metadata/collectObsidianTags';
 import { createCodecDiagnostic } from '../codecs/createCodecDiagnostic';
 import { encodeMetadataField } from '../metadata/encodeMetadataField';
+import { extractPreservationComment } from '../preservation/metadata/extractPreservationComment';
 import { formatTiddlyWikiTimestamp } from '../metadata/formatTiddlyWikiTimestamp';
 import { findPreservationRecord } from '../preservation/metadata/findPreservationRecord';
 import { getPreservationKey } from '../preservation/metadata/getPreservationKey';
@@ -39,23 +40,33 @@ export function exportObsidianNote(
   }
 
   const document = parsed.value;
+  const preservedBody = extractPreservationComment(document.body);
+  const documentWithoutComment = { ...document, body: preservedBody.body };
 
-  const previous = findPreservationRecord(
+  const legacyRecord = findPreservationRecord(
     document.properties,
     PRESERVATION_PROPERTY,
     'tiddlywiki',
   );
 
+  const previous = preservedBody.record
+    ? { record: preservedBody.record, key: undefined }
+    : legacyRecord;
+
   if (previous) {
     return restoreTiddlerFromNote(
       note.title,
-      document,
+      documentWithoutComment,
       previous.record,
       previous.key,
     );
   }
 
-  const converted = convertText(document.body, 'obsidian', 'tiddlywiki');
+  const converted = convertText(
+    documentWithoutComment.body,
+    'obsidian',
+    'tiddlywiki',
+  );
 
   const fields: TiddlerFields = Object.create(null);
 

@@ -9,7 +9,7 @@
     "title": "TW-Links-and-media",
     "type": "text/vnd.tiddlywiki",
     "tags": "manual-test source-tiddlywiki",
-    "text": "! Links and media\n\nFollow [[Back to the start|TW-Start]], then return here.\n\nOpen [[the TiddlyWiki website|https://tiddlywiki.com/]].\n\n!! Image\n\nThe JPEG should appear below.\n\n[img[TW-image.jpg]]\n\n!! Audio\n\nPlay the MP3 below.\n\n{{TW-audio.mp3}}\n"
+    "text": "! Links and media\n\nFollow [[Back to the start|TW-Start]], then return here.\n\nOpen [[the TiddlyWiki website|https://tiddlywiki.com/]].\n\n!! Image\n\nThe JPEG should appear below.\n\n[img[TW-image.jpg]]\n\n!! Audio\n\nPlay the MP3 below.\n\n{{TW-audio.mp3}}\n\n!! Video link\n\n[[Watch the TiddlyWiki introduction video|https://www.youtube.com/watch?v=KtCUr83XgyE]]\n"
   },
   {
     "title": "TW-Preservation",

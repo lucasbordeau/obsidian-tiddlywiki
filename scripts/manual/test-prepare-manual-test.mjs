@@ -256,7 +256,7 @@ async function assertWikiArtifactsReady(session) {
     (tiddler) => tiddler.title,
   );
 
-  assert.equal(officialIntroductionTiddlers.length, 20);
+  assert.equal(officialIntroductionTiddlers.length, 21);
 
   assert.equal(
     new Set(officialIntroductionTitles).size,
@@ -265,6 +265,14 @@ async function assertWikiArtifactsReady(session) {
 
   assert.ok(officialIntroductionTitles.includes('TiddlyWiki'));
   assert.ok(officialIntroductionTitles.includes('Transclusion'));
+  assert.ok(officialIntroductionTitles.includes('TiddlyWiki.mp3'));
+
+  const officialAudio = officialIntroductionTiddlers.find(
+    (tiddler) => tiddler.title === 'TiddlyWiki.mp3',
+  );
+
+  assert.equal(officialAudio.type, 'audio/mp3');
+  assert.ok(Buffer.from(officialAudio.text, 'base64').length > 0);
 
   const exportedTitles = exportedTiddlers
     .map((tiddler) => tiddler.title)
@@ -300,6 +308,7 @@ async function assertWikiArtifactsReady(session) {
   assert.match(mediaHtml, /data:image\/jpeg;base64,/);
   assert.match(mediaHtml, /<audio\b/);
   assert.match(mediaHtml, /data:audio\/mpeg;base64,/);
+  assert.match(mediaHtml, /youtube\.com\/watch\?v=KtCUr83XgyE/);
   assert.match(preservationHtml, /TW-MACRO-KEEP/);
 
   assert.equal(

@@ -7,6 +7,7 @@ import { parseTidFile } from '../../../../modules/conversion-core/codecs/tiddlyw
 import { serializeTiddlyWikiJson } from '../../../../modules/conversion-core/codecs/tiddlywiki/serializeTiddlyWikiJson';
 import { serializeTidFile } from '../../../../modules/conversion-core/codecs/tiddlywiki/serializeTidFile';
 import { TiddlerFields } from '../../../../modules/conversion-core/codecs/tiddlywiki/TiddlerFields';
+import { extractPreservationComment } from '../../../../modules/conversion-core/preservation/metadata/extractPreservationComment';
 import { readSampleBytes } from '../../../support/samples/readSampleBytes';
 import { attachmentCases } from './attachmentCases';
 import { getCodecValue } from '../../../support/getCodecValue';
@@ -35,7 +36,9 @@ describe('attachment payload and MIME transport', () => {
 
       const note = getCodecValue(importTiddler(parsedContainer[0]));
 
-      expect(getCodecValue(parseObsidianFrontMatter(note.content)).body).toBe(
+      const document = getCodecValue(parseObsidianFrontMatter(note.content));
+
+      expect(extractPreservationComment(document.body).body).toBe(
         original.text,
       );
 

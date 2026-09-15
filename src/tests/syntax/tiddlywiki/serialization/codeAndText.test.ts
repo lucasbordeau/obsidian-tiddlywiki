@@ -1,3 +1,4 @@
+import { convertText } from '../../../../modules/conversion-core/conversion/convertText';
 import { parseTiddlyWiki } from '../../../../modules/conversion-core/syntax/tiddlywiki/parsing/parseTiddlyWiki';
 import { serializeTiddlyWiki } from '../../../../modules/conversion-core/syntax/tiddlywiki/serialization/serializeTiddlyWiki';
 import { normalizeSemanticBlocks } from '../../../support/ast/normalizeSemanticBlocks';
@@ -6,6 +7,14 @@ import { createDocumentFromBlocks } from '../../../support/ast/createDocumentFro
 import { createParagraph } from '../../../support/ast/createParagraph';
 
 describe('TiddlyWiki structural parsing and serialization', () => {
+  test('decodes named, decimal and hexadecimal HTML entities in text', () => {
+    const source = 'Virgule&#44; esperluette &amp; copyright &#xA9;.';
+
+    const converted = convertText(source, 'tiddlywiki', 'obsidian');
+
+    expect(converted.text).toBe('Virgule, esperluette \\& copyright ©.');
+  });
+
   test('literal text cannot accidentally introduce TW formatting, widgets, autolinks or list markers', async () => {
     const literal =
       "#tag **stars** ''quotes''' //// __under___ ~~tilde~~ @@style@@ ,,sub,, ^^sup^^ [[link]] {{embed}} <script>alert('x')</script> `code` HelloThere\n* item\n!heading";

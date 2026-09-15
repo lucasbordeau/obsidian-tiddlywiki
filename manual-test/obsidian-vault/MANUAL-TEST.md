@@ -37,7 +37,7 @@ the entire vault. Compare `OB-Start` with [[OB-Start]] in Obsidian, then compare
 - [ ] Headings, formatting, nested lists, tables, and quotes retain their structure.
 - [ ] Code stays literal, including text resembling links or headings.
 - [ ] Internal links open the matching notes; external links keep their URLs.
-- [ ] Images display and audio plays in both apps.
+- [ ] Images display, audio plays, and the external video link opens in both apps.
 - [ ] Start-note tags and `manual-origin` / `manual-status` properties survive.
 - [ ] `TW-Preservation` renders `TW-MACRO-KEEP` again in the target wiki.
 
