@@ -157,6 +157,7 @@ export async function launchObsidian({
   vaultDirectory,
   executablePath = process.env.OBSIDIAN_EXECUTABLE,
   debug = false,
+  applicationArguments = [],
 }) {
   const directoryValidationPromises = [
     assertDirectory(runDirectory, 'Run directory'),
@@ -172,6 +173,7 @@ export async function launchObsidian({
   const argumentsForObsidian = [
     ...obsidianLauncher.leadingArguments,
     `--user-data-dir=${profileDirectory}`,
+    ...applicationArguments,
   ];
 
   if (debug) {

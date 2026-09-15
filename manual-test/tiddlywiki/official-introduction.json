@@ -1,0 +1,93 @@
+[
+  {
+    "title": "Audio",
+    "text": "TiddlyWiki supports audio as a first class citizen alongside images and text.\n\n{{TiddlyWiki.mp3}}\n\nNext, create structure with [[Tags]].\n"
+  },
+  {
+    "title": "CecilyMap",
+    "type": "application/json",
+    "text": "{\n\t\"newTiddlerPosition\": {\"x\": 360,\"y\": 100},\n\t\"positions\": {\n\t\t\" \":\t\t\t\t{\"x\":  30,\"y\": 17,\"w\": 120,\"h\": 120, \"r\": -2},\n\t\t\"Tiddlers\":\t\t\t{\"x\":  60,\"y\": 15,\"w\": 120,\"h\": 120, \"r\": 10},\n\t\t\"Links\":\t\t\t{\"x\":  90,\"y\": 13,\"w\": 120,\"h\": 120, \"r\": -7},\n\t\t\"Formatting\":\t\t{\"x\": 120,\"y\": 18,\"w\": 120,\"h\": 120, \"r\": 5},\n\t\t\"Images\":\t\t\t{\"x\": 150,\"y\": 12,\"w\": 120,\"h\": 120, \"r\": -11},\n\t\t\"Audio\":\t\t\t{\"x\": 180,\"y\": 14,\"w\": 120,\"h\": 120, \"r\": 16},\n\t\t\"Tags\":\t\t\t\t{\"x\": 210,\"y\": 15,\"w\": 120,\"h\": 120, \"r\": 20},\n\t\t\"Transclusion\":\t\t{\"x\": 240,\"y\": 16,\"w\": 120,\"h\": 120, \"r\": -4},\n\t\t\"Lists\":\t\t\t{\"x\": 275,\"y\": 13,\"w\": 120,\"h\": 120, \"r\": 6},\n\t\t\"Customisation\":\t{\"x\": 310,\"y\": 19,\"w\": 120,\"h\": 120, \"r\": -5},\n\t\t\"Plugins\":\t\t\t{\"x\": 350,\"y\": 12,\"w\": 120,\"h\": 120, \"r\": 10},\n\t\t\"Translations\":\t\t{\"x\": 390,\"y\": 15,\"w\": 120,\"h\": 120, \"r\": 8}\n\t}\n}"
+  },
+  {
+    "title": "Customisation",
+    "text": "TiddlyWiki supports deep customisation to fit your particular needs. For example, you can choose which tiddler toolbar buttons you need:\n\n<div class=\"tc-view-toolbar-tools\">\n\n{{$:/core/ui/TiddlerInfo/Tools}}\n\n</div>\n\n\nYou can make TiddlyWiki your own through [[Customisation]]."
+  },
+  {
+    "created": "20141029162816366",
+    "modified": "20141029163114250",
+    "title": "Formatting",
+    "text": "Tiddlers can contain formatted text:\n\n> {{FormattingDemoText}}\n\nFormatting is typed with special codes:\n\n<$edit-text tiddler=\"FormattingDemoText\" class=\"tc-edit-texteditor\" minHeight=\"100px\"/>\n\nTiddlyWiki is not just for text. [[Images]] are first class citizens, too.\n"
+  },
+  {
+    "title": "FormattingDemoText",
+    "text": "The //quick// brown ''fox'' jumps ~~over~~ the __lazy__ dog"
+  },
+  {
+    "title": "Get Started",
+    "text": "[img height=\"150px\" [Motovun Jack.svg]]\n\nLearn more about TiddlyWiki:\n\nhttps://tiddlywiki.com/#GettingStarted\n"
+  },
+  {
+    "title": "Images",
+    "text": "<$edit-bitmap tiddler=\"Motovun Jack Big.jpg\"/>\n\nTiddlyWiki also supports [[Audio]].\n"
+  },
+  {
+    "title": "Links",
+    "text": "Use links to navigate between tiddlers. They are typed with double square brackets:\n\n```\nTiddlers can also include [[Formatting]].\n```\n\nLinking becomes part of the punctuation of writing.\n\nTiddlers can also include [[Formatting]].\n"
+  },
+  {
+    "title": "Lists",
+    "text": "TiddlyWiki allows you to generate lists of tiddlers automatically, simplifying organisation and exploration.\n\nFor example, here's how to generate a list of all the tiddlers with a particular tag:\n\n```\n{{{ [tag[This is another tag]] }}}\n```\n\n<div class=\"tc-example-box\">\n\n{{{ [tag[This is another tag]] }}}\n\n</div>\n\nNext, extend TiddlyWiki in new ways with [[Plugins]].\n"
+  },
+  {
+    "title": "Other Story Views",
+    "text": "Here's an experimental view that displays tiddlers sideways:\n\n<$scrollable class=\"tc-scrollable-storyview\">\n<div class=\"tc-scrollable-storyview-inner\">\n<$list filter=\"[list[$:/StoryList]] -[[Other Story Views]]\" template=\"$:/core/ui/ViewTemplate\" storyview=\"cecily\"/>\n</div>\n</$scrollable>\n\nNext, tiddlers can be controlled with [[Toolbars]].\n\n"
+  },
+  {
+    "title": "Plugins",
+    "text": "Plugins are used to add functionality to TiddlyWiki.\n\nFor example, the ~KaTeX plugin uses an open source library from Khan Academy to typeset mathematical notation:\n\n$$\\displaystyle \\frac{1}{\\Bigl(\\sqrt{\\phi \\sqrt{5}}-\\phi\\Bigr) e^{\\frac25 \\pi}} = 1+\\frac{e^{-2\\pi}} {1+\\frac{e^{-4\\pi}} {1+\\frac{e^{-6\\pi}} {1+\\frac{e^{-8\\pi}} {1+\\cdots} } } }$$\n\nNext, TiddlyWiki has [[Translations]] in several languages."
+  },
+  {
+    "title": "Story Views",
+    "text": "A story is a sequence of tiddlers. The current story view shows a single tiddler at a time.\n\n<$button class=\"tc-btn-big-blue\">\n<$action-setfield $tiddler=\"$:/view\" text=\"classic\"/>\n{{$:/core/images/storyview-classic}} Switch to the default story view</$button>\n\n<$button class=\"tc-btn-big-blue\">\n<$action-setfield $tiddler=\"$:/view\" text=\"zoomin\"/>\n{{$:/core/images/storyview-zoomin}} Revert to the presentation story view</$button>\n\nNext, [[Themes]] change the appearance of TiddlyWiki.\n"
+  },
+  {
+    "created": "20141029163127136",
+    "modified": "20141029163157772",
+    "title": "Tags",
+    "tags": "[[This is a tag]] [[This is another tag]]",
+    "text": "Tags allow you to organise your tiddlers into categories.\n"
+  },
+  {
+    "title": "Themes",
+    "text": "Themes can change the layout, fonts, colours and background images of the page.\n\nFor example,\n\n<$button class=\"tc-btn-big-blue\">\n<$action-setfield $tiddler=\"$:/theme\" text=\"$:/themes/tiddlywiki/snowwhite\"/>\n{{$:/core/images/theme-button}} Switch to the default \"Snow White\" theme</$button>\n\n<$button class=\"tc-btn-big-blue\">\n<$action-setfield $tiddler=\"$:/theme\" text=\"$:/themes/tiddlywiki/starlight\"/>\n{{$:/core/images/theme-button}} Switch to the optional \"Starlight\" theme</$button>\n\n<$button class=\"tc-btn-big-blue\">\n<$action-setfield $tiddler=\"$:/theme\" text=\"$:/themes/tiddlywiki/hidefurniture\"/>\n{{$:/core/images/theme-button}} Revert to the presentation theme</$button>\n\n[[Other Story Views]] are also provided, and more are available as plugins.\n"
+  },
+  {
+    "title": "This is a tag",
+    "color": "red"
+  },
+  {
+    "title": "This is another tag",
+    "color": "#0da703"
+  },
+  {
+    "created": "20141029162816366",
+    "modified": "20141029163114250",
+    "title": "Tiddlers",
+    "text": "Tiddlers are the fundamental units of information in TiddlyWiki. Tiddlers work best when they are as small as possible so that they can be reused by weaving them together into different narratives and perspectives.\n\nYou can create relationships between tiddlers with [[Links]].\n"
+  },
+  {
+    "created": "20141029161248510",
+    "modified": "20141029161417820",
+    "title": "TiddlyWiki",
+    "text": "~TiddlyWiki is a powerful notetaking tool that helps you collect and structure any kind of information and work with it to get stuff done.\n\n<$scrollable class=\"tc-cecily-demo\">\n<div class=\"tc-cecily-demo-inner\">\n<$linkcatcher>\n<$list filter=\"[{$:/DefaultTiddlers}enlist-input[]] -[[ ]] -[[TiddlyWiki]]\" template=\"$:/core/ui/ViewTemplate\" storyview=\"cecily\" cecily-width=\"550px\" cecily-map=\"CecilyMap\"/>\n</$linkcatcher>\n</div>\n</$scrollable>\n\nIt's like a hypertext card index system from the future.\n\n~TiddlyWiki deals with information in bite-sized, linked chunks called [[Tiddlers]].\n"
+  },
+  {
+    "title": "Transclusion",
+    "tags": "[[This is a tag]] [[This is another tag]]",
+    "text": "Transcluding a tiddler inserts a copy of its content, allowing you to reuse the same text or image more than once. For example,\n\n```\nThis is my cat {{Motovun Jack.svg}} and his identical twin {{Motovun Jack.svg}}\n```\n\n<div class=\"tc-example-box\">\nThis is my cat {{Motovun Jack.svg}} and his identical twin {{Motovun Jack.svg}}\n</div>\n\nNext, weaving tiddlers into [[Lists]].\n"
+  },
+  {
+    "title": "Translations",
+    "text": "TiddlyWiki is currently available in <$count filter=\"[[$:/languages/en-GB]] [plugin-type[language]sort[title]] -[[$:/languages/de-AT]]\"/> languages:\n\n<div style.height=\"400px\" style.overflowY=\"auto\">\n{{$:/snippets/languageswitcher}}\n</div>\n\nFind out how to [[Get Started]].\n"
+  }
+]

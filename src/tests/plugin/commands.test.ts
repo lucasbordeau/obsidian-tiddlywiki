@@ -1,10 +1,23 @@
+import path from 'node:path';
 import type { App, ButtonComponent, Command, PluginManifest } from 'obsidian';
 import { Setting } from 'obsidian';
 import ObsidianTiddlyWikiPlugin from '../../main';
 import { ObsidianTiddlyWikiSettingsTab } from '../../modules/plugin-core/settings/ObsidianTiddlyWikiSettingsTab';
 import { exportVaultToJson } from '../../modules/plugin-core/settings/exportVaultToJson';
-import { importTiddlyWikiJsonFile } from '../../modules/plugin-core/settings/importTiddlyWikiJsonFile';
+import { importTiddlyWikiJsonPath } from '../../modules/plugin-core/settings/importTiddlyWikiJsonFile';
+import { getImportPathHint } from '../../modules/plugin-core/settings/openImportJsonPicker';
 import { renderImportJsonButton } from '../../modules/plugin-core/settings/renderImportJsonButton';
+
+jest.mock(
+  'electron',
+  () => ({
+    remote: {
+      dialog: { showOpenDialog: jest.fn() },
+      process: { argv: [] },
+    },
+  }),
+  { virtual: true },
+);
 
 jest.mock(
   'obsidian',
@@ -28,38 +41,19 @@ jest.mock('../../modules/plugin-core/settings/exportVaultToJson', () => ({
 jest.mock(
   '../../modules/plugin-core/settings/importTiddlyWikiJsonFile',
   () => ({
-    importTiddlyWikiJsonFile: jest.fn().mockResolvedValue(undefined),
+    importTiddlyWikiJsonPath: jest.fn().mockResolvedValue(undefined),
   }),
 );
 
-function createFileInput() {
-  return {
-    type: '',
-    accept: '',
-    multiple: false,
-    files: null as FileList | null,
-    click: jest.fn(),
-    addEventListener: jest.fn<void, [string, () => void | Promise<void>]>(),
+const electronMock = jest.requireMock('electron') as {
+  remote: {
+    dialog: { showOpenDialog: jest.Mock };
+    process: { argv: string[] };
   };
-}
+};
 
-function createFileList(file: File): FileList {
-  return { length: 1, item: () => file } as unknown as FileList;
-}
-
-async function dispatchFileChange(
-  fileInput: ReturnType<typeof createFileInput>,
-) {
-  const changeListener = fileInput.addEventListener.mock.calls.find(
-    ([eventName]) => eventName === 'change',
-  );
-
-  if (!changeListener) {
-    throw new Error('The file picker has no change listener');
-  }
-
-  await changeListener[1]();
-}
+const mockShowOpenDialog = electronMock.remote.dialog.showOpenDialog;
+const mockElectronProcess = electronMock.remote.process;
 
 function findCommand(plugin: ObsidianTiddlyWikiPlugin, commandId: string) {
   const registeredCommand = jest
@@ -76,52 +70,23 @@ function findCommand(plugin: ObsidianTiddlyWikiPlugin, commandId: string) {
 const app = { workspace: { activeLeaf: null } } as unknown as App;
 const manifest = { id: 'tiddlywiki-import-export' } as PluginManifest;
 
-const originalDocument = Object.getOwnPropertyDescriptor(
-  globalThis,
-  'document',
-);
-
 const displaySettings = jest.spyOn(
   ObsidianTiddlyWikiSettingsTab.prototype,
   'display',
 );
 
-let createdFileInputs: ReturnType<typeof createFileInput>[];
 let plugin: ObsidianTiddlyWikiPlugin;
 
 beforeEach(async () => {
   jest.clearAllMocks();
 
-  createdFileInputs = [];
+  mockElectronProcess.argv = [];
 
-  Object.defineProperty(globalThis, 'document', {
-    configurable: true,
-    value: {
-      createElement: (tagName: string) => {
-        if (tagName !== 'input') {
-          throw new Error(`Unexpected element: ${tagName}`);
-        }
-
-        const fileInput = createFileInput();
-
-        createdFileInputs.push(fileInput);
-
-        return fileInput;
-      },
-    },
-  });
+  mockShowOpenDialog.mockResolvedValue({ canceled: true, filePaths: [] });
 
   plugin = new ObsidianTiddlyWikiPlugin(app, manifest);
 
   await plugin.onload();
-});
-
-afterEach(() => {
-  if (originalDocument) {
-    Object.defineProperty(globalThis, 'document', originalDocument);
-  } else {
-    Reflect.deleteProperty(globalThis, 'document');
-  }
 });
 
 describe('command palette actions', () => {
@@ -148,87 +113,101 @@ describe('command palette actions', () => {
     );
 
     expect(displaySettings).not.toHaveBeenCalled();
-    expect(createdFileInputs).toHaveLength(0);
+    expect(mockShowOpenDialog).not.toHaveBeenCalled();
   });
 
-  it('opens a single JSON file picker with no active editor or settings display', () => {
-    findCommand(plugin, 'import-tiddlywiki-json')();
+  it('opens the native picker at the prepared JSON and imports it', async () => {
+    const preparedJsonPath = path.resolve('manual-test/tiddlywiki/import.json');
 
-    expect(createdFileInputs).toHaveLength(1);
+    mockElectronProcess.argv = [`--tiddlywiki-import-path=${preparedJsonPath}`];
 
-    expect(createdFileInputs[0]).toMatchObject({
-      type: 'file',
-      accept: '.json',
-      multiple: false,
+    mockShowOpenDialog.mockResolvedValue({
+      canceled: false,
+      filePaths: [preparedJsonPath],
     });
 
-    expect(createdFileInputs[0].click).toHaveBeenCalledTimes(1);
+    await findCommand(plugin, 'import-tiddlywiki-json')();
+
+    expect(mockShowOpenDialog).toHaveBeenCalledWith({
+      title: 'Import TiddlyWiki JSON',
+      defaultPath: preparedJsonPath,
+      filters: [{ name: 'TiddlyWiki JSON', extensions: ['json'] }],
+      properties: ['openFile'],
+    });
+
+    expect(importTiddlyWikiJsonPath).toHaveBeenCalledWith(
+      app,
+      preparedJsonPath,
+    );
+
     expect(displaySettings).not.toHaveBeenCalled();
-    expect(importTiddlyWikiJsonFile).not.toHaveBeenCalled();
   });
 
-  it('imports the selected file into the current vault', async () => {
-    const selectedFile = { name: 'wiki.json' } as File;
+  it('opens a standard native picker outside the manual test launcher', async () => {
+    await findCommand(plugin, 'import-tiddlywiki-json')();
 
-    findCommand(plugin, 'import-tiddlywiki-json')();
+    expect(mockShowOpenDialog).toHaveBeenCalledWith({
+      title: 'Import TiddlyWiki JSON',
+      filters: [{ name: 'TiddlyWiki JSON', extensions: ['json'] }],
+      properties: ['openFile'],
+    });
 
-    const fileInput = createdFileInputs[0];
-
-    fileInput.files = createFileList(selectedFile);
-
-    await dispatchFileChange(fileInput);
-
-    expect(importTiddlyWikiJsonFile).toHaveBeenCalledTimes(1);
-    expect(importTiddlyWikiJsonFile).toHaveBeenCalledWith(app, selectedFile);
+    expect(importTiddlyWikiJsonPath).not.toHaveBeenCalled();
   });
 
-  it.each([null, { length: 0, item: () => null } as unknown as FileList])(
-    'does not import after cancelling with files=%p',
-    async (selectedFiles) => {
-      findCommand(plugin, 'import-tiddlywiki-json')();
+  it.each([
+    { canceled: true, filePaths: ['/ignored.json'] },
+    { canceled: false, filePaths: [] },
+  ])('does not import after cancelling with %p', async (selection) => {
+    mockShowOpenDialog.mockResolvedValue(selection);
 
-      const fileInput = createdFileInputs[0];
+    await findCommand(plugin, 'import-tiddlywiki-json')();
 
-      fileInput.files = selectedFiles;
+    expect(importTiddlyWikiJsonPath).not.toHaveBeenCalled();
+  });
 
-      await dispatchFileChange(fileInput);
-
-      expect(importTiddlyWikiJsonFile).not.toHaveBeenCalled();
-    },
-  );
-
-  it('opens a fresh picker so the same file can be imported again', async () => {
-    const selectedFile = { name: 'wiki.json' } as File;
+  it('opens a fresh native picker so the same file can be imported again', async () => {
+    const selectedPath = path.resolve('test-fixtures/wiki.json');
     const importCommand = findCommand(plugin, 'import-tiddlywiki-json');
 
-    importCommand();
+    mockShowOpenDialog.mockResolvedValue({
+      canceled: false,
+      filePaths: [selectedPath],
+    });
 
-    createdFileInputs[0].files = createFileList(selectedFile);
+    await importCommand();
+    await importCommand();
 
-    await dispatchFileChange(createdFileInputs[0]);
+    expect(mockShowOpenDialog).toHaveBeenCalledTimes(2);
+    expect(importTiddlyWikiJsonPath).toHaveBeenCalledTimes(2);
 
-    importCommand();
-
-    createdFileInputs[1].files = createFileList(selectedFile);
-
-    await dispatchFileChange(createdFileInputs[1]);
-
-    expect(createdFileInputs).toHaveLength(2);
-    expect(createdFileInputs[1]).not.toBe(createdFileInputs[0]);
-    expect(createdFileInputs[1].click).toHaveBeenCalledTimes(1);
-    expect(importTiddlyWikiJsonFile).toHaveBeenCalledTimes(2);
-
-    expect(importTiddlyWikiJsonFile).toHaveBeenNthCalledWith(
+    expect(importTiddlyWikiJsonPath).toHaveBeenNthCalledWith(
       1,
       app,
-      selectedFile,
+      selectedPath,
     );
 
-    expect(importTiddlyWikiJsonFile).toHaveBeenNthCalledWith(
+    expect(importTiddlyWikiJsonPath).toHaveBeenNthCalledWith(
       2,
       app,
-      selectedFile,
+      selectedPath,
     );
+  });
+
+  it('reads only the dedicated manual import argument', () => {
+    const profilePath = path.resolve('temporary/profile');
+    const importPath = path.resolve('manual-test/tiddlywiki/import.json');
+    const unrelatedPath = path.resolve('unrelated/file.json');
+
+    expect(
+      getImportPathHint([
+        'Obsidian',
+        `--user-data-dir=${profilePath}`,
+        `--tiddlywiki-import-path=${importPath}`,
+      ]),
+    ).toBe(importPath);
+
+    expect(getImportPathHint(['Obsidian', unrelatedPath])).toBe(undefined);
   });
 
   it('exports the current vault with no active editor or settings display', async () => {
@@ -239,8 +218,8 @@ describe('command palette actions', () => {
     expect(displaySettings).not.toHaveBeenCalled();
   });
 
-  it('keeps the settings import button connected to the same picker behavior', async () => {
-    const selectedFile = { name: 'wiki.json' } as File;
+  it('keeps the settings import button connected to the native picker', async () => {
+    const selectedPath = path.resolve('test-fixtures/wiki.json');
 
     const button = {
       setButtonText: jest.fn().mockReturnThis(),
@@ -261,19 +240,18 @@ describe('command palette actions', () => {
       .mocked(Setting)
       .mockImplementation(() => setting as unknown as Setting);
 
+    mockShowOpenDialog.mockResolvedValue({
+      canceled: false,
+      filePaths: [selectedPath],
+    });
+
     renderImportJsonButton(app, settingsContainer);
 
-    expect(createdFileInputs).toHaveLength(0);
+    expect(mockShowOpenDialog).not.toHaveBeenCalled();
 
-    button.onClick.mock.calls[0][0]();
+    await button.onClick.mock.calls[0][0]();
 
-    const fileInput = createdFileInputs[0];
-
-    fileInput.files = createFileList(selectedFile);
-
-    await dispatchFileChange(fileInput);
-
-    expect(fileInput.click).toHaveBeenCalledTimes(1);
-    expect(importTiddlyWikiJsonFile).toHaveBeenCalledWith(app, selectedFile);
+    expect(mockShowOpenDialog).toHaveBeenCalledTimes(1);
+    expect(importTiddlyWikiJsonPath).toHaveBeenCalledWith(app, selectedPath);
   });
 });

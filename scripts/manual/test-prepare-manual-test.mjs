@@ -223,21 +223,48 @@ async function assertProfileReady(session) {
   return vaultId;
 }
 
-async function assertWikiArtifactsReady(runDirectory) {
+async function assertWikiArtifactsReady(session) {
   const runtime = await bootVerificationWiki();
-  const wikiDirectory = path.join(runDirectory, 'tiddlywiki');
-  const exportPath = path.join(wikiDirectory, 'import.json');
+  const wikiDirectory = path.dirname(session.sourceWikiPath);
+  const exportPath = session.importJsonPath;
   const exportSource = await readFile(exportPath, 'utf8');
   const exportedTiddlers = JSON.parse(exportSource);
 
-  for (const suffix of noteSuffixes) {
-    const filename = `TW-${suffix}.tid`;
+  const officialIntroductionSource = await readFile(
+    path.join(wikiDirectory, 'official-introduction.json'),
+    'utf8',
+  );
 
-    await assertFilesMatch(
-      path.join(wikiDirectory, filename),
-      path.join(projectDirectory, 'manual-test/tiddlywiki', filename),
-    );
-  }
+  const officialIntroductionTiddlers = JSON.parse(officialIntroductionSource);
+
+  assert.equal(
+    exportPath,
+    path.join(projectDirectory, 'manual-test/tiddlywiki/import.json'),
+  );
+
+  assert.equal(
+    wikiDirectory,
+    path.join(projectDirectory, 'manual-test/tiddlywiki'),
+  );
+
+  await assert.rejects(
+    access(path.join(session.runDirectory, 'generated-tiddlywiki')),
+    { code: 'ENOENT' },
+  );
+
+  const officialIntroductionTitles = officialIntroductionTiddlers.map(
+    (tiddler) => tiddler.title,
+  );
+
+  assert.equal(officialIntroductionTiddlers.length, 20);
+
+  assert.equal(
+    new Set(officialIntroductionTitles).size,
+    officialIntroductionTitles.length,
+  );
+
+  assert.ok(officialIntroductionTitles.includes('TiddlyWiki'));
+  assert.ok(officialIntroductionTitles.includes('Transclusion'));
 
   const exportedTitles = exportedTiddlers
     .map((tiddler) => tiddler.title)
@@ -370,38 +397,13 @@ async function assertWikiArtifactsReady(runDirectory) {
   }
 }
 
-async function assertGuideReady(guidePath, vaultDirectory) {
+async function assertGuideReady(guidePath) {
   const guideMarkdown = await readFile(guidePath, 'utf8');
-  const guideDirectory = path.dirname(guidePath);
-
-  const relativeArtifactPaths = [
-    '../tiddlywiki/import.json',
-    '../tiddlywiki/source.html',
-    '../tiddlywiki/empty.html',
-  ];
-
-  for (const relativeArtifactPath of relativeArtifactPaths) {
-    assert.ok(
-      guideMarkdown.includes(`\`${relativeArtifactPath}\``),
-      `Missing relative artifact path: ${relativeArtifactPath}`,
-    );
-
-    assert.equal(path.isAbsolute(relativeArtifactPath), false);
-
-    const localPath = path.resolve(guideDirectory, relativeArtifactPath);
-    const pathFromVault = path.relative(vaultDirectory, localPath);
-    const isOutsideVault = pathFromVault.startsWith(`..${path.sep}`);
-
-    assert.equal(
-      isOutsideVault,
-      true,
-      'Generated artifacts stay outside vault',
-    );
-
-    await access(localPath);
-  }
 
   assert.match(guideMarkdown, /^# Manual test: Obsidian/);
+  assert.match(guideMarkdown, /Cmd\+P.*Ctrl\+P/);
+  assert.match(guideMarkdown, /Import TiddlyWiki JSON/);
+  assert.match(guideMarkdown, /already selected/);
 
   assert.doesNotMatch(
     guideMarkdown,
@@ -413,15 +415,6 @@ async function assertGuideReady(guidePath, vaultDirectory) {
   assert.doesNotMatch(guideMarkdown, /(?:^|\s)(?:\/[\w.-]+)+\/?/m);
   assert.doesNotMatch(guideMarkdown, /[A-Za-z]:\\/);
   assert.doesNotMatch(guideMarkdown, /\]\(</);
-
-  const obsoleteLauncherFilenames = ['index.html', 'guide.js', 'guide.css'];
-  const runDirectory = path.dirname(vaultDirectory);
-
-  for (const filename of obsoleteLauncherFilenames) {
-    await assert.rejects(access(path.join(runDirectory, filename)), {
-      code: 'ENOENT',
-    });
-  }
 }
 
 test('prepares real manual testing artifacts and preserves earlier test sessions', async (context) => {
@@ -479,17 +472,14 @@ test('prepares real manual testing artifacts and preserves earlier test sessions
     await context.test(
       'packages the fixtures into working JSON and standalone TiddlyWiki files',
       async () => {
-        await assertWikiArtifactsReady(firstSession.runDirectory);
+        await assertWikiArtifactsReady(firstSession);
       },
     );
 
     await context.test(
-      'puts Markdown instructions and working relative paths in the mock vault',
+      'puts command-palette instructions in the mock vault',
       async () => {
-        await assertGuideReady(
-          firstSession.guidePath,
-          firstSession.vaultDirectory,
-        );
+        await assertGuideReady(firstSession.guidePath);
       },
     );
 
@@ -506,19 +496,12 @@ test('prepares real manual testing artifacts and preserves earlier test sessions
           'My manual result.md',
         );
 
-        const editedWikiPath = path.join(
-          firstSession.runDirectory,
-          'tiddlywiki',
-          'source.html',
-        );
-
         await writeFile(
           editedNotePath,
           'Manual edit that must survive another setup.',
         );
 
         await writeFile(newNotePath, 'A contributor-created note.');
-        await writeFile(editedWikiPath, 'A wiki saved during manual testing.');
 
         const secondSession = await prepareManualTest({
           projectDirectory,
@@ -535,11 +518,6 @@ test('prepares real manual testing artifacts and preserves earlier test sessions
         assert.equal(
           await readFile(newNotePath, 'utf8'),
           'A contributor-created note.',
-        );
-
-        assert.equal(
-          await readFile(editedWikiPath, 'utf8'),
-          'A wiki saved during manual testing.',
         );
 
         await assertVaultReady(secondSession.vaultDirectory);

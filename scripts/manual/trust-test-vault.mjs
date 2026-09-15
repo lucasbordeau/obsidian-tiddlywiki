@@ -134,11 +134,22 @@ async function waitForPlugins(port, pluginIds) {
   );
 }
 
-export async function trustTestVault({ profileDirectory, vaultId, pluginIds }) {
+export async function trustTestVault({
+  profileDirectory,
+  vaultId,
+  pluginIds,
+  commandId,
+}) {
   const port = await readDebuggingPort(profileDirectory);
   const trustKey = `enable-plugin-${vaultId}`;
   const trustExpression = `localStorage.setItem(${JSON.stringify(trustKey)},'true');setTimeout(()=>location.reload(),50);true`;
 
   await evaluateInObsidian(port, trustExpression);
   await waitForPlugins(port, pluginIds);
+
+  if (commandId) {
+    const commandExpression = `app.commands.executeCommandById(${JSON.stringify(commandId)});true`;
+
+    await evaluateInObsidian(port, commandExpression);
+  }
 }

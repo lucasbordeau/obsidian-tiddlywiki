@@ -8,11 +8,12 @@ historical minimum-version entries in `versions.json`.
 
 Use Node 24 and the committed npm lockfile:
 
-For hands-on testing, run `npm ci` once, then `npm run test:manual`. This opens
-a populated mock vault in a separate Obsidian instance with the current plugin
-and Hot Reload enabled, starts development watch, and opens `MANUAL-TEST.md`.
-The versioned mocks are visible under [`manual-test/`](./manual-test/README.md).
-Keep the terminal running while testing. See
+For hands-on testing, run `npm run test:manual`. On a fresh clone, that one
+command installs dependencies before it builds and opens a populated mock vault
+in a separate Obsidian instance. The current plugin and Hot Reload are already
+enabled. The versioned mocks are visible under
+[`manual-test/`](./manual-test/README.md). Keep the terminal running while
+testing. See
 [manual testing](./docs/development/manual-testing.md).
 
 For automated validation:

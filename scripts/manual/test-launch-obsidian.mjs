@@ -44,9 +44,18 @@ async function stopFakeObsidian(fakeProcess) {
   await exitPromise;
 }
 
-async function assertFakeLaunch(fixture, debug = false) {
+async function assertFakeLaunch(
+  fixture,
+  { debug = false, applicationArguments = [] } = {},
+) {
   const launchOptions = { ...fixture };
-  const expectedArguments = [`--user-data-dir=${fixture.profileDirectory}`];
+
+  const expectedArguments = [
+    `--user-data-dir=${fixture.profileDirectory}`,
+    ...applicationArguments,
+  ];
+
+  launchOptions.applicationArguments = applicationArguments;
 
   if (debug) {
     launchOptions.debug = true;
@@ -134,7 +143,18 @@ test(
       await context.test(
         'enables localhost debugging only when requested',
         async () => {
-          await assertFakeLaunch(fixture, true);
+          await assertFakeLaunch(fixture, { debug: true });
+        },
+      );
+
+      await context.test(
+        'passes application arguments to the isolated Obsidian process',
+        async () => {
+          await assertFakeLaunch(fixture, {
+            applicationArguments: [
+              `--tiddlywiki-import-path=${path.join(runDirectory, 'import.json')}`,
+            ],
+          });
         },
       );
 

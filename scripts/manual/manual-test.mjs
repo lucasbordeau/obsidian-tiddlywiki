@@ -3,7 +3,6 @@ import { fileURLToPath } from 'node:url';
 import { createPluginBuildContext } from '../build/create-plugin-build-context.mjs';
 import { launchObsidian } from './launch-obsidian.mjs';
 import { prepareManualTest } from './prepare-manual-test.mjs';
-import { revealManualFile } from './reveal-manual-file.mjs';
 import { trustTestVault } from './trust-test-vault.mjs';
 
 const supportedArguments = ['--no-open'];
@@ -29,14 +28,6 @@ console.log(`Mock vault: ${vaultPath}`);
 console.log(`TiddlyWiki JSON: ${importPath}`);
 
 if (!process.argv.includes('--no-open')) {
-  const wasImportFileRevealed = await revealManualFile(prepared.importJsonPath);
-
-  if (!wasImportFileRevealed) {
-    console.log(
-      'Open the TiddlyWiki JSON path printed above in your file browser.',
-    );
-  }
-
   const context = await createPluginBuildContext({
     pluginFolder: prepared.pluginDirectory,
     outfile: path.join(prepared.runDirectory, 'main.js'),
@@ -52,12 +43,16 @@ if (!process.argv.includes('--no-open')) {
       profileDirectory: prepared.profileDirectory,
       vaultDirectory: prepared.vaultDirectory,
       debug: true,
+      applicationArguments: [
+        `--tiddlywiki-import-path=${prepared.importJsonPath}`,
+      ],
     });
 
     await trustTestVault({
       profileDirectory: prepared.profileDirectory,
       vaultId: prepared.vaultId,
       pluginIds: ['hot-reload', 'tiddlywiki-import-export'],
+      commandId: 'tiddlywiki-import-export:import-tiddlywiki-json',
     });
 
     obsidian.process.once('exit', () => context.dispose());
@@ -68,6 +63,7 @@ if (!process.argv.includes('--no-open')) {
 
     console.log(`Obsidian started (PID ${obsidian.pid}). Logs: ${logPath}`);
     console.log('The mock vault is trusted and both plugins are loaded.');
+    console.log('The import picker is open with the test JSON selected.');
 
     console.log(
       'Hot Reload is watching the current source. Keep this terminal open; Ctrl+C stops watching.',

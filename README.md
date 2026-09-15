@@ -28,14 +28,18 @@ command, open **Settings → Hotkeys** and search for **TiddlyWiki**.
 With Node 24 and the Obsidian desktop app installed:
 
 ```sh
-npm ci              # Once after cloning
 npm run test:manual
 ```
 
-The command opens a separate Obsidian instance directly in a populated mock
-vault, with the current plugin and Hot Reload installed and enabled. It opens
-`MANUAL-TEST.md` in the vault with two checks: import the prepared TiddlyWiki JSON,
-then export back into the supplied blank wiki.
+The command installs dependencies when needed, then opens a separate Obsidian
+instance directly in a populated mock vault with the current plugin and Hot
+Reload installed and enabled. It opens `MANUAL-TEST.md` with two checks: import
+the prepared TiddlyWiki JSON, then export back into the supplied blank wiki.
+
+The native import picker opens automatically at the versioned
+`manual-test/tiddlywiki/import.json`. Choose **Open**. If you close it, press
+**Cmd+P** or **Ctrl+P** and run **Import/Export TiddlyWiki: Import TiddlyWiki
+JSON**.
 
 Keep the terminal running. Source edits rebuild and reload the plugin in the
 test vault. Press **Ctrl+C** to stop watching; the Obsidian window stays open.
@@ -43,9 +47,8 @@ test vault. Press **Ctrl+C** to stop watching; the Obsidian window stays open.
 The samples include real image/audio files, working internal links, formatting,
 metadata, and preservation examples. The complete source mocks are versioned in
 [`manual-test/`](./manual-test/README.md). Each run creates a fresh directory
-under `manual-test/runs/` and retains earlier runs. Setup requires no `.env` and
-works offline after `npm ci`; the pinned Hot Reload plugin is bundled in the
-repository.
+under `manual-test/runs/` and retains earlier runs. Setup requires no `.env`;
+the pinned Hot Reload plugin is bundled in the repository.
 
 Use `npm run test:manual -- --no-open` to prepare the files and exit without
 launching Obsidian or starting a watcher. See

@@ -5,20 +5,21 @@ Keep the terminal running: editing plugin source rebuilds and reloads the plugin
 
 ## 1. Import TiddlyWiki into Obsidian
 
-The test command opens your system file browser with `import.json` selected.
-In Obsidian, open **Settings → Import/Export TiddlyWiki**, click **Import .json**,
-and select that file. Its path relative to this vault is
-`../tiddlywiki/import.json`.
+The launcher opens the native picker in `manual-test/tiddlywiki` with
+`import.json` already selected. Choose **Open**.
+
+If you closed it, press **Cmd+P** on macOS or **Ctrl+P** on Windows/Linux and run
+**Import/Export TiddlyWiki: Import TiddlyWiki JSON**.
 
 A `TiddlyWiki-Import-…` folder should appear with four `TW-` notes, a JPEG,
-and an MP3. Open `TW-Start`, then open `../tiddlywiki/source.html` from the same
-system folder and compare them.
+and an MP3. Open `TW-Start`, then open `source.html` from the same folder shown
+by the picker and compare them.
 
 ## 2. Export Obsidian into TiddlyWiki
 
-In the same plugin settings, click **Export .json**. Open
-`../tiddlywiki/empty.html` from the same system folder, drag the downloaded
-`test.json` onto it, and confirm the import.
+Press **Cmd+P** or **Ctrl+P** again and run **Import/Export TiddlyWiki: Export
+vault to TiddlyWiki JSON**. Open `empty.html` from `manual-test/tiddlywiki`, drag
+the downloaded `test.json` onto it, and confirm the import.
 
 Expect the four `OB-` notes, four imported `TW-` notes, and four media tiddlers.
 This `MANUAL-TEST` instruction note is also exported because export includes
