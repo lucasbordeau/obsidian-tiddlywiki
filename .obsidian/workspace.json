@@ -1,0 +1,228 @@
+{
+  "main": {
+    "id": "bbdd9be1114e8763",
+    "type": "split",
+    "children": [
+      {
+        "id": "1f20fd1a056c0cb2",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "141f0e14c3661b03",
+            "type": "leaf",
+            "state": {
+              "type": "empty",
+              "state": {},
+              "icon": "lucide-file",
+              "title": "New tab"
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "vertical"
+  },
+  "left": {
+    "id": "32381fed2fe420fa",
+    "type": "split",
+    "children": [
+      {
+        "id": "045ac9c7c994a3cf",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "e277941cfde5ad70",
+            "type": "leaf",
+            "state": {
+              "type": "file-explorer",
+              "state": {
+                "sortOrder": "alphabetical",
+                "autoReveal": false
+              },
+              "icon": "lucide-folder-closed",
+              "title": "Files"
+            }
+          },
+          {
+            "id": "f97357608131bd93",
+            "type": "leaf",
+            "state": {
+              "type": "search",
+              "state": {
+                "query": "",
+                "matchingCase": false,
+                "explainSearch": false,
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical"
+              },
+              "icon": "lucide-search",
+              "title": "Search"
+            }
+          },
+          {
+            "id": "15ae8b14916f2a07",
+            "type": "leaf",
+            "state": {
+              "type": "bookmarks",
+              "state": {},
+              "icon": "lucide-bookmark",
+              "title": "Bookmarks"
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "horizontal",
+    "width": 300
+  },
+  "right": {
+    "id": "e5faa8caab60f5ea",
+    "type": "split",
+    "children": [
+      {
+        "id": "f6c46fd2358b521b",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "6018ad657730fcd7",
+            "type": "leaf",
+            "state": {
+              "type": "backlink",
+              "state": {
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical",
+                "showSearch": false,
+                "searchQuery": "",
+                "backlinkCollapsed": false,
+                "unlinkedCollapsed": true
+              },
+              "icon": "links-coming-in",
+              "title": "Backlinks"
+            }
+          },
+          {
+            "id": "1f3b316c0fb0ca9c",
+            "type": "leaf",
+            "state": {
+              "type": "outgoing-link",
+              "state": {
+                "linksCollapsed": false,
+                "unlinkedCollapsed": true
+              },
+              "icon": "links-going-out",
+              "title": "Outgoing links"
+            }
+          },
+          {
+            "id": "503b529db85da6d9",
+            "type": "leaf",
+            "state": {
+              "type": "tag",
+              "state": {
+                "sortOrder": "frequency",
+                "useHierarchy": true,
+                "showSearch": false,
+                "searchQuery": ""
+              },
+              "icon": "lucide-tags",
+              "title": "Tags"
+            }
+          },
+          {
+            "id": "0ef7943e5d4b74ff",
+            "type": "leaf",
+            "state": {
+              "type": "all-properties",
+              "state": {
+                "sortOrder": "frequency",
+                "showSearch": false,
+                "searchQuery": ""
+              },
+              "icon": "lucide-archive",
+              "title": "All properties"
+            }
+          },
+          {
+            "id": "a6f695d8fdc80fe0",
+            "type": "leaf",
+            "state": {
+              "type": "outline",
+              "state": {
+                "followCursor": false,
+                "showSearch": false,
+                "searchQuery": ""
+              },
+              "icon": "lucide-list",
+              "title": "Outline"
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "horizontal",
+    "width": 300,
+    "collapsed": true
+  },
+  "left-ribbon": {
+    "hiddenItems": {
+      "switcher:Open quick switcher": false,
+      "graph:Open graph view": false,
+      "canvas:Create new canvas": false,
+      "daily-notes:Open today's daily note": false,
+      "templates:Insert template": false,
+      "command-palette:Open command palette": false,
+      "bases:Create new base": false
+    }
+  },
+  "active": "141f0e14c3661b03",
+  "lastOpenFiles": [
+    "manual-test/runs/grok-dNiDQ4/profile/5a2d2343478b2c9b.json",
+    "manual-test/runs/grok-dNiDQ4/profile/Code Cache/js/e68ac9d21f134e1c_0",
+    "manual-test/runs/grok-dNiDQ4/profile/Code Cache/js/a2f4bbf5c95026ff_0",
+    "manual-test/runs/grok-dNiDQ4/profile/Code Cache/js/cf83a17d751205c2_0",
+    "manual-test/runs/grok-dNiDQ4/profile/Code Cache/js/ce24286ac5fb5589_0",
+    "manual-test/runs/grok-dNiDQ4/profile/IndexedDB/app_obsidian.md_0.indexeddb.leveldb/000008.ldb",
+    "manual-test/runs/grok-dNiDQ4/profile/Session Storage/000003.log",
+    "manual-test/runs/grok-dNiDQ4/profile/Session Storage/CURRENT",
+    "manual-test/runs/grok-dNiDQ4/profile/Session Storage/MANIFEST-000001",
+    "manual-test/runs/grok-dNiDQ4/profile/Session Storage/LOG",
+    "manual-test/runs/grok-dNiDQ4/profile/Session Storage/LOCK",
+    "manual-test/runs/grok-dNiDQ4/verification/imported-image.png",
+    "manual-test/runs/grok-dNiDQ4/verification/exercises.png",
+    "manual-test/runs/grok-dNiDQ4/verification/details-and-code.png",
+    "manual-test/runs/grok-dNiDQ4/obsidian-vault/GROK-CATALOG.md",
+    "manual-test/runs/grok-dNiDQ4/obsidian-vault/GROK-IMPORT.md",
+    "manual-test/runs/grok-dNiDQ4/obsidian-vault/Notes/Your First Dynamic List.md",
+    "manual-test/runs/grok-dNiDQ4/obsidian-vault/Attachments/xy.png",
+    "manual-test/runs/grok-dNiDQ4/obsidian-vault/Notes/Writing Shell Scripts Against a TiddlyWiki.md",
+    "manual-test/runs/grok-dNiDQ4/obsidian-vault/Notes/Wr-Transclusions.md",
+    "manual-test/runs/grok-dNiDQ4/obsidian-vault/Notes/Wr-Tables.md",
+    "manual-test/runs/grok-dNiDQ4/obsidian-vault/Notes/Wr-Styles.md",
+    "manual-test/runs/grok-dNiDQ4/obsidian-vault/Notes/Wr-Quotes.md",
+    "manual-test/runs/grok-dNiDQ4/obsidian-vault/Notes/Wr-Lists.md",
+    "manual-test/runs/grok-dNiDQ4/obsidian-vault/Notes/Wr-Links.md",
+    "manual-test/runs/grok-dNiDQ4/obsidian-vault/Notes/Wr-LineBreaks.md",
+    "manual-test/runs/grok-dNiDQ4/obsidian-vault/Notes/Wr-InlineFormatting.md",
+    "manual-test/runs/grok-dNiDQ4/obsidian-vault/Notes/Wr-Images.md",
+    "manual-test/runs/grok-dNiDQ4/obsidian-vault/Notes/Wr-HorizontalRules.md",
+    "manual-test/runs/grok-dNiDQ4/obsidian-vault/Notes/Wr-Headings.md",
+    "manual-test/runs/grok-dNiDQ4/obsidian-vault/Notes/Wr-CodeBlocks.md",
+    "manual-test/runs/grok-dNiDQ4/obsidian-vault/Notes/Working with Dates.md",
+    "manual-test/runs/grok-dNiDQ4/obsidian-vault/Notes/Wikitext Reference.md",
+    "manual-test/runs/grok-dNiDQ4/obsidian-vault/Notes/Wikitext.md",
+    "manual-test/runs/grok-dNiDQ4/obsidian-vault/Notes/Wikification.md",
+    "manual-test/runs/grok-dNiDQ4/obsidian-vault/Notes/Widgets.md",
+    "manual-test/runs/grok-dNiDQ4/obsidian-vault/Notes/Why TiddlyWiki-.md",
+    "manual-test/runs/grok-dNiDQ4/obsidian-vault/Notes/When Things Go Wrong.md",
+    "manual-test/runs/grok-dNiDQ4/obsidian-vault/Notes/Welcome to Grok TiddlyWiki.md",
+    "manual-test/runs/grok-dNiDQ4/obsidian-vault/Notes/Variables.md",
+    "manual-test/runs/grok-dNiDQ4/obsidian-vault/Attachments/side-by-side-wikitext.png",
+    "manual-test/runs/grok-dNiDQ4/obsidian-vault/Attachments/savers-oh-no.png",
+    "manual-test/runs/grok-dNiDQ4/obsidian-vault/Attachments/open-button.png",
+    "manual-test/runs/grok-dNiDQ4/obsidian-vault/Attachments/internal-external-toc-distinction.png",
+    "manual-test/runs/grok-dNiDQ4/obsidian-vault/Attachments/interface.png",
+    "manual-test/runs/grok-dNiDQ4/obsidian-vault/Attachments/edge-notched.jpg"
+  ]
+}
