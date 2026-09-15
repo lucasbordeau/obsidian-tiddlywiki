@@ -1,4 +1,4 @@
-# Import/Export TiddlyWiki 
+# Import/Export TiddlyWiki
 
 Import and export from TiddlyWiki with JSON files.
 
@@ -6,7 +6,8 @@ Import and export from TiddlyWiki with JSON files.
 
 Just install it from the store.
 
-Or copy over `main.js`, `manifest.json` to your vault `VaultFolder/.obsidian/plugins/your-plugin-id/`.
+Or copy `main.js`, `manifest.json`, and `styles.css` to your vault at
+`VaultFolder/.obsidian/plugins/your-plugin-id/`.
 
 ## How to dev
 
@@ -17,5 +18,3 @@ Or copy over `main.js`, `manifest.json` to your vault `VaultFolder/.obsidian/plu
 Setup `DEV_VAULT_PLUGIN_FOLDER` (your obsidian dev-vault plugin folder) in a .env file (copy the .env.example)
 
 I couldn't manage to have the [hot-reload](https://github.com/pjeby/hot-reload) plugin to work, just turn off an on again the plugin in Obsidian and it will reload.
-
-

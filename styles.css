@@ -1,0 +1,47 @@
+.tiddlywiki-export-tree {
+  max-height: 20rem;
+  margin: 0 0 var(--size-4-3);
+  padding: var(--size-4-2);
+  overflow: auto;
+  border: 1px solid var(--background-modifier-border);
+  border-radius: var(--radius-s);
+  background: var(--background-secondary);
+}
+
+.tiddlywiki-export-tree ul {
+  margin: 0;
+  padding-left: var(--size-4-5);
+  list-style: none;
+}
+
+.tiddlywiki-export-tree > ul {
+  padding-left: 0;
+}
+
+.tiddlywiki-export-node-row {
+  display: flex;
+  align-items: center;
+  min-height: 2rem;
+  gap: var(--size-4-2);
+  border-radius: var(--radius-s);
+  cursor: pointer;
+}
+
+.tiddlywiki-export-node-row:hover {
+  background: var(--background-modifier-hover);
+}
+
+.tiddlywiki-export-node-row input {
+  flex: 0 0 auto;
+  margin: 0;
+}
+
+.tiddlywiki-export-tree summary::marker {
+  color: var(--text-muted);
+}
+
+.tiddlywiki-export-summary {
+  margin: 0 0 var(--size-4-4);
+  color: var(--text-muted);
+  font-size: var(--font-ui-small);
+}
