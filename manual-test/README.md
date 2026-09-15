@@ -7,10 +7,11 @@ npm ci
 npm run test:manual
 ```
 
-The command copies `obsidian-vault/` into a fresh directory under `runs/`,
-injects the current plugin build and Hot Reload, creates the TiddlyWiki test
-files inside the copied vault, and opens that vault in an isolated Obsidian
-instance. Follow the `MANUAL-TEST.md` note that opens automatically.
+The command copies `obsidian-vault/` and `tiddlywiki/` into a fresh directory
+under `runs/`, injects the current plugin build and Hot Reload, builds the JSON
+and standalone wikis in the copied `tiddlywiki/` folder, and opens the copied
+vault in an isolated Obsidian instance. It also reveals `import.json` in the
+system file browser. Follow the `MANUAL-TEST.md` note that opens automatically.
 
 These independently authored sources exercise both starting formats. The `OB-`
 notes and media in `obsidian-vault/` start in Obsidian; the `TW-` tiddlers in

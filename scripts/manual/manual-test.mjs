@@ -3,6 +3,7 @@ import { fileURLToPath } from 'node:url';
 import { createPluginBuildContext } from '../build/create-plugin-build-context.mjs';
 import { launchObsidian } from './launch-obsidian.mjs';
 import { prepareManualTest } from './prepare-manual-test.mjs';
+import { revealManualFile } from './reveal-manual-file.mjs';
 import { trustTestVault } from './trust-test-vault.mjs';
 
 const supportedArguments = ['--no-open'];
@@ -21,11 +22,21 @@ const prepared = await prepareManualTest();
 const projectDirectory = fileURLToPath(new URL('../../', import.meta.url));
 const guidePath = path.relative(projectDirectory, prepared.guidePath);
 const vaultPath = path.relative(projectDirectory, prepared.vaultDirectory);
+const importPath = path.relative(projectDirectory, prepared.importJsonPath);
 
 console.log(`\nManual test instructions: ${guidePath}`);
 console.log(`Mock vault: ${vaultPath}`);
+console.log(`TiddlyWiki JSON: ${importPath}`);
 
 if (!process.argv.includes('--no-open')) {
+  const wasImportFileRevealed = await revealManualFile(prepared.importJsonPath);
+
+  if (!wasImportFileRevealed) {
+    console.log(
+      'Open the TiddlyWiki JSON path printed above in your file browser.',
+    );
+  }
+
   const context = await createPluginBuildContext({
     pluginFolder: prepared.pluginDirectory,
     outfile: path.join(prepared.runDirectory, 'main.js'),

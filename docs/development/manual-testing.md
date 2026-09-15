@@ -11,6 +11,7 @@ Obsidian opens directly in a populated mock vault with the current plugin and
 Hot Reload installed and enabled. The `MANUAL-TEST.md` note opens with the
 import/export instructions and a checklist. Follow its two steps to import the
 prepared JSON into Obsidian, then export the vault into the supplied blank wiki.
+The system file browser opens with `import.json` selected.
 
 Keep the terminal running. Editing plugin source rebuilds the bundle and Hot
 Reload reloads the plugin in the test vault. **Ctrl+C** stops the watcher; the
@@ -25,19 +26,20 @@ is registered and opened automatically. Setup uses the installed TiddlyWiki
 version and requires no `.env`. The pinned official Hot Reload plugin is bundled
 in the repository, so setup works offline after `npm ci`.
 
-| File or folder                                                      | Purpose                                                                |
-| ------------------------------------------------------------------- | ---------------------------------------------------------------------- |
-| `manual-test/obsidian-vault/`                                       | Versioned source vault with four `OB-` notes, media, and configuration |
-| `manual-test/tiddlywiki/`                                           | Four independently authored, versioned `TW-` tiddlers                  |
-| `manual-test/runs/run-…/Obsidian test vault/MANUAL-TEST.md`         | Instructions and checklist, opened automatically in Obsidian           |
-| `manual-test/runs/run-…/Obsidian test vault/TiddlyWiki test files/` | Generated source wiki, import JSON, and blank target wiki              |
+| File or folder                                          | Purpose                                                                |
+| ------------------------------------------------------- | ---------------------------------------------------------------------- |
+| `manual-test/obsidian-vault/`                           | Versioned source vault with four `OB-` notes, media, and configuration |
+| `manual-test/tiddlywiki/`                               | Four independently authored, versioned `TW-` tiddlers                  |
+| `manual-test/runs/run-…/obsidian-vault/MANUAL-TEST.md`  | Instructions and checklist, opened automatically in Obsidian           |
+| `manual-test/runs/run-…/tiddlywiki/import.json`         | Generated JSON selected in the plugin's import picker                  |
+| `manual-test/runs/run-…/tiddlywiki/{source,empty}.html` | Generated source and blank target wikis                                |
 
 ## Expected results
 
 1. In **Settings → Import/Export TiddlyWiki**, click **Import .json** and select
-   the JSON linked in `MANUAL-TEST.md`. Expect a `TiddlyWiki-Import-…` folder
-   containing four `TW-` notes, an image, and audio. Compare `TW-Start` with the
-   source wiki.
+   `../tiddlywiki/import.json`, relative to the mock vault root. Expect a
+   `TiddlyWiki-Import-…` folder containing four `TW-` notes, an image, and audio.
+   Compare `TW-Start` with the source wiki.
 2. Click **Export .json**. Drag the downloaded `test.json` into the blank target
    wiki and confirm the import. Expect both `OB-` and `TW-` sets: eight sample
    notes and four media tiddlers. The `MANUAL-TEST` instruction note is also

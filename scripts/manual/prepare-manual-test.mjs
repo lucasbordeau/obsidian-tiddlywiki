@@ -31,13 +31,17 @@ export async function prepareManualTest({
   await mkdir(outputDirectory, { recursive: true });
 
   const runDirectory = await mkdtemp(path.join(outputDirectory, 'run-'));
-  const vaultDirectory = path.join(runDirectory, 'Obsidian test vault');
+  const vaultDirectory = path.join(runDirectory, 'obsidian-vault');
   const settingsDirectory = path.join(vaultDirectory, '.obsidian');
   const pluginDirectory = path.join(settingsDirectory, 'plugins', manifest.id);
   const profileDirectory = path.join(runDirectory, 'profile');
-  const wikiDirectory = path.join(vaultDirectory, 'TiddlyWiki test files');
+  const wikiDirectory = path.join(runDirectory, 'tiddlywiki');
 
   await cp(vaultTemplateDirectory, vaultDirectory, { recursive: true });
+
+  await cp(path.join(manualTestDirectory, 'tiddlywiki'), wikiDirectory, {
+    recursive: true,
+  });
 
   await mkdir(pluginDirectory, { recursive: true });
   await writeFile(path.join(pluginDirectory, 'main.js'), pluginBundle);
@@ -58,7 +62,7 @@ export async function prepareManualTest({
 
   const wikiSummary = await buildManualWikis({
     outputDirectory: wikiDirectory,
-    fixturesDirectory: manualTestDirectory,
+    fixturesDirectory: runDirectory,
     mediaDirectory: vaultTemplateDirectory,
   });
 

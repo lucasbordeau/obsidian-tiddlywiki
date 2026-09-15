@@ -125,9 +125,9 @@ export async function buildManualWikis({
 
   validateFixtureTitles(fixtureTiddlers);
 
-  const sourceWikiPath = path.join(outputDirectory, 'tiddlywiki-source.html');
-  const emptyWikiPath = path.join(outputDirectory, 'tiddlywiki-empty.html');
-  const importJsonPath = path.join(outputDirectory, 'tiddlywiki-import.json');
+  const sourceWikiPath = path.join(outputDirectory, 'source.html');
+  const emptyWikiPath = path.join(outputDirectory, 'empty.html');
+  const importJsonPath = path.join(outputDirectory, 'import.json');
 
   await mkdir(outputDirectory, { recursive: true });
 
