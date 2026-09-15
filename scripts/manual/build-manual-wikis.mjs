@@ -113,6 +113,12 @@ function configureManualWiki(runtime, title, defaultTitles) {
   runtime.wiki.addTiddlers(configurationTiddlers);
 }
 
+function normalizeStandaloneWikiHtml(wikiHtml) {
+  const normalizedLines = wikiHtml.replace(/\r\n/g, '\n').trim();
+
+  return `${normalizedLines}\n`;
+}
+
 export async function buildManualWikis({
   outputDirectory,
   fixturesDirectory,
@@ -138,7 +144,7 @@ export async function buildManualWikis({
     '$:/core/save/all',
   );
 
-  await writeFile(emptyWikiPath, emptyWikiHtml);
+  await writeFile(emptyWikiPath, normalizeStandaloneWikiHtml(emptyWikiHtml));
 
   const defaultTitles = noteTiddlers.map((tiddler) => tiddler.title);
   const startTitleIndex = defaultTitles.indexOf('TW-Start');
@@ -161,7 +167,7 @@ export async function buildManualWikis({
     '$:/core/save/all',
   );
 
-  await writeFile(sourceWikiPath, sourceWikiHtml);
+  await writeFile(sourceWikiPath, normalizeStandaloneWikiHtml(sourceWikiHtml));
 
   await writeFile(
     importJsonPath,

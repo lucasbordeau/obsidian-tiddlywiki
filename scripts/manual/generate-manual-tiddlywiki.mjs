@@ -90,17 +90,29 @@ try {
     mediaDirectory: path.join(manualTestDirectory, 'obsidian-vault'),
   });
 
-  const destinationPath = path.join(
+  const importDestinationPath = path.join(
     manualTestDirectory,
     'tiddlywiki',
     'import.json',
   );
 
-  await copyFile(wikiSummary.importJsonPath, destinationPath);
+  const sourceWikiDestinationPath = path.join(
+    manualTestDirectory,
+    'tiddlywiki',
+    'source.html',
+  );
+
+  const fixtureCopyPromises = [
+    copyFile(wikiSummary.importJsonPath, importDestinationPath),
+    copyFile(wikiSummary.sourceWikiPath, sourceWikiDestinationPath),
+  ];
+
+  await Promise.all(fixtureCopyPromises);
 
   const introductionTiddlerCount = await generateOfficialIntroduction();
 
   console.log('Updated manual-test/tiddlywiki/import.json.');
+  console.log('Updated the self-contained manual-test/tiddlywiki/source.html.');
 
   console.log(
     `Updated official-introduction.json with ${introductionTiddlerCount} BSD-licensed tiddlers.`,

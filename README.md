@@ -41,6 +41,10 @@ The native import picker opens automatically at the versioned
 **Cmd+P** or **Ctrl+P** and run **Import/Export TiddlyWiki: Import TiddlyWiki
 JSON**.
 
+To exercise TiddlyWiki's export yourself, open the versioned self-contained
+`manual-test/tiddlywiki/source.html`, choose **Tools → Export all → JSON File**,
+and import the downloaded JSON with the same Obsidian command.
+
 Keep the terminal running. Source edits rebuild and reload the plugin in the
 test vault. Press **Ctrl+C** to stop watching; the Obsidian window stays open.
 

@@ -15,11 +15,17 @@ A `TiddlyWiki-Import-…` folder should appear with four `TW-` notes, a JPEG,
 and an MP3. Open `TW-Start`, then open `source.html` from the same folder shown
 by the picker and compare them.
 
+To verify the TiddlyWiki export yourself, cancel the initial picker and open the
+versioned, self-contained `manual-test/tiddlywiki/source.html` in a browser. In
+TiddlyWiki, choose **Tools → Export all → JSON File**. Return to Obsidian, run
+the import command with **Cmd+P** or **Ctrl+P**, and select the downloaded JSON.
+
 ## 2. Export Obsidian into TiddlyWiki
 
 Press **Cmd+P** or **Ctrl+P** again and run **Import/Export TiddlyWiki: Export
-vault to TiddlyWiki JSON**. Open `empty.html` from `manual-test/tiddlywiki`, drag
-the downloaded `test.json` onto it, and confirm the import.
+vault to TiddlyWiki JSON**. Open the generated `empty.html` from
+`manual-test/tiddlywiki`, drag the downloaded `test.json` onto it, and confirm
+the import.
 
 Expect the four `OB-` notes, four imported `TW-` notes, and four media tiddlers.
 This `MANUAL-TEST` instruction note is also exported because export includes

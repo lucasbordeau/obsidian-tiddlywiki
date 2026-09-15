@@ -22,7 +22,6 @@ data.json
 .dev-vault/
 /manual-test/runs/
 /manual-test/tiddlywiki/empty.html
-/manual-test/tiddlywiki/source.html
 
 dist/
 coverage/

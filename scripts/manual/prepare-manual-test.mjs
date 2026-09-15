@@ -44,6 +44,7 @@ export async function prepareManualTest({
 
   const wikiDirectory = path.join(manualTestDirectory, 'tiddlywiki');
   const versionedImportJsonPath = path.join(wikiDirectory, 'import.json');
+  const versionedSourceWikiPath = path.join(wikiDirectory, 'source.html');
 
   await cp(vaultTemplateDirectory, vaultDirectory, { recursive: true });
 
@@ -70,26 +71,33 @@ export async function prepareManualTest({
     mediaDirectory: vaultTemplateDirectory,
   });
 
-  const [generatedImportJson, versionedImportJson] = await Promise.all([
+  const artifactReadPromises = [
     readFile(wikiSummary.importJsonPath),
     readFile(versionedImportJsonPath),
-  ]);
+    readFile(wikiSummary.sourceWikiPath),
+    readFile(versionedSourceWikiPath),
+  ];
 
-  if (!generatedImportJson.equals(versionedImportJson)) {
+  const [
+    generatedImportJson,
+    versionedImportJson,
+    generatedSourceWiki,
+    versionedSourceWiki,
+  ] = await Promise.all(artifactReadPromises);
+
+  const hasOutdatedVersionedArtifact =
+    !generatedImportJson.equals(versionedImportJson) ||
+    !generatedSourceWiki.equals(versionedSourceWiki);
+
+  if (hasOutdatedVersionedArtifact) {
     throw new Error(
-      'manual-test/tiddlywiki/import.json is out of date. Run npm run test:manual:fixtures.',
+      'The versioned TiddlyWiki fixtures are out of date. Run npm run test:manual:fixtures.',
     );
   }
 
-  const sourceWikiPath = path.join(wikiDirectory, 'source.html');
   const emptyWikiPath = path.join(wikiDirectory, 'empty.html');
 
-  const wikiCopyPromises = [
-    copyFile(wikiSummary.sourceWikiPath, sourceWikiPath),
-    copyFile(wikiSummary.emptyWikiPath, emptyWikiPath),
-  ];
-
-  await Promise.all(wikiCopyPromises);
+  await copyFile(wikiSummary.emptyWikiPath, emptyWikiPath);
   await rm(generatedWikiDirectory, { recursive: true });
 
   const guidePath = path.join(vaultDirectory, 'MANUAL-TEST.md');
@@ -103,7 +111,7 @@ export async function prepareManualTest({
     vaultId: vaultConfiguration.vaultId,
     ...wikiSummary,
     importJsonPath: versionedImportJsonPath,
-    sourceWikiPath,
+    sourceWikiPath: versionedSourceWikiPath,
     emptyWikiPath,
   };
 }
