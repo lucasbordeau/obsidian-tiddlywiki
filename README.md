@@ -8,6 +8,35 @@ Just install it from the store.
 
 Or copy over `main.js`, `manifest.json` to your vault `VaultFolder/.obsidian/plugins/your-plugin-id/`.
 
+## Try the current version
+
+With Node 24 and the Obsidian desktop app installed:
+
+```sh
+npm ci              # Once after cloning
+npm run test:manual
+```
+
+The command opens a separate Obsidian instance directly in a populated mock
+vault, with the current plugin and Hot Reload installed and enabled. It opens
+`MANUAL-TEST.md` in the vault with two checks: import the prepared TiddlyWiki JSON,
+then export back into the supplied blank wiki.
+
+Keep the terminal running. Source edits rebuild and reload the plugin in the
+test vault. Press **Ctrl+C** to stop watching; the Obsidian window stays open.
+
+The samples include real image/audio files, working internal links, formatting,
+metadata, and preservation examples. The complete source mocks are versioned in
+[`manual-test/`](./manual-test/README.md). Each run creates a fresh directory
+under `manual-test/runs/` and retains earlier runs. Setup requires no `.env` and
+works offline after `npm ci`; the pinned Hot Reload plugin is bundled in the
+repository.
+
+Use `npm run test:manual -- --no-open` to prepare the files and exit without
+launching Obsidian or starting a watcher. See
+[manual testing](./docs/development/manual-testing.md) for expected results and
+repeated round trips.
+
 ## How to dev
 
 Use Node 24 and a disposable Obsidian vault. From this repository:

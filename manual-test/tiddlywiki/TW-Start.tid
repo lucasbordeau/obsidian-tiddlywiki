@@ -1,0 +1,16 @@
+title: TW-Start
+type: text/vnd.tiddlywiki
+tags: manual-test source-tiddlywiki
+manual-origin: tiddlywiki
+manual-status: ready
+
+! TiddlyWiki manual test
+
+This tiddler began in TiddlyWiki. Its title stays `TW-Start` throughout the test.
+
+# Open [[Formatting|TW-Formatting]] and check the rendered examples.
+# Open [[Links and media|TW-Links-and-media]] and try the links and players.
+# Open [[Preservation|TW-Preservation]] and inspect its source macro.
+
+After importing into Obsidian, add a sentence here and add the tag `checked`.
+Export back to TiddlyWiki and check that the sentence and tag survive.

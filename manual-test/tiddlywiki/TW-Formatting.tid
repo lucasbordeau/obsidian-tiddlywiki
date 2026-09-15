@@ -1,0 +1,36 @@
+title: TW-Formatting
+type: text/vnd.tiddlywiki
+tags: manual-test source-tiddlywiki
+
+! Formatting
+
+''Bold'', //italic//, ~~strikethrough~~, and `literal **asterisks**`.
+
+!! Lists and table
+
+* First parent
+** Child
+*** Grandchild
+* Second parent
+
+# First step
+## Nested step
+# Second step
+
+|!Check|!Expected|h
+|Heading|Two levels|
+|Nesting|Three bullet levels|
+
+<<<
+A quote with ''bold text''.
+<<<
+
+!! Literal code
+
+```text
+''This stays literal.''
+[[TW-Start]]
+<tag>not an HTML element</tag>
+```
+
+[[Back to the start|TW-Start]]

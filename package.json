@@ -10,12 +10,14 @@
     "version": "node version-bump.mjs && git add manifest.json versions.json",
     "typecheck": "tsc --noEmit --skipLibCheck",
     "lint": "node scripts/lint/lint.mjs",
-    "format": "prettier --check \"src/**/*.ts\" \"scripts/**/*.mjs\" \"eslint-rules/**/*.mjs\" AGENTS.md CONTRIBUTING.md \"docs/development/**/*.md\" \"skills/**/*.md\"",
+    "format": "prettier --check \"src/**/*.ts\" \"scripts/**/*.mjs\" \"manual-test/README.md\" \"manual-test/obsidian-vault/MANUAL-TEST.md\" \"eslint-rules/**/*.mjs\" AGENTS.md CONTRIBUTING.md \"docs/development/**/*.md\" \"skills/**/*.md\"",
     "build:core": "node scripts/build/build-core.mjs",
     "test:lint": "node --test scripts/lint/tests/test-*.mjs",
     "test:dev": "node --test scripts/build/test-*.mjs",
+    "test:manual": "npm run build && node scripts/manual/manual-test.mjs",
+    "test:manual:setup": "npm run build && node --test scripts/manual/test-*.mjs",
     "test:bundles": "node scripts/validation/test-core-bundles.mjs",
-    "check": "npm run typecheck && npm test -- --runInBand && npm run test:lint && npm run test:dev && npm run lint && npm run build:core && npm run test:bundles"
+    "check": "npm run typecheck && npm test -- --runInBand && npm run test:lint && npm run test:dev && npm run lint && npm run build:core && npm run test:bundles && npm run test:manual:setup"
   },
   "keywords": [],
   "author": "",
