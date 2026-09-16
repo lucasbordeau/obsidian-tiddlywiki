@@ -1,11 +1,13 @@
 import { importTiddler } from '@/modules/conversion-core/notes/importTiddler';
 import { parseTiddlyWikiTimestampToEpochMilliseconds } from '@/modules/conversion-core/metadata/parseTiddlyWikiTimestampToEpochMilliseconds';
+import { ConversionDiagnostic } from '@/modules/conversion-core/conversion/ConversionDiagnostic';
 import { ObsidianNote } from '@/modules/obsidian/ObsidianNote';
 import { Tiddler } from '@/modules/tiddlywiki/Tiddler';
 
 export function convertTiddlersToObsidianNotes(
   tiddlers: Tiddler[],
   referenceTiddlers: Tiddler[] = tiddlers,
+  reportDiagnostic?: (title: string, diagnostic: ConversionDiagnostic) => void,
 ): ObsidianNote[] {
   const canonicalTargets = new Map(
     referenceTiddlers.flatMap((tiddler) => {
@@ -53,6 +55,10 @@ export function convertTiddlersToObsidianNotes(
           .map((diagnostic) => diagnostic.message)
           .join('\n'),
       );
+    }
+
+    for (const diagnostic of importResult.diagnostics) {
+      reportDiagnostic?.(tiddler.title, diagnostic);
     }
 
     const note: ObsidianNote = { ...importResult.value };

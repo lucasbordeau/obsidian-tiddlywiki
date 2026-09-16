@@ -21,5 +21,5 @@ export async function exportVaultToJson(app: App): Promise<void> {
 
   const preparedExport = await prepareExport(app, exportFilePaths);
 
-  downloadExport(preparedExport.tiddlers);
+  downloadExport(preparedExport.tiddlers, preparedExport.brokenLinkCount);
 }

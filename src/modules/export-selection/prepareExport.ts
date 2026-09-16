@@ -1,15 +1,45 @@
+import * as fs from 'fs';
 import * as path from 'path';
 import { Temporal } from '@js-temporal/polyfill';
+import { lookup } from 'mime-types';
 import { App } from 'obsidian';
 import { convertMediaFileToBase64Object } from '@/modules/file-manipulation/convertMediaFileToBase64Object';
+import { isTextualAttachmentContentType } from '@/modules/file-manipulation/isTextualAttachmentContentType';
 import { MediaFile } from '@/modules/file-manipulation/MediaFile';
 import { convertObsidianNoteToTiddler } from '@/modules/format-converters/convertObsidianNoteToTiddler';
-import { getMimeTypeFromFilePath } from '@/modules/file-manipulation/getMimeTypeFromFilePath';
 import { PreparedExport } from '@/modules/export-selection/PreparedExport';
 import { replaceLinksOutsideExportScope } from '@/modules/export-selection/replaceLinksOutsideExportScope';
 import { ScopedExportNote } from '@/modules/export-selection/ScopedExportNote';
 import { getVaultDirectory } from '@/modules/plugin-core/settings/getVaultDirectory';
 import { convertBase64ObjectToTiddler } from '@/modules/tiddlywiki/convertBase64ObjectToTiddler';
+import { Tiddler } from '@/modules/tiddlywiki/Tiddler';
+
+function getExportContentType(filePath: string): string {
+  const extension = path.extname(filePath).toLowerCase();
+
+  if (extension === '.canvas') {
+    return 'application/json';
+  }
+
+  if (extension === '.base') {
+    return 'text/plain';
+  }
+
+  return lookup(filePath) || 'application/octet-stream';
+}
+
+function convertTextDocumentFileToTiddler(mediaFile: MediaFile): Tiddler {
+  return {
+    title: path.basename(mediaFile.filePath),
+    text: fs.readFileSync(mediaFile.filePath, 'utf8'),
+    type: mediaFile.mimeType,
+    created: mediaFile.creationDate.toString({ fractionalSecondDigits: 3 }),
+    modified: mediaFile.lastModifiedDate.toString({
+      fractionalSecondDigits: 3,
+    }),
+    tags: '',
+  };
+}
 
 export async function prepareExport(
   app: App,
@@ -66,7 +96,7 @@ export async function prepareExport(
     (mediaFile) => ({
       extension: path.extname(mediaFile.path),
       filePath: path.join(vaultDirectory, mediaFile.path),
-      mimeType: getMimeTypeFromFilePath(mediaFile.path),
+      mimeType: getExportContentType(mediaFile.path),
       creationDate: Temporal.Instant.fromEpochMilliseconds(
         Math.trunc(mediaFile.stat.ctime),
       ),
@@ -76,9 +106,20 @@ export async function prepareExport(
     }),
   );
 
-  const mediaTiddlers = selectedMediaRecords
-    .map(convertMediaFileToBase64Object)
-    .map(convertBase64ObjectToTiddler);
+  const mediaTiddlers = selectedMediaRecords.map((mediaFile) => {
+    const isTextDocumentContainer = isTextualAttachmentContentType(
+      mediaFile.mimeType,
+      path.basename(mediaFile.filePath),
+    );
+
+    if (isTextDocumentContainer) {
+      return convertTextDocumentFileToTiddler(mediaFile);
+    }
+
+    const base64Object = convertMediaFileToBase64Object(mediaFile);
+
+    return convertBase64ObjectToTiddler(base64Object);
+  });
 
   return {
     tiddlers: [...noteTiddlers, ...mediaTiddlers],

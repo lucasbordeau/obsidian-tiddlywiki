@@ -75,6 +75,117 @@ describe('links outside export scope', () => {
     });
   });
 
+  test.each([
+    ['double-backtick code spans', '``[[Excluded]]``'],
+    ['tilde code fences', '~~~md\n[[Excluded]]\n~~~'],
+    ['indented code blocks', '    [[Excluded]]'],
+  ])('keeps links inside %s unchanged', (_context, code) => {
+    const noteContent = `${code}\n\nOutside [[Excluded]].`;
+
+    const linkReplacement = replaceLinksOutsideExportScope(
+      noteContent,
+      'Current note.md',
+      new Set(['Current note.md']),
+      resolveObsidianLink,
+    );
+
+    expect(linkReplacement).toEqual({
+      content: `${code}\n\nOutside Excluded.`,
+      brokenLinkCount: 1,
+    });
+  });
+
+  test('rewrites a nested-list link without mistaking indentation for code', () => {
+    const noteContent = '- Parent\n    - [[Excluded]]';
+
+    const linkReplacement = replaceLinksOutsideExportScope(
+      noteContent,
+      'Current note.md',
+      new Set(['Current note.md']),
+      resolveObsidianLink,
+    );
+
+    expect(linkReplacement).toEqual({
+      content: '- Parent\n    - Excluded',
+      brokenLinkCount: 1,
+    });
+  });
+
+  test('rewrites links after many unmatched backtick delimiter lengths', () => {
+    const unmatchedDelimiters = Array.from({ length: 256 }, (_, index) =>
+      '`'.repeat(index + 1),
+    ).join(' ');
+
+    const noteContent = `${unmatchedDelimiters}\n\n[[Excluded]]`;
+
+    const linkReplacement = replaceLinksOutsideExportScope(
+      noteContent,
+      'Current note.md',
+      new Set(['Current note.md']),
+      resolveObsidianLink,
+    );
+
+    expect(linkReplacement).toEqual({
+      content: `${unmatchedDelimiters}\n\nExcluded`,
+      brokenLinkCount: 1,
+    });
+  });
+
+  test('treats a backslash-prefixed backtick as a closing code delimiter', () => {
+    const noteContent = '`code \\` [[Excluded]] ` trailing';
+
+    const linkReplacement = replaceLinksOutsideExportScope(
+      noteContent,
+      'Current note.md',
+      new Set(['Current note.md']),
+      resolveObsidianLink,
+    );
+
+    expect(linkReplacement).toEqual({
+      content: '`code \\` Excluded ` trailing',
+      brokenLinkCount: 1,
+    });
+  });
+
+  test('lets remaining backticks after an escape open a code span', () => {
+    const noteContent = '\\``[[Excluded]]` and [[Excluded]]';
+
+    const linkReplacement = replaceLinksOutsideExportScope(
+      noteContent,
+      'Current note.md',
+      new Set(['Current note.md']),
+      resolveObsidianLink,
+    );
+
+    expect(linkReplacement).toEqual({
+      content: '\\``[[Excluded]]` and Excluded',
+      brokenLinkCount: 1,
+    });
+  });
+
+  test.each([
+    ['CR', '\r'],
+    ['CRLF', '\r\n'],
+  ])(
+    'keeps tilde code fences intact with %s line endings',
+    (_label, newline) => {
+      const code = `Intro${newline}~~~${newline}[[Excluded]]${newline}~~~`;
+      const noteContent = `${code}${newline}Outside [[Excluded]]`;
+
+      const linkReplacement = replaceLinksOutsideExportScope(
+        noteContent,
+        'Current note.md',
+        new Set(['Current note.md']),
+        resolveObsidianLink,
+      );
+
+      expect(linkReplacement).toEqual({
+        content: `${code}${newline}Outside Excluded`,
+        brokenLinkCount: 1,
+      });
+    },
+  );
+
   test('ignores links in front matter removed during conversion', () => {
     const selectedExportFilePaths = new Set(['Current note.md']);
 

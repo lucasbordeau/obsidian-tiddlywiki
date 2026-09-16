@@ -36,6 +36,21 @@ describe('whole-vault export command', () => {
       new Set(['Inbox.md', 'Projects/Plan.md']),
     );
 
-    expect(downloadExport).toHaveBeenCalledWith([]);
+    expect(downloadExport).toHaveBeenCalledWith([], 0);
+  });
+
+  test('passes the number of flattened links to the download notice', async () => {
+    const app = {
+      vault: { getFiles: jest.fn().mockReturnValue([]) },
+    } as unknown as App;
+
+    jest.mocked(prepareExport).mockResolvedValue({
+      tiddlers: [],
+      brokenLinkCount: 2,
+    });
+
+    await exportVaultToJson(app);
+
+    expect(downloadExport).toHaveBeenCalledWith([], 2);
   });
 });
