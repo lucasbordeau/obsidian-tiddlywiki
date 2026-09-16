@@ -47,8 +47,6 @@ Windows/Linux, then search for **TiddlyWiki**.
 
 ### Intentionally out of scope
 
-- Live synchronization with a TiddlyWiki wiki or direct `.tid` file exchange.
-  The plugin's commands use JSON files.
 - Executing TiddlyWiki macros, widgets, filters, queries, or custom parser
   rules.
 - Recreating rendered views from Obsidian features or community plugins such
