@@ -1,6 +1,7 @@
 import { InlineNode } from '@/modules/conversion-core/model/inlines/InlineNode';
 import { TiddlyWikiSerializationContext } from '@/modules/conversion-core/syntax/tiddlywiki/serialization/context/TiddlyWikiSerializationContext';
 import { quoteTiddlyWikiAttribute } from '@/modules/conversion-core/syntax/tiddlywiki/serialization/quoteTiddlyWikiAttribute';
+import { isSafeRemoteMediaUrl } from '@/modules/conversion-core/validation/isSafeRemoteMediaUrl';
 
 export function serializeTiddlyWikiEmbed(
   this: TiddlyWikiSerializationContext,
@@ -12,6 +13,24 @@ export function serializeTiddlyWikiEmbed(
     !externalTarget && this.options.resolveLink
       ? this.options.resolveLink(node.target, 'embed')
       : node.target;
+
+  if (node.kind === 'audio' || node.kind === 'video') {
+    const unsupportedMedia =
+      !isSafeRemoteMediaUrl(target) ||
+      node.alt.length > 0 ||
+      node.width !== undefined ||
+      node.height !== undefined ||
+      node.title !== undefined;
+
+    if (unsupportedMedia) {
+      return this.preserve(
+        node,
+        'Remote media requires a safe URL and plain playback controls.',
+      );
+    }
+
+    return `<${node.kind} controls="controls" preload="none" src="${target}"></${node.kind}>`;
+  }
 
   if (node.kind === 'transclusion') {
     const hasDisplayOptions =

@@ -4,8 +4,10 @@ import { renderHtmlInlines } from '@/modules/conversion-core/syntax/obsidian/ser
 import { resolveLinkTarget } from '@/modules/conversion-core/syntax/obsidian/serialization/links/resolveLinkTarget';
 import { escapeWikiPart } from '@/modules/conversion-core/syntax/obsidian/serialization/escaping/escapeWikiPart';
 import { escapeText } from '@/modules/conversion-core/syntax/obsidian/serialization/escaping/escapeText';
+import { escapeHtml } from '@/modules/conversion-core/syntax/obsidian/serialization/escaping/escapeHtml';
 import { serializeMarkdownDestination } from '@/modules/conversion-core/syntax/obsidian/serialization/links/serializeMarkdownDestination';
 import { serializeMarkdownTitle } from '@/modules/conversion-core/syntax/obsidian/serialization/links/serializeMarkdownTitle';
+import { isSafeRemoteMediaUrl } from '@/modules/conversion-core/validation/isSafeRemoteMediaUrl';
 
 export function renderEmbed(
   node: Extract<InlineNode, { type: 'embed' }>,
@@ -31,6 +33,30 @@ export function renderEmbed(
   const target = resolveLinkTarget(node.target, 'embed', context, external);
   const targetIsExternal = /^(?:[a-z][a-z\d+.-]*:|\/\/)/i.test(target);
   const externalTransclusion = node.kind === 'transclusion' && targetIsExternal;
+
+  const externalMediaKind = externalTransclusion
+    ? context.options.resolveExternalEmbedKind?.(node.target)
+    : undefined;
+
+  const mediaKind =
+    node.kind === 'audio' || node.kind === 'video'
+      ? node.kind
+      : externalMediaKind;
+
+  const safeRemoteMediaTarget = isSafeRemoteMediaUrl(target);
+
+  if (
+    safeRemoteMediaTarget &&
+    (mediaKind === 'audio' || mediaKind === 'video')
+  ) {
+    return `<${mediaKind} controls="controls" preload="none" src="${escapeHtml(target)}"></${mediaKind}>`;
+  }
+
+  if (safeRemoteMediaTarget && externalMediaKind === 'image') {
+    const alt = node.alt || node.target;
+
+    return `![${escapeText(alt)}](${serializeMarkdownDestination(target)})`;
+  }
 
   if (externalTransclusion) {
     const label = node.alt || node.target;

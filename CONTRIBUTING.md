@@ -8,9 +8,12 @@ historical minimum-version entries in `versions.json`.
 
 Use Node 24 and the committed npm lockfile:
 
-For hands-on conversion testing, run `npm run demo:tw`. It opens the sole manual
-fixture, `manual-test/tiddlywiki/basic-feature-demo.html`, in the default browser.
+For hands-on conversion testing, run `npm run demo:tw`. It opens the authored
+feature demo, `manual-test/tiddlywiki/basic-feature-demo.html`, in the default
+browser. Run `npm run demo:tw:empty` to open a blank wiki for Obsidian exports.
 See [manual testing](./docs/development/manual-testing.md).
+Run `npm run dev:obsidian` to install the plugin in the disposable development
+vault, launch an isolated Obsidian instance, and watch for source changes.
 
 For automated validation:
 

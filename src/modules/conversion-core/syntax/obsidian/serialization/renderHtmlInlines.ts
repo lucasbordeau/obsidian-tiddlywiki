@@ -2,6 +2,7 @@ import { InlineNode } from '@/modules/conversion-core/model/inlines/InlineNode';
 import { SerializationContext } from '@/modules/conversion-core/syntax/obsidian/types/SerializationContext';
 import { escapeHtml } from '@/modules/conversion-core/syntax/obsidian/serialization/escaping/escapeHtml';
 import { resolveLinkTarget } from '@/modules/conversion-core/syntax/obsidian/serialization/links/resolveLinkTarget';
+import { isSafeRemoteMediaUrl } from '@/modules/conversion-core/validation/isSafeRemoteMediaUrl';
 
 export function renderHtmlInlines(
   nodes: InlineNode[],
@@ -71,6 +72,23 @@ export function renderHtmlInlines(
             : ` height="${escapeHtml(node.height)}"`;
 
         return `<img src="${escapeHtml(target)}" alt="${escapeHtml(node.alt)}"${title}${width}${height}>`;
+      }
+
+      const isRemoteMedia =
+        node.type === 'embed' &&
+        (node.kind === 'audio' || node.kind === 'video');
+
+      if (isRemoteMedia) {
+        const target = resolveLinkTarget(
+          node.target,
+          'embed',
+          context,
+          isSafeRemoteMediaUrl(node.target),
+        );
+
+        if (isSafeRemoteMediaUrl(target)) {
+          return `<${node.kind} controls="controls" preload="none" src="${escapeHtml(target)}"></${node.kind}>`;
+        }
       }
 
       // HTML wrappers disable Markdown parsing in Obsidian. Keep foreign constructs explicit.

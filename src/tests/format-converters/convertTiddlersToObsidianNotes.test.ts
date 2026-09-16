@@ -1,4 +1,5 @@
 import { convertTiddlersToObsidianNotes } from '@/modules/format-converters/convertTiddlersToObsidianNotes';
+import { convertObsidianNoteToTiddler } from '@/modules/format-converters/convertObsidianNoteToTiddler';
 
 describe('TiddlyWiki to Obsidian note migration', () => {
   test('emits usable transclusions without preservation comments', () => {
@@ -22,22 +23,31 @@ describe('TiddlyWiki to Obsidian note migration', () => {
     expect(note.content).not.toContain('<$list');
   });
 
-  test('turns canonical external-media transclusions into durable URL links', () => {
+  test('embeds canonical remote media according to its declared MIME type', () => {
+    const imageUrl =
+      'https://raw.githubusercontent.com/example/project/commit/image.jpg';
+
     const audioUrl =
-      'https://raw.githubusercontent.com/example/project/commit/audio.mp3';
+      'https://raw.githubusercontent.com/example/project/commit/audio?version=1&format=mp3';
 
     const videoUrl =
       'https://raw.githubusercontent.com/example/project/commit/video.mp4';
 
     const textTiddler = {
       title: 'External media',
-      text: '{{Remote audio.mp3}}\n\n{{Remote video.mp4}}',
+      text: '{{Remote image.jpg}}\n\n{{Remote audio}}\n\n{{Remote video.mp4}}',
     };
 
     const referenceTiddlers = [
       textTiddler,
       {
-        title: 'Remote audio.mp3',
+        title: 'Remote image.jpg',
+        text: '',
+        type: 'image/jpeg',
+        _canonical_uri: imageUrl,
+      },
+      {
+        title: 'Remote audio',
         text: '',
         type: 'audio/mpeg',
         _canonical_uri: audioUrl,
@@ -55,9 +65,68 @@ describe('TiddlyWiki to Obsidian note migration', () => {
       referenceTiddlers,
     );
 
-    expect(note.content).toContain(`[Remote audio.mp3](<${audioUrl}>)`);
-    expect(note.content).toContain(`[Remote video.mp4](<${videoUrl}>)`);
-    expect(note.content).not.toContain('![[Remote audio.mp3]]');
+    expect(note.content).toContain(`![Remote image.jpg](<${imageUrl}>)`);
+
+    expect(note.content).toContain(
+      `<audio controls="controls" preload="none" src="${audioUrl.replace('&', '&amp;')}"></audio>`,
+    );
+
+    expect(note.content).toContain(
+      `<video controls="controls" preload="none" src="${videoUrl}"></video>`,
+    );
+
+    expect(note.content).not.toContain('![[Remote audio]]');
     expect(note.content).not.toContain('![[Remote video.mp4]]');
+
+    let importedNote = note;
+
+    for (let round = 0; round < 2; round += 1) {
+      const exportedTiddler = convertObsidianNoteToTiddler(importedNote);
+
+      expect(exportedTiddler.text).toContain('<audio');
+      expect(exportedTiddler.text).toContain('<video');
+
+      [importedNote] = convertTiddlersToObsidianNotes([exportedTiddler]);
+
+      expect(importedNote.content).toContain(imageUrl);
+      expect(importedNote.content).toContain('<audio');
+      expect(importedNote.content).toContain('<video');
+      expect(importedNote.content).not.toContain('<!--otw');
+    }
+
+    expect(importedNote.content).toContain('format=mp3');
+    expect(importedNote.content).toContain(videoUrl);
+  });
+
+  test('keeps unknown or unsafe canonical targets as URL links', () => {
+    const remoteUrl = 'https://example.org/archive/file.zip';
+    const unsafeUrl = 'javascript:alert(1)';
+
+    const textTiddler = {
+      title: 'Other external resources',
+      text: '{{Archive.zip}}\n\n{{Unsafe.mp3}}',
+    };
+
+    const [note] = convertTiddlersToObsidianNotes(
+      [textTiddler],
+      [
+        textTiddler,
+        {
+          title: 'Archive.zip',
+          text: '',
+          type: 'application/zip',
+          _canonical_uri: remoteUrl,
+        },
+        {
+          title: 'Unsafe.mp3',
+          text: '',
+          type: 'audio/mpeg',
+          _canonical_uri: unsafeUrl,
+        },
+      ],
+    );
+
+    expect(note.content).toContain(`[Archive.zip](<${remoteUrl}>)`);
+    expect(note.content).not.toContain('<audio');
   });
 });

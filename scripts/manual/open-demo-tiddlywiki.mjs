@@ -4,13 +4,20 @@ import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 const projectDirectory = fileURLToPath(new URL('../../', import.meta.url));
+const demoDirectory = path.join(projectDirectory, 'manual-test', 'tiddlywiki');
 
 export const demoTiddlyWikiPath = path.join(
-  projectDirectory,
-  'manual-test',
-  'tiddlywiki',
+  demoDirectory,
   'basic-feature-demo.html',
 );
+
+export const emptyTiddlyWikiPath = path.join(demoDirectory, 'empty.html');
+
+export function getDemoTiddlyWikiPath(commandArguments = []) {
+  const opensEmptyWiki = commandArguments.includes('--empty');
+
+  return opensEmptyWiki ? emptyTiddlyWikiPath : demoTiddlyWikiPath;
+}
 
 export function getDemoOpenCommand(filePath, platform = process.platform) {
   if (platform === 'darwin') {
@@ -64,7 +71,9 @@ const invokedScriptPath = process.argv[1]
 const isInvokedDirectly = invokedScriptPath === fileURLToPath(import.meta.url);
 
 if (isInvokedDirectly) {
-  await openDemoTiddlyWiki();
+  const selectedDemoPath = getDemoTiddlyWikiPath(process.argv.slice(2));
 
-  console.log(`Opened demo TiddlyWiki: ${demoTiddlyWikiPath}`);
+  await openDemoTiddlyWiki(selectedDemoPath);
+
+  console.log(`Opened TiddlyWiki: ${selectedDemoPath}`);
 }

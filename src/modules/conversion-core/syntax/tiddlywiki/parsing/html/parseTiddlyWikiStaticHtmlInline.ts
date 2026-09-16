@@ -2,6 +2,7 @@ import { InlineNode } from '@/modules/conversion-core/model/inlines/InlineNode';
 import { TiddlyWikiFormattingType } from '@/modules/conversion-core/syntax/tiddlywiki/types/TiddlyWikiFormattingType';
 import { TiddlyWikiParsingContext } from '@/modules/conversion-core/syntax/tiddlywiki/parsing/context/TiddlyWikiParsingContext';
 import { parseTiddlyWikiHtmlImage } from '@/modules/conversion-core/syntax/tiddlywiki/parsing/html/parseTiddlyWikiHtmlImage';
+import { parseTiddlyWikiHtmlMedia } from '@/modules/conversion-core/syntax/tiddlywiki/parsing/html/parseTiddlyWikiHtmlMedia';
 import { parseTiddlyWikiHtmlInlineCode } from '@/modules/conversion-core/syntax/tiddlywiki/parsing/html/parseTiddlyWikiHtmlInlineCode';
 import { parseTiddlyWikiHtmlLink } from '@/modules/conversion-core/syntax/tiddlywiki/parsing/html/parseTiddlyWikiHtmlLink';
 import { parseTiddlyWikiHtmlTransclusion } from '@/modules/conversion-core/syntax/tiddlywiki/parsing/html/parseTiddlyWikiHtmlTransclusion';
@@ -79,6 +80,18 @@ export function parseTiddlyWikiStaticHtmlInline(
 
   if (closeStart < openEnd) {
     return undefined;
+  }
+
+  if (tag === 'audio' || tag === 'video') {
+    return parseTiddlyWikiHtmlMedia.call(this, {
+      start,
+      end,
+      tag,
+      openEnd,
+      closeStart,
+      attributes,
+      range,
+    });
   }
 
   if (tag === 'sup' && Object.keys(attributes).length === 0) {

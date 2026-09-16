@@ -48,13 +48,17 @@ Use Node 24 and a disposable Obsidian vault. From this repository:
 
 ```sh
 npm ci
-cp .env.example .env
-npm run dev
+npm run dev:obsidian
 ```
 
-The default destination is `.dev-vault/.obsidian/plugins/tiddlywiki-import-export`.
-The first build creates it; open `.dev-vault` as a vault in Obsidian. To use another
-development vault, change `DEV_VAULT_PLUGIN_FOLDER` in `.env`.
+This builds and installs the plugin, enables it in `.dev-vault`, and opens that
+vault in an isolated Obsidian profile. It watches for changes until you press
+Ctrl+C. The default destination is
+`.dev-vault/.obsidian/plugins/tiddlywiki-import-export`. To use another
+development vault, set `DEV_VAULT_PLUGIN_FOLDER` in `.env` (copy `.env.example`
+first). Set `OBSIDIAN_EXECUTABLE` if Obsidian is not discoverable by the launcher.
+Use `npm run dev:obsidian -- --no-open` to install without opening the app, or
+`npm run dev` to watch without launching it.
 
 Install [Hot Reload](https://github.com/pjeby/hot-reload) in that vault. In a second
 terminal, these commands download the tested revision (0.3.1):
@@ -67,12 +71,12 @@ curl -fL https://raw.githubusercontent.com/pjeby/hot-reload/4c5454963ec4cbe84730
   -o .dev-vault/.obsidian/plugins/hot-reload/manifest.json
 ```
 
-Adjust the download destination if using another vault. In Obsidian's **Settings →
-Community plugins**, turn on community plugins and enable **Hot Reload** and
-**Import/Export TiddlyWiki**. Restart the development vault once if the newly
-installed plugins are not listed.
+Adjust the download destination if using another vault. The launcher enables
+**Import/Export TiddlyWiki** in the development vault. In Obsidian's **Settings →
+Community plugins**, enable **Hot Reload** after installing it. Restart the
+development vault once if a newly installed plugin is not listed.
 
-Keep `npm run dev` running. Each successful build copies `manifest.json`,
+Keep `npm run dev:obsidian` running. Each successful build copies `manifest.json`,
 `styles.css`, a `.hotreload` marker and `main.js` into the plugin folder. Hot
 Reload watches the marker and reloads the enabled plugin after the bundle changes;
 Obsidian displays a reload notice. Failed builds leave the last working vault

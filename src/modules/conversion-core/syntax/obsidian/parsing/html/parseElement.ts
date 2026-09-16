@@ -3,6 +3,7 @@ import { HtmlChildrenParser } from '@/modules/conversion-core/syntax/obsidian/ty
 import { InlineNode } from '@/modules/conversion-core/model/inlines/InlineNode';
 import { parseAttributes } from '@/modules/conversion-core/syntax/obsidian/parsing/html/parseAttributes';
 import { areHtmlAttributesAllowed } from '@/modules/conversion-core/syntax/obsidian/parsing/html/areHtmlAttributesAllowed';
+import { isSafeRemoteMediaUrl } from '@/modules/conversion-core/validation/isSafeRemoteMediaUrl';
 
 const formatTypes = {
   strong: 'strong',
@@ -76,6 +77,33 @@ export function parseElement(
     }
 
     return embed;
+  }
+
+  if (tag === 'audio' || tag === 'video') {
+    const canonicalAttributes =
+      /^\s+controls="controls"(?:\s+preload="none")?\s+src="[^"]*"\s*$/.test(
+        opening[2],
+      );
+
+    const mediaSource = attributes.src ?? '';
+    const safeSource = isSafeRemoteMediaUrl(mediaSource);
+
+    const closing = new RegExp(`^</${tag}\\s*>`, 'i').exec(
+      source.slice(cursor.position),
+    );
+
+    if (!canonicalAttributes || !safeSource || !closing) {
+      return undefined;
+    }
+
+    cursor.position += closing[0].length;
+
+    return {
+      type: 'embed',
+      target: mediaSource,
+      alt: '',
+      kind: tag,
+    };
   }
 
   const children = collectChildren(source, cursor, tag);

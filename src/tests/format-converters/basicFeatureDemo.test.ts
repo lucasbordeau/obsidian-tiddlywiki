@@ -83,7 +83,7 @@ describe('basic feature demo import', () => {
     );
   });
 
-  test('keeps the external image embedded and canonical media as durable URLs', () => {
+  test('keeps the external image embedded and remote audio/video playable', () => {
     const externalMediaNote = getNote('Basic Notes — External Media');
 
     const remoteAudio = getByTitle(tiddlers, 'Basic Notes Remote Signal.mp3');
@@ -95,11 +95,11 @@ describe('basic feature demo import', () => {
     );
 
     expect(externalMediaNote.content).toContain(
-      `[Basic Notes Remote Signal.mp3](<${remoteAudio._canonical_uri}>)`,
+      `<audio controls="controls" preload="none" src="${remoteAudio._canonical_uri}"></audio>`,
     );
 
     expect(externalMediaNote.content).toContain(
-      `[Basic Notes Remote Station.mp4](<${remoteVideo._canonical_uri}>)`,
+      `<video controls="controls" preload="none" src="${remoteVideo._canonical_uri}"></video>`,
     );
 
     expect(externalMediaNote.content).not.toContain(

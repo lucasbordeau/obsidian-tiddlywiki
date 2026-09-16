@@ -14,14 +14,35 @@ export function convertTiddlersToObsidianNotes(
     }),
   );
 
+  const canonicalMediaKinds = new Map(
+    referenceTiddlers.flatMap((tiddler) => {
+      const mediaCategory = tiddler.type?.split('/')[0];
+
+      const isMediaCategory =
+        mediaCategory === 'image' ||
+        mediaCategory === 'audio' ||
+        mediaCategory === 'video';
+
+      if (!tiddler._canonical_uri || !isMediaCategory) {
+        return [];
+      }
+
+      return [[tiddler.title, mediaCategory] as const];
+    }),
+  );
+
   const resolveImportedTarget = (target: string): string =>
     canonicalTargets.get(target) ?? target;
+
+  const resolveExternalEmbedKind = (target: string) =>
+    canonicalMediaKinds.get(target);
 
   return tiddlers.map((tiddler) => {
     const importResult = importTiddler(tiddler, {
       preserveRoundTripMetadata: false,
       preserveUnsupportedSource: false,
       resolveLink: resolveImportedTarget,
+      resolveExternalEmbedKind,
     });
 
     if (!importResult.value) {
