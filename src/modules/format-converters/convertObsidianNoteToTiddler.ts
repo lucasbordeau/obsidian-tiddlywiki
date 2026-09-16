@@ -3,7 +3,11 @@ import { Tiddler } from '@/modules/tiddlywiki/Tiddler';
 import { exportObsidianNote } from '@/modules/conversion-core/notes/exportObsidianNote';
 
 export function convertObsidianNoteToTiddler(note: ObsidianNote): Tiddler {
-  const exportResult = exportObsidianNote(note);
+  const exportResult = exportObsidianNote(note, {
+    assumeUtcForNaiveDateTime: true,
+    creationTimeMs: note.creationTimeMs,
+    modificationTimeMs: note.modificationTimeMs,
+  });
 
   if (!exportResult.value) {
     throw new Error(

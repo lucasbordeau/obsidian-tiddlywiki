@@ -1,4 +1,5 @@
 import * as path from 'path';
+import { Temporal } from '@js-temporal/polyfill';
 import { App } from 'obsidian';
 import { convertMediaFileToBase64Object } from '@/modules/file-manipulation/convertMediaFileToBase64Object';
 import { MediaFile } from '@/modules/file-manipulation/MediaFile';
@@ -31,6 +32,8 @@ export async function prepareExport(
       title: markdownFile.basename,
       content: await app.vault.cachedRead(markdownFile),
       path: markdownFile.path,
+      creationTimeMs: markdownFile.stat.ctime,
+      modificationTimeMs: markdownFile.stat.mtime,
     }),
   );
 
@@ -52,6 +55,8 @@ export async function prepareExport(
     return convertObsidianNoteToTiddler({
       title: scopedExportNote.title,
       content: linkReplacement.content,
+      creationTimeMs: scopedExportNote.creationTimeMs,
+      modificationTimeMs: scopedExportNote.modificationTimeMs,
     });
   });
 
@@ -62,8 +67,12 @@ export async function prepareExport(
       extension: path.extname(mediaFile.path),
       filePath: path.join(vaultDirectory, mediaFile.path),
       mimeType: getMimeTypeFromFilePath(mediaFile.path),
-      creationDate: new Date(mediaFile.stat.ctime),
-      lastModifiedDate: new Date(mediaFile.stat.mtime),
+      creationDate: Temporal.Instant.fromEpochMilliseconds(
+        Math.trunc(mediaFile.stat.ctime),
+      ),
+      lastModifiedDate: Temporal.Instant.fromEpochMilliseconds(
+        Math.trunc(mediaFile.stat.mtime),
+      ),
     }),
   );
 

@@ -2,6 +2,19 @@ import { LexingContext } from '@/modules/conversion-core/lexing/LexingContext';
 import { TokenMatch } from '@/modules/conversion-core/lexing/TokenMatch';
 import { findTiddlyWikiImageEnd } from '@/modules/conversion-core/lexing/boundaries/findTiddlyWikiImageEnd';
 
+/**
+ * Recognize native TiddlyWiki `[img[...]]` syntax, including attributes.
+ * The image boundary helper skips quoted and dynamic attribute values.
+ *
+ * ```ts
+ * lexSource('[img[photo.png]] [[outside]]', 'tiddlywiki')
+ *   .map(({ kind, raw }) => [kind, raw]);
+ * // [['embed', '[img[photo.png]]'], ['whitespace', ' '], ['link', '[[outside]]']]
+ * lexSource('![alt](photo.png) [[outside]]', 'obsidian')
+ *   .map(({ kind, raw }) => [kind, raw]);
+ * // [['embed', '![alt](photo.png)'], ['whitespace', ' '], ['link', '[[outside]]']]
+ * ```
+ */
 export function scanTiddlyWikiImage(
   context: LexingContext,
 ): TokenMatch | undefined {

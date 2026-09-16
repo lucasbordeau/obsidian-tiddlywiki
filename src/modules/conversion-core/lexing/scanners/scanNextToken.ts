@@ -15,6 +15,20 @@ import { scanPlainText } from '@/modules/conversion-core/lexing/scanners/scanPla
 import { LexingContext } from '@/modules/conversion-core/lexing/LexingContext';
 import { TokenMatch } from '@/modules/conversion-core/lexing/TokenMatch';
 
+/**
+ * Try scanners in priority order at one cursor, ending with plain-text progress.
+ * Earlier matches shield their contents from later scanners.
+ *
+ * ```ts
+ * lexSource('`[[literal]]` [[link]]', 'obsidian')
+ *   .map(({ kind, raw }) => [kind, raw]);
+ * // [['code', '`[[literal]]`'], ['whitespace', ' '], ['link', '[[link]]']]
+ * lexSource('`[[literal]]` [[link]]', 'tiddlywiki')
+ *   .map(({ kind, raw }) => [kind, raw]);
+ * // [['code', '`[[literal]]`'], ['whitespace', ' '], ['link', '[[link]]']]
+ * // A code token prevents the wiki-link scanner from seeing [[literal]].
+ * ```
+ */
 export function scanNextToken(context: LexingContext): TokenMatch {
   const matchedToken =
     // Matches a fenced code region, such as ```ts ... ```.

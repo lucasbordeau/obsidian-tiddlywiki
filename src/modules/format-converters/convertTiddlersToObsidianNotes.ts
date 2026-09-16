@@ -1,4 +1,5 @@
 import { importTiddler } from '@/modules/conversion-core/notes/importTiddler';
+import { parseTiddlyWikiTimestampToEpochMilliseconds } from '@/modules/conversion-core/metadata/parseTiddlyWikiTimestampToEpochMilliseconds';
 import { ObsidianNote } from '@/modules/obsidian/ObsidianNote';
 import { Tiddler } from '@/modules/tiddlywiki/Tiddler';
 
@@ -41,6 +42,7 @@ export function convertTiddlersToObsidianNotes(
     const importResult = importTiddler(tiddler, {
       preserveRoundTripMetadata: false,
       preserveUnsupportedSource: false,
+      metadataProjection: 'migration',
       resolveLink: resolveImportedTarget,
       resolveExternalEmbedKind,
     });
@@ -53,6 +55,24 @@ export function convertTiddlersToObsidianNotes(
       );
     }
 
-    return importResult.value;
+    const note: ObsidianNote = { ...importResult.value };
+
+    const creationTimeMs = parseTiddlyWikiTimestampToEpochMilliseconds(
+      tiddler.created,
+    );
+
+    const modificationTimeMs = parseTiddlyWikiTimestampToEpochMilliseconds(
+      tiddler.modified,
+    );
+
+    if (creationTimeMs !== undefined) {
+      note.creationTimeMs = creationTimeMs;
+    }
+
+    if (modificationTimeMs !== undefined) {
+      note.modificationTimeMs = modificationTimeMs;
+    }
+
+    return note;
   });
 }

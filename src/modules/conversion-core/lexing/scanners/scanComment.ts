@@ -2,6 +2,20 @@ import { LexingContext } from '@/modules/conversion-core/lexing/LexingContext';
 import { TokenMatch } from '@/modules/conversion-core/lexing/TokenMatch';
 import { findDelimitedEnd } from '@/modules/conversion-core/lexing/boundaries/findDelimitedEnd';
 
+/**
+ * Group HTML comments and the active dialect's comment syntax into one token.
+ * An unfinished comment currently runs through the remaining source.
+ *
+ * ```ts
+ * lexSource('%% hidden %%', 'obsidian')[0];
+ * // { kind: 'comment', range: { start: 0, end: 12 }, raw: '%% hidden %%' }
+ * lexSource('/% hidden %/', 'tiddlywiki')[0];
+ * // { kind: 'comment', range: { start: 0, end: 12 }, raw: '/% hidden %/' }
+ * lexSource('<!-- [[hidden]] --> [[visible]]', 'obsidian')
+ *   .filter(({ kind }) => kind === 'link')
+ *   .map(({ raw }) => raw); // ['[[visible]]']
+ * ```
+ */
 export function scanComment(context: LexingContext): TokenMatch | undefined {
   const { source, dialect, cursor } = context;
 

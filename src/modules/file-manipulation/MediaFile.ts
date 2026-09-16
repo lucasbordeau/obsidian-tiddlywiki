@@ -1,7 +1,9 @@
+import { Temporal } from '@js-temporal/polyfill';
+
 export type MediaFile = {
   filePath: string;
   extension: string;
   mimeType: string;
-  creationDate: Date;
-  lastModifiedDate: Date;
+  creationDate: Temporal.Instant;
+  lastModifiedDate: Temporal.Instant;
 };

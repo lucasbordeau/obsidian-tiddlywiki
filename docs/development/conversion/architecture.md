@@ -61,16 +61,16 @@ contracts use type-only imports.
 Internal consumers import the owning file directly; `src/conversion.ts` remains
 the public package entry point.
 
-The host settings tab and its rendering, form, action and path helpers live
-together in `src/modules/plugin-core/settings/`. Tooling is grouped under
+The Obsidian host registers import and export commands in `src/main.ts`. Their
+host adapters live under `src/modules/plugin-core/`. Tooling is grouped under
 `scripts/{build,lint,validation}/`, and local ESLint rules live directly in
 `eslint-rules/`.
 
-Tests mirror responsibilities under `src/tests/`: `syntax` holds dialect and
-feature cases, `conversion` holds lexer, integration and preservation checks,
-and `codecs` holds containers, metadata and media. Shared assertions, renderer
-access and fixture readers live in `support`. Case collections sit beside their
-test suites. Test inputs remain in `samples`.
+Tests live in `__tests__` folders beside the owning syntax, conversion, codec,
+metadata, note and host modules. Cross-cutting feature cases sit beside their
+dialect implementation. Case collections stay beside their suites. Shared
+assertions, renderer access and fixture readers live in `src/testing/support/`;
+shared input fixtures live in `src/testing/samples/`.
 
 ## API contracts
 

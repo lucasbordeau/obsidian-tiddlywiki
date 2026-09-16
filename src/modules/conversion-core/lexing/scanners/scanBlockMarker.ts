@@ -1,6 +1,17 @@
 import { LexingContext } from '@/modules/conversion-core/lexing/LexingContext';
 import { TokenMatch } from '@/modules/conversion-core/lexing/TokenMatch';
 
+/**
+ * Recognize a dialect's heading, list, quote, table, or directive marker.
+ * Only a cursor in the current line's whitespace/quote prefix can match.
+ *
+ * ```ts
+ * lexSource('# Heading', 'obsidian').map(({ kind, raw }) => [kind, raw]);
+ * // [['block-marker', '#'], ['whitespace', ' '], ['text', 'Heading']]
+ * lexSource('!Heading', 'tiddlywiki').map(({ kind, raw }) => [kind, raw]);
+ * // [['block-marker', '!'], ['text', 'Heading']]
+ * ```
+ */
 export function scanBlockMarker(
   context: LexingContext,
 ): TokenMatch | undefined {

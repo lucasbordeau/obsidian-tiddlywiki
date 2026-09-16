@@ -7,7 +7,7 @@ conversion package has no dependency on that runtime.
 The [official WikiText index](https://tiddlywiki.com/static/WikiText.html)
 enumerates 36 core syntax groups. Every group appears below. Examples are original
 regression inputs in
-[TiddlyWiki feature suites](../../../../src/tests/syntax/tiddlywiki/features).
+[TiddlyWiki feature suites](../../../../src/modules/conversion-core/syntax/tiddlywiki/__tests__/features).
 Their 234 cases include 78 native syntax cases, 146 source-preservation cases and ten
 dedicated image/transclusion/context checks. The 146 preservation cases include
 all 62 unique widget names listed by the official widget index.
@@ -21,8 +21,8 @@ all 62 unique widget names listed by the official widget index.
 - **Static**: supported shared semantics use a small, parsed HTML/widget subset
   when native shortcuts cannot express them. Complex lists, checkboxes, callouts,
   rich link labels and footnotes have separate bidirectional tests in
-  [TiddlyWiki serialization suites](../../../../src/tests/syntax/tiddlywiki/serialization)
-  and [conversion integration suites](../../../../src/tests/conversion/integration).
+  [TiddlyWiki serialization suites](../../../../src/modules/conversion-core/syntax/tiddlywiki/serialization/__tests__)
+  and [conversion integration suites](../../../../src/modules/conversion-core/conversion/__tests__).
 - **Preserved**: a diagnostic identifies the unsupported source. An inert
   capsule carries its original bytes through Obsidian; each feature case restores
   them after a nearby edit. Rendering and interactive behavior still require
@@ -90,7 +90,7 @@ separate. Width and height accept pixel values and percentages.
 | Quotes, Unicode, URL queries and all attributes together              | `TW-IMAGE-ATTR-QUOTES`, `TW-IMAGE-WIDGET`, `TW-IMAGE-SEMANTICS`                                                                           | Literal values; final case also checks actual TW rendering after the Markdown round trip |
 | Class, loading, usemap and load actions                               | `TW-IMAGE-CLASS`, `TW-IMAGE-LOADING`, `TW-IMAGE-USEMAP`, `TW-IMAGE-ACTIONS`                                                               | Original source retained                                                                 |
 | Transcluded, filtered, variable and substituted image attributes      | `TW-IMAGE-INDIRECT`, `TW-IMAGE-FILTERED`, `TW-IMAGE-VARIABLE`, `TW-IMAGE-SUBSTITUTED`                                                     | Original source retained                                                                 |
-| Plain remote audio/video HTML controls                                | [Remote-media regression](../../../../src/tests/syntax/tiddlywiki/features/html/remoteMedia.test.ts)                                      | Native typed media embed; URLs and controls survive two conversion cycles                |
+| Plain remote audio/video HTML controls                                | [Remote-media regression](../../../../src/modules/conversion-core/syntax/tiddlywiki/__tests__/features/html/remoteMedia.test.ts)          | Native typed media embed; URLs and controls survive two conversion cycles                |
 | Responsive HTML, nested audio/video markup and document iframes       | `TW-IMAGE-RESPONSIVE`, `TW-HTML-AUDIO`, `TW-HTML-VIDEO`, `TW-HTML-IFRAME`                                                                 | Original source retained                                                                 |
 | Whole-note, explicit text-field, PDF, audio and video transclusion    | `TW-NOTE-EMBED`, `TW-NOTE-EMBED-TEXT`, `TW-PDF-EMBED`, `TW-AUDIO-EMBED`, `TW-VIDEO-EMBED`                                                 | Native Obsidian transclusion with the same target                                        |
 | Static modern and legacy transclude widgets                           | `TW-TRANSCLUDE-WIDGET`, `TW-TRANSCLUDE-WIDGET-LEGACY`                                                                                     | Native Obsidian transclusion with the same target                                        |
@@ -178,7 +178,7 @@ codecs remains available for content outside the supported source profile.
 
 ## Composition and editor regressions
 
-[`tiddlywiki-stress.tid`](../../../../src/tests/samples/conversion-core/tiddlywiki-stress.tid)
+[`tiddlywiki-stress.tid`](../../../../src/testing/samples/conversion-core/tiddlywiki-stress.tid)
 combines mixed five-level lists, nested formatting, literal links and code in
 tables, images, nested quote fences and a fenced block containing syntax-looking
 text. The core suite checks five serialization cycles and actual TW rendering.

@@ -3,6 +3,7 @@ import { spawn } from 'node:child_process';
 import { mkdir, readFile, writeFile } from 'node:fs/promises';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { Temporal } from '@js-temporal/polyfill';
 import dotenv from 'dotenv';
 import { createPluginBuildContext } from '../build/create-plugin-build-context.mjs';
 
@@ -108,7 +109,7 @@ export async function prepareDevelopmentVault({
   vaults[vaultId] = {
     ...vaults[vaultId],
     path: vaultDirectory,
-    ts: Date.now(),
+    ts: Temporal.Now.instant().epochMilliseconds,
     open: true,
   };
 

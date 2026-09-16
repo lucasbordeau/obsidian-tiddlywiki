@@ -27,6 +27,12 @@ To test the Obsidian import, use **Tools → Export all → JSON File** in the w
 then run **Import/Export TiddlyWiki: Import TiddlyWiki JSON** from Obsidian's
 command palette and select the downloaded file.
 
+Imported notes keep tags and authored fields such as `status` and `owner` in
+Properties. TiddlyWiki-only operational fields are omitted. Valid `created` and
+`modified` timestamps are applied to the Markdown files themselves, so no static
+date properties appear. The file modification time changes when the note is
+edited. File dates may change when notes are copied or synced outside Obsidian.
+
 To test the Obsidian export, open the blank wiki:
 
 ```sh

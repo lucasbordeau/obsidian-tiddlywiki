@@ -2,6 +2,8 @@ import { CodecResult } from '@/modules/conversion-core/codecs/CodecResult';
 import { convertTiddlerBody } from '@/modules/conversion-core/notes/convertTiddlerBody';
 import { prependPreservationComment } from '@/modules/conversion-core/preservation/metadata/prependPreservationComment';
 import { getTiddlerProperties } from '@/modules/conversion-core/metadata/getTiddlerProperties';
+import { isTiddlyWikiOperationalField } from '@/modules/conversion-core/metadata/isTiddlyWikiOperationalField';
+import { parseTiddlyWikiTimestampToEpochMilliseconds } from '@/modules/conversion-core/metadata/parseTiddlyWikiTimestampToEpochMilliseconds';
 import { findPreservationRecord } from '@/modules/conversion-core/preservation/metadata/findPreservationRecord';
 import { ImportTiddlerOptions } from '@/modules/conversion-core/notes/ImportTiddlerOptions';
 import { isMarkdownContentType } from '@/modules/conversion-core/notes/isMarkdownContentType';
@@ -72,9 +74,26 @@ export function importTiddler(
   for (const [name, value] of Object.entries(sourceProperties)) {
     const isReserved = ['title', 'type', 'tags'].includes(name);
 
-    if (!isReserved) {
-      properties[name] = value;
+    const isOperationalField =
+      options.metadataProjection === 'migration' &&
+      isTiddlyWikiOperationalField(name);
+
+    if (isReserved || isOperationalField) {
+      continue;
     }
+
+    const isTimestamp = name === 'created' || name === 'modified';
+
+    const isFileTimestamp =
+      options.metadataProjection === 'migration' &&
+      isTimestamp &&
+      parseTiddlyWikiTimestampToEpochMilliseconds(value) !== undefined;
+
+    if (isFileTimestamp) {
+      continue;
+    }
+
+    properties[name] = value;
   }
 
   const originalTags = normalizeObsidianTags(

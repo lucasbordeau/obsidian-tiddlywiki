@@ -69,9 +69,9 @@ Group files by domain, adding operation folders when they hold a substantial,
 coherent set of files. Keep small groups flat; avoid single-file category layers
 and mirrored `types`, `utils` or `cases` folders for every feature. Parser and
 serializer entry points coordinate their handlers. Keep context contracts close
-to their consumers and import implementation files directly. Tests follow the
-same domains, with case collections beside their suites and reusable fixture
-readers and assertions under `src/tests/support/`.
+to their consumers and import implementation files directly. Put suites and
+their case collections in a `__tests__` folder beside the owning implementation.
+Shared fixture readers and assertions live under `src/testing/support/`.
 
 Use blank lines to separate validation, preparation, state changes, and the final
 action. Keep related declarations, object assignments, and assertions together.
@@ -86,7 +86,8 @@ tooling or private repository checkout.
 
 ## Tests and changes
 
-Add executable behavior tests with corresponding fixtures under `src/tests/`.
+Add executable behavior tests in a colocated `__tests__` folder. Shared input
+fixtures live under `src/testing/samples/`.
 Check both conversion directions, nested/literal contexts and repeated round trips.
 For a bug, assert the externally observable result. Use the official TiddlyWiki
 runtime only in tests to independently verify generated syntax where appropriate.

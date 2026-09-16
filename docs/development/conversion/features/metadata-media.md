@@ -1,6 +1,6 @@
 # Metadata and media transport inventory
 
-Checked against the official documentation on 2026-09-09. Executable cases are grouped under [container codecs](../../../../src/tests/codecs/tiddlywiki), [Obsidian properties and tags](../../../../src/tests/codecs/obsidian), [metadata preservation](../../../../src/tests/codecs/metadata), and [media payloads](../../../../src/tests/codecs/media). Input fixtures are under `src/tests/samples/metadata/`.
+Checked against the official documentation on 2026-09-09. Executable cases are grouped under [container codecs](../../../../src/modules/conversion-core/codecs/tiddlywiki/__tests__), [Obsidian properties and tags](../../../../src/modules/conversion-core/codecs/obsidian/__tests__), [metadata preservation](../../../../src/modules/conversion-core/metadata/__tests__), and [media payloads](../../../../src/modules/conversion-core/notes/__tests__/media). Input fixtures are under `src/testing/samples/metadata/`.
 
 The tests exercise the portable container and metadata codecs. They compare original fields, strings, UTF-8 bytes and decoded base64 bytes after conversion. Media playback, image rendering and filesystem attachment writes belong to host integration checks. The wikitext and Markdown suites cover image/embed syntax separately.
 
@@ -23,6 +23,19 @@ The tests exercise the portable container and metadata codecs. They compare orig
 | Arbitrary document/binary types                             | Include DOCX and `application/octet-stream` as opaque transport cases.                                                                                                                                                                                           | [TW content-type field](https://tiddlywiki.com/static/ContentType.html)                                                                  |
 
 The attachment matrix records explicit MIME declarations for transport tests; it is not an extension-to-MIME detection implementation. Synthetic binary cases establish byte preservation independently of media decoders. The existing JPEG and MP3 fixtures add realistic payload sizes. Separate `.canvas` JSON and `.base` YAML examples also verify preservation of their document containers. These extensions are included in the [Obsidian file format inventory](https://obsidian.md/help/file-formats).
+
+The Obsidian vault importer uses a concise migration projection. It retains tags,
+authored custom fields and useful display fields such as `caption`, while omitting
+TiddlyWiki-only operational fields such as `creator`, `modifier`, `list`, draft
+state, plugin settings and `_canonical_uri`. Valid compact `created` and
+`modified` values become the Markdown file's creation and modification times
+through Obsidian's vault write options, retaining millisecond precision and
+keeping dates out of frontmatter. Later edits update the file modification time.
+When exporting Markdown without explicit date properties, the vault converter
+uses the file's current timestamps. Invalid TiddlyWiki timestamp values remain
+text properties because they cannot be represented as file dates. The portable
+codec's default mode still exposes every original field and retains the full
+preservation record for lossless round trips.
 
 Preservation records have a schema version, source identity, original and emitted body snapshots, and metadata snapshots. Exact source restoration requires matching identity, content type and unchanged emitted body. Metadata edits are applied independently. An edit creates a fresh record after consuming the previous one, keeping repeated conversion size bounded. A colliding user property/field keeps its original value; the record uses a numbered namespace suffix.
 

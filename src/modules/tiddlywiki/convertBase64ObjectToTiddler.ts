@@ -8,8 +8,10 @@ export function convertBase64ObjectToTiddler(
     title: base64Object.fileName,
     text: base64Object.base64,
     type: base64Object.mimeType,
-    created: base64Object.creationDate.toISOString(),
-    modified: base64Object.lastModifiedDate.toISOString(),
+    created: base64Object.creationDate.toString({ fractionalSecondDigits: 3 }),
+    modified: base64Object.lastModifiedDate.toString({
+      fractionalSecondDigits: 3,
+    }),
     tags: '',
   };
 }

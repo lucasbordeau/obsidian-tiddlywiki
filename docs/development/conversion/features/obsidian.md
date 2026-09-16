@@ -3,10 +3,10 @@
 Reference date: 2026-09-09. The examples are original regression inputs. The matrix
 distinguishes editable syntax conversion, static representations and retained
 source. Each `O-*` identifier names an executable test in
-[Obsidian feature suites](../../../../src/tests/syntax/obsidian/features);
+[Obsidian feature suites](../../../../src/modules/conversion-core/syntax/obsidian/__tests__/features);
 focused regressions live in the sibling
-[parsing](../../../../src/tests/syntax/obsidian/parsing) and
-[serialization](../../../../src/tests/syntax/obsidian/serialization) folders.
+[parsing](../../../../src/modules/conversion-core/syntax/obsidian/parsing/__tests__) and
+[serialization](../../../../src/modules/conversion-core/syntax/obsidian/serialization/__tests__) folders.
 
 ## Note syntax
 
@@ -40,18 +40,18 @@ heading and block targets, aliases and Markdown destinations. The
 [embed reference](https://obsidian.md/help/embeds) covers note sections, image size,
 audio, PDF fragments, canvas and embedded lists.
 
-| Feature                                                                    | Executable coverage                                                                           | Conversion contract                                                     |
-| -------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------- |
-| Wiki and Markdown links; folder paths; optional `.md`; aliases             | `O-LINK`, `O-FILE`                                                                            | Target and label identity                                               |
-| Reference links/images, formatted labels, tooltips                         | `O-LINK`, `O-MARKDOWN-IMAGE`                                                                  | Resolved destination, label, alt and title                              |
-| Heading, nested heading, same-note and block links                         | `O-LINK`                                                                                      | Fragment retained; resolving anchors requires host mapping              |
-| External HTTP URLs, query strings, parentheses, mail and Obsidian URIs     | `O-LINK`                                                                                      | External target unchanged                                               |
-| Whole-note/file embeds                                                     | `O-FILE`                                                                                      | Target becomes a TW transclusion; referenced content remains host-owned |
-| Heading/block embeds and PDF page/height fragments                         | `O-ANCHOR-EMBED`                                                                              | Source retained with diagnostic pending host-specific resolution        |
-| Paragraph/list block identifiers                                           | `O-PRESERVED`, `O-COMPOUND`                                                                   | Source retained with diagnostic                                         |
-| Local image dimensions and Unicode/spaced targets                          | `O-IMAGE`: eight formats × paragraph, callout, task list and table                            | Image target, width and height                                          |
-| Remote/relative/reference images; escaped alt; width-only and width×height | `O-MARKDOWN-IMAGE`, `O-IMAGE-RENDER`                                                          | Distinct alt, tooltip, target and size; checked with actual TW renderer |
-| Custom link resolver                                                       | [Integration rendering suite](../../../../src/tests/conversion/integration/rendering.test.ts) | Internal references remapped; external URLs retained                    |
+| Feature                                                                    | Executable coverage                                                                                           | Conversion contract                                                     |
+| -------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------- |
+| Wiki and Markdown links; folder paths; optional `.md`; aliases             | `O-LINK`, `O-FILE`                                                                                            | Target and label identity                                               |
+| Reference links/images, formatted labels, tooltips                         | `O-LINK`, `O-MARKDOWN-IMAGE`                                                                                  | Resolved destination, label, alt and title                              |
+| Heading, nested heading, same-note and block links                         | `O-LINK`                                                                                                      | Fragment retained; resolving anchors requires host mapping              |
+| External HTTP URLs, query strings, parentheses, mail and Obsidian URIs     | `O-LINK`                                                                                                      | External target unchanged                                               |
+| Whole-note/file embeds                                                     | `O-FILE`                                                                                                      | Target becomes a TW transclusion; referenced content remains host-owned |
+| Heading/block embeds and PDF page/height fragments                         | `O-ANCHOR-EMBED`                                                                                              | Source retained with diagnostic pending host-specific resolution        |
+| Paragraph/list block identifiers                                           | `O-PRESERVED`, `O-COMPOUND`                                                                                   | Source retained with diagnostic                                         |
+| Local image dimensions and Unicode/spaced targets                          | `O-IMAGE`: eight formats × paragraph, callout, task list and table                                            | Image target, width and height                                          |
+| Remote/relative/reference images; escaped alt; width-only and width×height | `O-MARKDOWN-IMAGE`, `O-IMAGE-RENDER`                                                                          | Distinct alt, tooltip, target and size; checked with actual TW renderer |
+| Custom link resolver                                                       | [Integration rendering suite](../../../../src/modules/conversion-core/conversion/__tests__/rendering.test.ts) | Internal references remapped; external URLs retained                    |
 
 ## Complete built-in file-format checklist
 
@@ -73,16 +73,16 @@ the host application.
 
 ## Host-specific content
 
-| Feature and official source                                                                                 | Executable coverage                                                                                                 | Conversion contract                                                                                         |
-| ----------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------- |
-| [Callouts](https://obsidian.md/help/callouts): all 27 documented types/aliases, case and custom types       | `O-CALLOUT`                                                                                                         | Type/title/fold metadata and nested content; target uses static HTML                                        |
-| [Search query blocks](https://obsidian.md/help/Plugins/Search)                                              | `O-FENCED`, `O-COMPOUND`                                                                                            | Literal query and fence language; displayed as code in TW                                                   |
-| [Bases YAML and inline base blocks](https://obsidian.md/help/bases/syntax)                                  | `O-FILE`, `O-FENCED`, `O-COMPOUND`                                                                                  | File reference or literal code; dynamic views require Obsidian                                              |
-| Mermaid diagrams and internal-link classes                                                                  | `O-FENCED`, `O-COMPOUND`                                                                                            | Diagram source and language; displayed as code in TW                                                        |
-| [HTML](https://obsidian.md/help/html): underline, inline semantic tags, custom styles, details, audio/video | `O-PRESERVED`, [remote-media regression](../../../../src/tests/syntax/tiddlywiki/features/html/remoteMedia.test.ts) | Plain URL-backed audio/video controls and static inline tags converted; other HTML retained with diagnostic |
-| [Web pages and social embeds](https://obsidian.md/help/embed-web-pages)                                     | `O-PRESERVED`, Markdown provider-embed regressions                                                                  | Iframe/provider source retained with diagnostic                                                             |
-| Community-plugin code fences, illustrated by Dataview                                                       | `O-FENCED`                                                                                                          | Literal code and language retained                                                                          |
-| Properties, tags, aliases, dates and custom metadata                                                        | Metadata suites and linked inventory                                                                                | Structured codecs and edit-aware preservation                                                               |
+| Feature and official source                                                                                 | Executable coverage                                                                                                                             | Conversion contract                                                                                         |
+| ----------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------- |
+| [Callouts](https://obsidian.md/help/callouts): all 27 documented types/aliases, case and custom types       | `O-CALLOUT`                                                                                                                                     | Type/title/fold metadata and nested content; target uses static HTML                                        |
+| [Search query blocks](https://obsidian.md/help/Plugins/Search)                                              | `O-FENCED`, `O-COMPOUND`                                                                                                                        | Literal query and fence language; displayed as code in TW                                                   |
+| [Bases YAML and inline base blocks](https://obsidian.md/help/bases/syntax)                                  | `O-FILE`, `O-FENCED`, `O-COMPOUND`                                                                                                              | File reference or literal code; dynamic views require Obsidian                                              |
+| Mermaid diagrams and internal-link classes                                                                  | `O-FENCED`, `O-COMPOUND`                                                                                                                        | Diagram source and language; displayed as code in TW                                                        |
+| [HTML](https://obsidian.md/help/html): underline, inline semantic tags, custom styles, details, audio/video | `O-PRESERVED`, [remote-media regression](../../../../src/modules/conversion-core/syntax/tiddlywiki/__tests__/features/html/remoteMedia.test.ts) | Plain URL-backed audio/video controls and static inline tags converted; other HTML retained with diagnostic |
+| [Web pages and social embeds](https://obsidian.md/help/embed-web-pages)                                     | `O-PRESERVED`, Markdown provider-embed regressions                                                                                              | Iframe/provider source retained with diagnostic                                                             |
+| Community-plugin code fences, illustrated by Dataview                                                       | `O-FENCED`                                                                                                                                      | Literal code and language retained                                                                          |
+| Properties, tags, aliases, dates and custom metadata                                                        | Metadata suites and linked inventory                                                                                                            | Structured codecs and edit-aware preservation                                                               |
 
 Workspace features such as graph view, backlinks, bookmarks, navigation and editor
 settings operate outside a note's stored syntax. Community extensions can define
@@ -90,7 +90,7 @@ additional syntax; the inventory records a tested core baseline.
 
 ## Contrived composition
 
-[`obsidian-media-laboratory.md`](../../../../src/tests/samples/conversion-core/obsidian-media-laboratory.md)
+[`obsidian-media-laboratory.md`](../../../../src/testing/samples/conversion-core/obsidian-media-laboratory.md)
 combines nested folded callouts, mixed task/numbered lists, sized images in tables,
 PDF/audio/video/canvas/Base embeds, rich footnotes, math, comments, iframe HTML and
 literal Mermaid/query/base/code fences. `O-COMPOUND` checks the complete parsed

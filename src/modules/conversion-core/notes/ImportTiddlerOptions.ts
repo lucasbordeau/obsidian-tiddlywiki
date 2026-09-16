@@ -2,4 +2,5 @@ import { ConversionOptions } from '@/modules/conversion-core/conversion/Conversi
 
 export type ImportTiddlerOptions = ConversionOptions & {
   preserveRoundTripMetadata?: boolean;
+  metadataProjection?: 'complete' | 'migration';
 };

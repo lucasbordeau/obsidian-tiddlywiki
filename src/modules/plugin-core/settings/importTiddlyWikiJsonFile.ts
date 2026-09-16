@@ -1,4 +1,4 @@
-import * as fs from 'fs';
+import * as path from 'path';
 import { App } from 'obsidian';
 import { Notice } from 'obsidian';
 import { readFilePathToJSON } from '@/modules/file-manipulation/readFilePathToJSON';
@@ -11,8 +11,9 @@ import { writeMediaTiddlers } from '@/modules/plugin-core/settings/writeMediaTid
 
 async function importTiddlers(app: App, tiddlers: Tiddler[]): Promise<void> {
   const importPath = getImportPath(app);
+  const importFolderPath = path.basename(importPath);
 
-  fs.mkdirSync(importPath, { recursive: true });
+  await app.vault.createFolder(importFolderPath);
 
   await writeMediaTiddlers(tiddlers, importPath);
 
@@ -22,7 +23,11 @@ async function importTiddlers(app: App, tiddlers: Tiddler[]): Promise<void> {
 
   const obsidianNotes = convertTiddlersToObsidianNotes(textTiddlers, tiddlers);
 
-  writeObsidianNotesToDirectory(obsidianNotes, importPath);
+  await writeObsidianNotesToDirectory(
+    app.vault,
+    obsidianNotes,
+    importFolderPath,
+  );
 
   new Notice(`✅ Successfuly imported TiddlyWiki to ${importPath}`, 10000);
 }
