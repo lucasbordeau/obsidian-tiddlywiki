@@ -32,7 +32,7 @@ Windows/Linux, then search for **TiddlyWiki**.
   `TiddlyWiki-Import-*` folder at the root of the vault.
 - **Obsidian → TiddlyWiki:** Run **Import/Export TiddlyWiki: Export vault to
   TiddlyWiki JSON**. The plugin downloads `tiddlywiki-export.json` for the whole
-  visible vault. In TiddlyWiki, use **Tools → Import** to select that file.
+  visible vault. In TiddlyWiki, use **Tools → Import** to inport that file.
 
 ## Scope of this plugin
 
@@ -42,7 +42,7 @@ Windows/Linux, then search for **TiddlyWiki**.
   tables, code, links, and inline formatting. Some features use static HTML
   representations in the other format.
 - Whole-note transclusions and local image, audio, and video attachments.
-  External media references remain external.
+  External media references are embedded in HTML tags.
 - Tags, authored fields, and timestamps in the JSON exchange.
 
 ### Intentionally out of scope
