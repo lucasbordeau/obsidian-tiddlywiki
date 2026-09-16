@@ -1,6 +1,6 @@
-import type { LexingContext } from '../LexingContext';
-import type { TokenMatch } from '../TokenMatch';
-import { findDelimitedEnd } from '../boundaries/findDelimitedEnd';
+import { LexingContext } from '@/modules/conversion-core/lexing/LexingContext';
+import { TokenMatch } from '@/modules/conversion-core/lexing/TokenMatch';
+import { findDelimitedEnd } from '@/modules/conversion-core/lexing/boundaries/findDelimitedEnd';
 
 export function scanTransclusion(
   context: LexingContext,

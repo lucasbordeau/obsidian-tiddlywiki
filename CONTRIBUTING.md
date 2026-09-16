@@ -8,13 +8,9 @@ historical minimum-version entries in `versions.json`.
 
 Use Node 24 and the committed npm lockfile:
 
-For hands-on testing, run `npm run test:manual`. On a fresh clone, that one
-command installs dependencies before it builds and opens a populated mock vault
-in a separate Obsidian instance. The current plugin and Hot Reload are already
-enabled. The versioned mocks are visible under
-[`manual-test/`](./manual-test/README.md). Keep the terminal running while
-testing. See
-[manual testing](./docs/development/manual-testing.md).
+For hands-on conversion testing, run `npm run demo:tw`. It opens the sole manual
+fixture, `manual-test/tiddlywiki/basic-feature-demo.html`, in the default browser.
+See [manual testing](./docs/development/manual-testing.md).
 
 For automated validation:
 
@@ -27,7 +23,8 @@ npm run test:dev
 npm run lint
 npm run build:core
 npm run test:bundles
-npm run test:manual:setup
+npm run build
+npm run test:demo
 ```
 
 `npm run check` runs those checks together. `npm run format` checks maintained
@@ -55,6 +52,9 @@ when an artifact is independently reused or its size warrants it. Keep reusable
 types in named files.
 Use a type guard for repeated nullish/shape validation. Preserve single quotes,
 two-space indentation, trailing commas and LF line endings.
+Use the `@/` alias for module paths within `src`, including tests. Use regular
+imports for both type and runtime bindings; `import type` declarations and inline
+type modifiers are forbidden. Tooling outside `src` may use relative paths.
 
 Start function names and their utility filenames with a verb describing the
 operation: `findMarkdownLinkEnd`, `getInlinePlainText`, `parseHtmlInline`,

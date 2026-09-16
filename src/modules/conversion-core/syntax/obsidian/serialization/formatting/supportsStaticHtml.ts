@@ -1,4 +1,4 @@
-import type { InlineNode } from '../../../../model/inlines/InlineNode';
+import { InlineNode } from '@/modules/conversion-core/model/inlines/InlineNode';
 
 export function supportsStaticHtml(node: InlineNode): boolean {
   if ('children' in node) {

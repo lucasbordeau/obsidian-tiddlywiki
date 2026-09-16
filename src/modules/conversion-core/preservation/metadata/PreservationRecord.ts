@@ -1,4 +1,4 @@
-import type { Dialect } from '../../model/Dialect';
+import { Dialect } from '@/modules/conversion-core/model/Dialect';
 
 export type PreservationRecord = {
   kind: 'obsidian-tiddlywiki-preservation';

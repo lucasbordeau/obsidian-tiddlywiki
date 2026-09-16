@@ -1,13 +1,13 @@
 import * as fs from 'fs';
-import type { App } from 'obsidian';
+import { App } from 'obsidian';
 import { Notice } from 'obsidian';
-import { readFilePathToJSON } from '../../file-manipulation/readFilePathToJSON';
-import { readFileObjectToJSON } from '../../file-manipulation/readFileObjectToJSON';
-import { convertTiddlersToObsidianNotes } from '../../format-converters/convertTiddlersToObsidianNotes';
-import { writeObsidianNotesToDirectory } from '../../obsidian/writeObsidianNotesToDirectory';
-import type { Tiddler } from '../../tiddlywiki/Tiddler';
-import { getImportPath } from './getImportPath';
-import { writeMediaTiddlers } from './writeMediaTiddlers';
+import { readFilePathToJSON } from '@/modules/file-manipulation/readFilePathToJSON';
+import { readFileObjectToJSON } from '@/modules/file-manipulation/readFileObjectToJSON';
+import { convertTiddlersToObsidianNotes } from '@/modules/format-converters/convertTiddlersToObsidianNotes';
+import { writeObsidianNotesToDirectory } from '@/modules/obsidian/writeObsidianNotesToDirectory';
+import { Tiddler } from '@/modules/tiddlywiki/Tiddler';
+import { getImportPath } from '@/modules/plugin-core/settings/getImportPath';
+import { writeMediaTiddlers } from '@/modules/plugin-core/settings/writeMediaTiddlers';
 
 async function importTiddlers(app: App, tiddlers: Tiddler[]): Promise<void> {
   const importPath = getImportPath(app);
@@ -17,10 +17,10 @@ async function importTiddlers(app: App, tiddlers: Tiddler[]): Promise<void> {
   await writeMediaTiddlers(tiddlers, importPath);
 
   const textTiddlers = tiddlers.filter(
-    (tiddler) => !('type' in tiddler) || tiddler.type?.contains('text'),
+    (tiddler) => !tiddler.type || tiddler.type.includes('text'),
   );
 
-  const obsidianNotes = convertTiddlersToObsidianNotes(textTiddlers);
+  const obsidianNotes = convertTiddlersToObsidianNotes(textTiddlers, tiddlers);
 
   writeObsidianNotesToDirectory(obsidianNotes, importPath);
 

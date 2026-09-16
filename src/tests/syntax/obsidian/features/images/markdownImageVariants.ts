@@ -12,7 +12,11 @@ export const markdownImageVariants = [
   [
     'relative Markdown image',
     '![drawing](<assets/two words.png> "Study")',
-    { alt: 'drawing', title: 'Study' },
+    {
+      target: 'assets/two words.png',
+      alt: 'drawing',
+      title: 'Study',
+    },
   ],
   [
     'escaped alt delimiters',

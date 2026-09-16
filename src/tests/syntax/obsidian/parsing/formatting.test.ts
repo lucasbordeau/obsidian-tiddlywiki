@@ -1,4 +1,4 @@
-import { parseObsidianBlocks } from '../../../support/parseObsidianBlocks';
+import { parseObsidianBlocks } from '@/tests/support/parseObsidianBlocks';
 
 describe('Obsidian structural parsing', () => {
   test('preserves nested formatting, code literals, alias identity and protected delimiters', () => {

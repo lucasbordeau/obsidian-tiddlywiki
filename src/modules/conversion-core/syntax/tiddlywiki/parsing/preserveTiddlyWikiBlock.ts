@@ -1,5 +1,5 @@
-import type { BlockNode } from '../../../model/blocks/BlockNode';
-import type { TiddlyWikiParsingContext } from './context/TiddlyWikiParsingContext';
+import { BlockNode } from '@/modules/conversion-core/model/blocks/BlockNode';
+import { TiddlyWikiParsingContext } from '@/modules/conversion-core/syntax/tiddlywiki/parsing/context/TiddlyWikiParsingContext';
 
 export function preserveTiddlyWikiBlock(
   this: TiddlyWikiParsingContext,

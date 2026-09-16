@@ -1,5 +1,5 @@
-import type { HtmlAttributes } from '../../types/HtmlAttributes';
-import { decodeHtml } from './decodeHtml';
+import { HtmlAttributes } from '@/modules/conversion-core/syntax/obsidian/types/HtmlAttributes';
+import { decodeHtml } from '@/modules/conversion-core/syntax/obsidian/parsing/html/decodeHtml';
 
 export function parseAttributes(source: string): HtmlAttributes | undefined {
   const attributes: HtmlAttributes = {};

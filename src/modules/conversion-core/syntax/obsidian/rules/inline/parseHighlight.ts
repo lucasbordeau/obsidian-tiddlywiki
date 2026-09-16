@@ -1,5 +1,5 @@
 import MarkdownIt from 'markdown-it';
-import { findDelimiter } from './findDelimiter';
+import { findDelimiter } from '@/modules/conversion-core/syntax/obsidian/rules/inline/findDelimiter';
 
 export function parseHighlight(
   state: MarkdownIt.StateInline,

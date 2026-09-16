@@ -1,6 +1,6 @@
-import type { BlockNode } from '../../../../model/blocks/BlockNode';
-import type { TiddlyWikiHtmlState } from './TiddlyWikiHtmlState';
-import type { TiddlyWikiParsingContext } from '../context/TiddlyWikiParsingContext';
+import { BlockNode } from '@/modules/conversion-core/model/blocks/BlockNode';
+import { TiddlyWikiHtmlState } from '@/modules/conversion-core/syntax/tiddlywiki/parsing/html/TiddlyWikiHtmlState';
+import { TiddlyWikiParsingContext } from '@/modules/conversion-core/syntax/tiddlywiki/parsing/context/TiddlyWikiParsingContext';
 
 export function parseTiddlyWikiHtmlCodeBlock(
   this: TiddlyWikiParsingContext,

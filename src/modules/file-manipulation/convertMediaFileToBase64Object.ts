@@ -1,7 +1,7 @@
 import * as fs from 'fs';
 import * as path from 'path';
-import { Base64Object } from './Base64Object';
-import { MediaFile } from './MediaFile';
+import { Base64Object } from '@/modules/file-manipulation/Base64Object';
+import { MediaFile } from '@/modules/file-manipulation/MediaFile';
 
 export function convertMediaFileToBase64Object(
   mediaFile: MediaFile,

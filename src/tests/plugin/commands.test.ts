@@ -1,19 +1,17 @@
 import path from 'node:path';
-import type { App, ButtonComponent, Command, PluginManifest } from 'obsidian';
+import { App, ButtonComponent, Command, PluginManifest } from 'obsidian';
 import { Setting } from 'obsidian';
-import ObsidianTiddlyWikiPlugin from '../../main';
-import { ObsidianTiddlyWikiSettingsTab } from '../../modules/plugin-core/settings/ObsidianTiddlyWikiSettingsTab';
-import { exportVaultToJson } from '../../modules/plugin-core/settings/exportVaultToJson';
-import { importTiddlyWikiJsonPath } from '../../modules/plugin-core/settings/importTiddlyWikiJsonFile';
-import { getImportPathHint } from '../../modules/plugin-core/settings/openImportJsonPicker';
-import { renderImportJsonButton } from '../../modules/plugin-core/settings/renderImportJsonButton';
+import ObsidianTiddlyWikiPlugin from '@/main';
+import { ObsidianTiddlyWikiSettingsTab } from '@/modules/plugin-core/settings/ObsidianTiddlyWikiSettingsTab';
+import { exportVaultToJson } from '@/modules/plugin-core/settings/exportVaultToJson';
+import { importTiddlyWikiJsonPath } from '@/modules/plugin-core/settings/importTiddlyWikiJsonFile';
+import { renderImportJsonButton } from '@/modules/plugin-core/settings/renderImportJsonButton';
 
 jest.mock(
   'electron',
   () => ({
     remote: {
       dialog: { showOpenDialog: jest.fn() },
-      process: { argv: [] },
     },
   }),
   { virtual: true },
@@ -48,12 +46,10 @@ jest.mock(
 const electronMock = jest.requireMock('electron') as {
   remote: {
     dialog: { showOpenDialog: jest.Mock };
-    process: { argv: string[] };
   };
 };
 
 const mockShowOpenDialog = electronMock.remote.dialog.showOpenDialog;
-const mockElectronProcess = electronMock.remote.process;
 
 function findCommand(plugin: ObsidianTiddlyWikiPlugin, commandId: string) {
   const registeredCommand = jest
@@ -79,8 +75,6 @@ let plugin: ObsidianTiddlyWikiPlugin;
 
 beforeEach(async () => {
   jest.clearAllMocks();
-
-  mockElectronProcess.argv = [];
 
   mockShowOpenDialog.mockResolvedValue({ canceled: true, filePaths: [] });
 
@@ -116,34 +110,7 @@ describe('command palette actions', () => {
     expect(mockShowOpenDialog).not.toHaveBeenCalled();
   });
 
-  it('opens the native picker at the prepared JSON and imports it', async () => {
-    const preparedJsonPath = path.resolve('manual-test/tiddlywiki/import.json');
-
-    mockElectronProcess.argv = [`--tiddlywiki-import-path=${preparedJsonPath}`];
-
-    mockShowOpenDialog.mockResolvedValue({
-      canceled: false,
-      filePaths: [preparedJsonPath],
-    });
-
-    await findCommand(plugin, 'import-tiddlywiki-json')();
-
-    expect(mockShowOpenDialog).toHaveBeenCalledWith({
-      title: 'Import TiddlyWiki JSON',
-      defaultPath: preparedJsonPath,
-      filters: [{ name: 'TiddlyWiki JSON', extensions: ['json'] }],
-      properties: ['openFile'],
-    });
-
-    expect(importTiddlyWikiJsonPath).toHaveBeenCalledWith(
-      app,
-      preparedJsonPath,
-    );
-
-    expect(displaySettings).not.toHaveBeenCalled();
-  });
-
-  it('opens a standard native picker outside the manual test launcher', async () => {
+  it('opens a standard native picker', async () => {
     await findCommand(plugin, 'import-tiddlywiki-json')();
 
     expect(mockShowOpenDialog).toHaveBeenCalledWith({
@@ -192,22 +159,6 @@ describe('command palette actions', () => {
       app,
       selectedPath,
     );
-  });
-
-  it('reads only the dedicated manual import argument', () => {
-    const profilePath = path.resolve('temporary/profile');
-    const importPath = path.resolve('manual-test/tiddlywiki/import.json');
-    const unrelatedPath = path.resolve('unrelated/file.json');
-
-    expect(
-      getImportPathHint([
-        'Obsidian',
-        `--user-data-dir=${profilePath}`,
-        `--tiddlywiki-import-path=${importPath}`,
-      ]),
-    ).toBe(importPath);
-
-    expect(getImportPathHint(['Obsidian', unrelatedPath])).toBe(undefined);
   });
 
   it('exports the current vault with no active editor or settings display', async () => {

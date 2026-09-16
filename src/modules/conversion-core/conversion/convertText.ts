@@ -1,10 +1,10 @@
-import { parseObsidian } from '../syntax/obsidian/parsing/parseObsidian';
-import { serializeObsidian } from '../syntax/obsidian/serialization/serializeObsidian';
-import { parseTiddlyWiki } from '../syntax/tiddlywiki/parsing/parseTiddlyWiki';
-import { serializeTiddlyWiki } from '../syntax/tiddlywiki/serialization/serializeTiddlyWiki';
-import type { ConversionOptions } from './ConversionOptions';
-import type { ConversionResult } from './ConversionResult';
-import type { Dialect } from '../model/Dialect';
+import { parseObsidian } from '@/modules/conversion-core/syntax/obsidian/parsing/parseObsidian';
+import { serializeObsidian } from '@/modules/conversion-core/syntax/obsidian/serialization/serializeObsidian';
+import { parseTiddlyWiki } from '@/modules/conversion-core/syntax/tiddlywiki/parsing/parseTiddlyWiki';
+import { serializeTiddlyWiki } from '@/modules/conversion-core/syntax/tiddlywiki/serialization/serializeTiddlyWiki';
+import { ConversionOptions } from '@/modules/conversion-core/conversion/ConversionOptions';
+import { ConversionResult } from '@/modules/conversion-core/conversion/ConversionResult';
+import { Dialect } from '@/modules/conversion-core/model/Dialect';
 
 export function convertText(
   source: string,

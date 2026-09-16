@@ -1,5 +1,5 @@
-import { assertStableRoundTrip } from '../../../../support/assertStableRoundTrip';
-import { markdownFeatureSources } from './markdownFeatureSources';
+import { assertStableRoundTrip } from '@/tests/support/assertStableRoundTrip';
+import { markdownFeatureSources } from '@/tests/syntax/obsidian/features/markdown/markdownFeatureSources';
 
 describe('official Obsidian feature inventory', () => {
   test.each(markdownFeatureSources)(

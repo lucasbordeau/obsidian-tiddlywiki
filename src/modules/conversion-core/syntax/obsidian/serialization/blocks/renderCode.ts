@@ -1,5 +1,5 @@
-import type { BlockNode } from '../../../../model/blocks/BlockNode';
-import { getLongestDelimiterRun } from '../getLongestDelimiterRun';
+import { BlockNode } from '@/modules/conversion-core/model/blocks/BlockNode';
+import { getLongestDelimiterRun } from '@/modules/conversion-core/syntax/obsidian/serialization/getLongestDelimiterRun';
 
 export function renderCode(
   block: Extract<BlockNode, { type: 'code' }>,

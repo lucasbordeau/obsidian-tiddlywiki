@@ -1,6 +1,6 @@
 import * as fs from 'fs';
 import * as path from 'path';
-import { ObsidianNote } from 'src/modules/obsidian/ObsidianNote';
+import { ObsidianNote } from '@/modules/obsidian/ObsidianNote';
 
 export async function writeObsidianNotesToDirectory(
   obsidianNotes: ObsidianNote[],

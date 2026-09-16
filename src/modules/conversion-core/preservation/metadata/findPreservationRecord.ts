@@ -1,6 +1,6 @@
-import type { Dialect } from '../../model/Dialect';
-import type { PreservationRecord } from './PreservationRecord';
-import { readPreservationRecord } from './readPreservationRecord';
+import { Dialect } from '@/modules/conversion-core/model/Dialect';
+import { PreservationRecord } from '@/modules/conversion-core/preservation/metadata/PreservationRecord';
+import { readPreservationRecord } from '@/modules/conversion-core/preservation/metadata/readPreservationRecord';
 
 export function findPreservationRecord(
   properties: Record<string, unknown>,

@@ -1,5 +1,5 @@
-import type { App } from 'obsidian';
-import { importTiddlyWikiJsonFile } from './importTiddlyWikiJsonFile';
+import { App } from 'obsidian';
+import { importTiddlyWikiJsonFile } from '@/modules/plugin-core/settings/importTiddlyWikiJsonFile';
 
 export async function importSelectedFiles(
   app: App,

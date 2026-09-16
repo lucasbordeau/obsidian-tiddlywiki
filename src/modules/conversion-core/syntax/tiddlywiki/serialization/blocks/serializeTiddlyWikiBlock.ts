@@ -1,10 +1,10 @@
-import type { BlockNode } from '../../../../model/blocks/BlockNode';
-import type { TiddlyWikiSerializationContext } from '../context/TiddlyWikiSerializationContext';
-import { serializeTiddlyWikiCodeBlock } from './serializeTiddlyWikiCodeBlock';
-import { serializeTiddlyWikiQuoteBlock } from './serializeTiddlyWikiQuoteBlock';
-import { serializeTiddlyWikiListBlock } from './serializeTiddlyWikiListBlock';
-import { serializeTiddlyWikiTable } from './serializeTiddlyWikiTable';
-import { serializeTiddlyWikiFootnote } from './serializeTiddlyWikiFootnote';
+import { BlockNode } from '@/modules/conversion-core/model/blocks/BlockNode';
+import { TiddlyWikiSerializationContext } from '@/modules/conversion-core/syntax/tiddlywiki/serialization/context/TiddlyWikiSerializationContext';
+import { serializeTiddlyWikiCodeBlock } from '@/modules/conversion-core/syntax/tiddlywiki/serialization/blocks/serializeTiddlyWikiCodeBlock';
+import { serializeTiddlyWikiQuoteBlock } from '@/modules/conversion-core/syntax/tiddlywiki/serialization/blocks/serializeTiddlyWikiQuoteBlock';
+import { serializeTiddlyWikiListBlock } from '@/modules/conversion-core/syntax/tiddlywiki/serialization/blocks/serializeTiddlyWikiListBlock';
+import { serializeTiddlyWikiTable } from '@/modules/conversion-core/syntax/tiddlywiki/serialization/blocks/serializeTiddlyWikiTable';
+import { serializeTiddlyWikiFootnote } from '@/modules/conversion-core/syntax/tiddlywiki/serialization/blocks/serializeTiddlyWikiFootnote';
 
 export function serializeTiddlyWikiBlock(
   this: TiddlyWikiSerializationContext,

@@ -1,6 +1,6 @@
-import type { InlineNode } from '../../../../model/inlines/InlineNode';
-import type { TiddlyWikiInlineMatch } from '../../types/TiddlyWikiInlineMatch';
-import type { TiddlyWikiParsingContext } from '../context/TiddlyWikiParsingContext';
+import { InlineNode } from '@/modules/conversion-core/model/inlines/InlineNode';
+import { TiddlyWikiInlineMatch } from '@/modules/conversion-core/syntax/tiddlywiki/types/TiddlyWikiInlineMatch';
+import { TiddlyWikiParsingContext } from '@/modules/conversion-core/syntax/tiddlywiki/parsing/context/TiddlyWikiParsingContext';
 
 export function matchTiddlyWikiImage(
   this: TiddlyWikiParsingContext,

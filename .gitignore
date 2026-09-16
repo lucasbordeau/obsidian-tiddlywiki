@@ -20,8 +20,6 @@ data.json
 
 .env
 .dev-vault/
-/manual-test/runs/
-/manual-test/tiddlywiki/empty.html
 
 dist/
 coverage/

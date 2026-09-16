@@ -1,10 +1,10 @@
-import type { InlineNode } from '../../../../model/inlines/InlineNode';
-import type { TiddlyWikiSerializationContext } from '../context/TiddlyWikiSerializationContext';
-import { escapeTiddlyWikiText } from '../escapeTiddlyWikiText';
-import { serializeTiddlyWikiInlineCode } from './serializeTiddlyWikiInlineCode';
-import { serializeTiddlyWikiHighlight } from './serializeTiddlyWikiHighlight';
-import { serializeTiddlyWikiLink } from './serializeTiddlyWikiLink';
-import { serializeTiddlyWikiEmbed } from './serializeTiddlyWikiEmbed';
+import { InlineNode } from '@/modules/conversion-core/model/inlines/InlineNode';
+import { TiddlyWikiSerializationContext } from '@/modules/conversion-core/syntax/tiddlywiki/serialization/context/TiddlyWikiSerializationContext';
+import { escapeTiddlyWikiText } from '@/modules/conversion-core/syntax/tiddlywiki/serialization/escapeTiddlyWikiText';
+import { serializeTiddlyWikiInlineCode } from '@/modules/conversion-core/syntax/tiddlywiki/serialization/inlines/serializeTiddlyWikiInlineCode';
+import { serializeTiddlyWikiHighlight } from '@/modules/conversion-core/syntax/tiddlywiki/serialization/inlines/serializeTiddlyWikiHighlight';
+import { serializeTiddlyWikiLink } from '@/modules/conversion-core/syntax/tiddlywiki/serialization/inlines/serializeTiddlyWikiLink';
+import { serializeTiddlyWikiEmbed } from '@/modules/conversion-core/syntax/tiddlywiki/serialization/inlines/serializeTiddlyWikiEmbed';
 
 export function serializeTiddlyWikiInlineNode(
   this: TiddlyWikiSerializationContext,

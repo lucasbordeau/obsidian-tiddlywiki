@@ -1,6 +1,6 @@
-import type { TiddlyWikiInlineMatch } from '../../types/TiddlyWikiInlineMatch';
-import { TIDDLYWIKI_EXTERNAL_PROTOCOL } from '../../constants/TiddlyWikiExternalProtocol.const';
-import type { TiddlyWikiParsingContext } from '../context/TiddlyWikiParsingContext';
+import { TiddlyWikiInlineMatch } from '@/modules/conversion-core/syntax/tiddlywiki/types/TiddlyWikiInlineMatch';
+import { TIDDLYWIKI_EXTERNAL_PROTOCOL } from '@/modules/conversion-core/syntax/tiddlywiki/constants/TiddlyWikiExternalProtocol.const';
+import { TiddlyWikiParsingContext } from '@/modules/conversion-core/syntax/tiddlywiki/parsing/context/TiddlyWikiParsingContext';
 
 export function matchTiddlyWikiWikiLink(
   this: TiddlyWikiParsingContext,

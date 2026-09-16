@@ -1,8 +1,8 @@
-import type { HtmlCursor } from '../../types/HtmlCursor';
-import type { HtmlChildrenParser } from '../../types/HtmlChildrenParser';
-import type { InlineNode } from '../../../../model/inlines/InlineNode';
-import { parseAttributes } from './parseAttributes';
-import { areHtmlAttributesAllowed } from './areHtmlAttributesAllowed';
+import { HtmlCursor } from '@/modules/conversion-core/syntax/obsidian/types/HtmlCursor';
+import { HtmlChildrenParser } from '@/modules/conversion-core/syntax/obsidian/types/HtmlChildrenParser';
+import { InlineNode } from '@/modules/conversion-core/model/inlines/InlineNode';
+import { parseAttributes } from '@/modules/conversion-core/syntax/obsidian/parsing/html/parseAttributes';
+import { areHtmlAttributesAllowed } from '@/modules/conversion-core/syntax/obsidian/parsing/html/areHtmlAttributesAllowed';
 
 const formatTypes = {
   strong: 'strong',

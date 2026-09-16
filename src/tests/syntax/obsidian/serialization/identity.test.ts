@@ -1,7 +1,7 @@
-import { parseObsidian } from '../../../../modules/conversion-core/syntax/obsidian/parsing/parseObsidian';
-import { serializeObsidian } from '../../../../modules/conversion-core/syntax/obsidian/serialization/serializeObsidian';
-import { ParsedDocument } from '../../../../modules/conversion-core/model/ParsedDocument';
-import { parseObsidianBlocks } from '../../../support/parseObsidianBlocks';
+import { parseObsidian } from '@/modules/conversion-core/syntax/obsidian/parsing/parseObsidian';
+import { serializeObsidian } from '@/modules/conversion-core/syntax/obsidian/serialization/serializeObsidian';
+import { ParsedDocument } from '@/modules/conversion-core/model/ParsedDocument';
+import { parseObsidianBlocks } from '@/tests/support/parseObsidianBlocks';
 
 describe('Obsidian semantic serialization', () => {
   test('resolves targets independently of aliases, inline labels and external URLs', () => {

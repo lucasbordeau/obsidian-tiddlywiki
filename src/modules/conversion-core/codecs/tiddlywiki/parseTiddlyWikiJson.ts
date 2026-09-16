@@ -1,7 +1,7 @@
-import { isRecord } from '../../validation/isRecord';
-import { createCodecDiagnostic } from '../createCodecDiagnostic';
-import type { CodecResult } from '../CodecResult';
-import type { TiddlerFields } from './TiddlerFields';
+import { isRecord } from '@/modules/conversion-core/validation/isRecord';
+import { createCodecDiagnostic } from '@/modules/conversion-core/codecs/createCodecDiagnostic';
+import { CodecResult } from '@/modules/conversion-core/codecs/CodecResult';
+import { TiddlerFields } from '@/modules/conversion-core/codecs/tiddlywiki/TiddlerFields';
 
 export function parseTiddlyWikiJson(
   source: string,

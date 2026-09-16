@@ -1,6 +1,6 @@
 import MarkdownIt from 'markdown-it';
-import { findDelimiter } from './findDelimiter';
-import { pushInlineToken } from './pushInlineToken';
+import { findDelimiter } from '@/modules/conversion-core/syntax/obsidian/rules/inline/findDelimiter';
+import { pushInlineToken } from '@/modules/conversion-core/syntax/obsidian/rules/inline/pushInlineToken';
 
 export function parseWikiReference(
   state: MarkdownIt.StateInline,

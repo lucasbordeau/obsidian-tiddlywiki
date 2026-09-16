@@ -1,8 +1,8 @@
-import { areMetadataValuesEqual } from './areMetadataValuesEqual';
-import { decodeMetadataField } from '../../metadata/decodeMetadataField';
-import { normalizeObsidianTags } from '../../metadata/normalizeObsidianTags';
-import { parseTiddlyWikiTags } from '../../metadata/parseTiddlyWikiTags';
-import type { PreservationRecord } from './PreservationRecord';
+import { areMetadataValuesEqual } from '@/modules/conversion-core/preservation/metadata/areMetadataValuesEqual';
+import { decodeMetadataField } from '@/modules/conversion-core/metadata/decodeMetadataField';
+import { normalizeObsidianTags } from '@/modules/conversion-core/metadata/normalizeObsidianTags';
+import { parseTiddlyWikiTags } from '@/modules/conversion-core/metadata/parseTiddlyWikiTags';
+import { PreservationRecord } from '@/modules/conversion-core/preservation/metadata/PreservationRecord';
 
 export function applyTiddlerFieldEdits(
   properties: Record<string, unknown>,

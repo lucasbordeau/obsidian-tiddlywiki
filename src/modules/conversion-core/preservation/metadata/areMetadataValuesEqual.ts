@@ -1,4 +1,4 @@
-import { isRecord } from '../../validation/isRecord';
+import { isRecord } from '@/modules/conversion-core/validation/isRecord';
 
 export function areMetadataValuesEqual(left: unknown, right: unknown): boolean {
   if (left === right) {

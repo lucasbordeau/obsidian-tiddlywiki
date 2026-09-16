@@ -1,5 +1,5 @@
-import type { HtmlCursor } from './HtmlCursor';
-import type { InlineNode } from '../../../model/inlines/InlineNode';
+import { HtmlCursor } from '@/modules/conversion-core/syntax/obsidian/types/HtmlCursor';
+import { InlineNode } from '@/modules/conversion-core/model/inlines/InlineNode';
 
 export type HtmlChildrenParser = (
   source: string,

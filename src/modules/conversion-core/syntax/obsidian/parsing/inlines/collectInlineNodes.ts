@@ -1,7 +1,7 @@
-import type { Token } from '../../types/Token';
-import type { TokenCursor } from '../../types/TokenCursor';
-import type { InlineNode } from '../../../../model/inlines/InlineNode';
-import { parseInlineToken } from './parseInlineToken';
+import { Token } from '@/modules/conversion-core/syntax/obsidian/types/Token';
+import { TokenCursor } from '@/modules/conversion-core/syntax/obsidian/types/TokenCursor';
+import { InlineNode } from '@/modules/conversion-core/model/inlines/InlineNode';
+import { parseInlineToken } from '@/modules/conversion-core/syntax/obsidian/parsing/inlines/parseInlineToken';
 
 export function collectInlineNodes(
   tokens: Token[],

@@ -1,7 +1,7 @@
-import { parseObsidian } from '../../../../../modules/conversion-core/syntax/obsidian/parsing/parseObsidian';
-import { collectAllInlines } from '../../../../support/ast/collectAllInlines';
-import { assertStableRoundTrip } from '../../../../support/assertStableRoundTrip';
-import { linkSources } from './linkSources';
+import { parseObsidian } from '@/modules/conversion-core/syntax/obsidian/parsing/parseObsidian';
+import { collectAllInlines } from '@/tests/support/ast/collectAllInlines';
+import { assertStableRoundTrip } from '@/tests/support/assertStableRoundTrip';
+import { linkSources } from '@/tests/syntax/obsidian/features/links/linkSources';
 
 describe('official Obsidian feature inventory', () => {
   test.each(linkSources)(

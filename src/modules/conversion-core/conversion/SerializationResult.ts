@@ -1,4 +1,4 @@
-import type { ConversionDiagnostic } from './ConversionDiagnostic';
+import { ConversionDiagnostic } from '@/modules/conversion-core/conversion/ConversionDiagnostic';
 
 export type SerializationResult = {
   text: string;

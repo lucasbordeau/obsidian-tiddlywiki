@@ -1,4 +1,4 @@
-import { FeatureCase } from '../FeatureCase';
+import { FeatureCase } from '@/tests/syntax/tiddlywiki/features/FeatureCase';
 
 export const preservedCases: FeatureCase[] = [
   { id: 'TW-TABLE-HEADER-SUFFIX', source: '|A|B|h\n|one|two|' },

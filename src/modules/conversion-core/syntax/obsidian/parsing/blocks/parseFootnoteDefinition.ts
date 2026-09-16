@@ -1,17 +1,17 @@
-import type { Token } from '../../types/Token';
-import type { ParseContext } from '../../types/ParseContext';
-import type { BlockCollector } from '../../types/BlockCollector';
-import type { BlockNode } from '../../../../model/blocks/BlockNode';
-import { removeRanges } from '../removeRanges';
+import { Token } from '@/modules/conversion-core/syntax/obsidian/types/Token';
+import { ParseContext } from '@/modules/conversion-core/syntax/obsidian/types/ParseContext';
+import { BlockCollector } from '@/modules/conversion-core/syntax/obsidian/types/BlockCollector';
+import { BlockNode } from '@/modules/conversion-core/model/blocks/BlockNode';
+import { removeRanges } from '@/modules/conversion-core/syntax/obsidian/parsing/removeRanges';
 
 export function parseFootnoteDefinition(
   token: Token,
   context: ParseContext,
   collectNestedBlocks: BlockCollector,
 ): BlockNode {
-  const nestedTokens = context.markdown.parse(
+  const nestedTokens = context.obsidianParser.parse(
     token.content,
-    context.environment,
+    context.parserEnvironment,
   );
 
   const nestedContext = {

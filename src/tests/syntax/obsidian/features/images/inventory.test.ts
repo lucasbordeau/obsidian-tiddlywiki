@@ -1,11 +1,11 @@
-import { convertText } from '../../../../../modules/conversion-core/conversion/convertText';
-import { parseObsidian } from '../../../../../modules/conversion-core/syntax/obsidian/parsing/parseObsidian';
-import { renderTiddlyWiki } from '../../../../support/runtime/renderTiddlyWiki';
-import { collectAllInlines } from '../../../../support/ast/collectAllInlines';
-import { assertStableRoundTrip } from '../../../../support/assertStableRoundTrip';
-import { imageExtensions } from './imageExtensions';
-import { imageContexts } from './imageContexts';
-import { markdownImageVariants } from './markdownImageVariants';
+import { convertText } from '@/modules/conversion-core/conversion/convertText';
+import { parseObsidian } from '@/modules/conversion-core/syntax/obsidian/parsing/parseObsidian';
+import { renderTiddlyWiki } from '@/tests/support/runtime/renderTiddlyWiki';
+import { collectAllInlines } from '@/tests/support/ast/collectAllInlines';
+import { assertStableRoundTrip } from '@/tests/support/assertStableRoundTrip';
+import { imageExtensions } from '@/tests/syntax/obsidian/features/images/imageExtensions';
+import { imageContexts } from '@/tests/syntax/obsidian/features/images/imageContexts';
+import { markdownImageVariants } from '@/tests/syntax/obsidian/features/images/markdownImageVariants';
 
 describe('official Obsidian feature inventory', () => {
   describe.each(imageExtensions)('O-IMAGE: .%s', (extension) => {

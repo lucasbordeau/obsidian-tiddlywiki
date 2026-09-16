@@ -2,6 +2,8 @@ import { ESLint } from 'eslint';
 import noConditionalObjectSpread from '../../eslint-rules/no-conditional-object-spread.mjs';
 import noInlinePromiseAllPipeline from '../../eslint-rules/no-inline-promise-all-pipeline.mjs';
 import noCompactFunctionBodies from '../../eslint-rules/no-compact-function-bodies.mjs';
+import noRelativeSourceImports from '../../eslint-rules/no-relative-source-imports.mjs';
+import noTypeOnlyImports from '../../eslint-rules/no-type-only-imports.mjs';
 import statementSpacing from '../../eslint-rules/statement-spacing.mjs';
 
 export function createEslint(fixStage) {
@@ -20,6 +22,8 @@ export function createEslint(fixStage) {
           'no-conditional-object-spread': noConditionalObjectSpread,
           'no-inline-promise-all-pipeline': noInlinePromiseAllPipeline,
           'no-compact-function-bodies': noCompactFunctionBodies,
+          'no-relative-source-imports': noRelativeSourceImports,
+          'no-type-only-imports': noTypeOnlyImports,
           'statement-spacing': statementSpacing,
         },
       },
@@ -30,6 +34,8 @@ export function createEslint(fixStage) {
         'local/no-conditional-object-spread': 'error',
         'local/no-inline-promise-all-pipeline': 'error',
         'local/no-compact-function-bodies': 'error',
+        'local/no-relative-source-imports': 'error',
+        'local/no-type-only-imports': 'error',
         'local/statement-spacing': 'error',
         'prettier/prettier': fixStructure ? 'off' : 'error',
         curly: ['error', 'all'],

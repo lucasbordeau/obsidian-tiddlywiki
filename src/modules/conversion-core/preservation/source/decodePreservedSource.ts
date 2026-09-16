@@ -1,5 +1,5 @@
-import type { PreservedSource } from './PreservedSource';
-import { isRecord } from '../../validation/isRecord';
+import { PreservedSource } from '@/modules/conversion-core/preservation/source/PreservedSource';
+import { isRecord } from '@/modules/conversion-core/validation/isRecord';
 
 export function decodePreservedSource(
   comment: string,

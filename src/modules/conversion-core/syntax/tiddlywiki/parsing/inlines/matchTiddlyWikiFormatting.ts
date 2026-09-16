@@ -1,6 +1,6 @@
-import type { TiddlyWikiInlineMatch } from '../../types/TiddlyWikiInlineMatch';
-import { TIDDLYWIKI_FORMATTING_MARKERS } from '../../constants/TiddlyWikiFormattingMarkers.const';
-import type { TiddlyWikiParsingContext } from '../context/TiddlyWikiParsingContext';
+import { TiddlyWikiInlineMatch } from '@/modules/conversion-core/syntax/tiddlywiki/types/TiddlyWikiInlineMatch';
+import { TIDDLYWIKI_FORMATTING_MARKERS } from '@/modules/conversion-core/syntax/tiddlywiki/constants/TiddlyWikiFormattingMarkers.const';
+import { TiddlyWikiParsingContext } from '@/modules/conversion-core/syntax/tiddlywiki/parsing/context/TiddlyWikiParsingContext';
 
 export function matchTiddlyWikiFormatting(
   this: TiddlyWikiParsingContext,

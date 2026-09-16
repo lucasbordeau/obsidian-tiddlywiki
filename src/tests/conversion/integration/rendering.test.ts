@@ -1,5 +1,5 @@
-import { convertText } from '../../../modules/conversion-core/conversion/convertText';
-import { renderTiddlyWiki } from '../../support/runtime/renderTiddlyWiki';
+import { convertText } from '@/modules/conversion-core/conversion/convertText';
+import { renderTiddlyWiki } from '@/tests/support/runtime/renderTiddlyWiki';
 
 describe('cross-dialect conversion', () => {
   test('real TW rendering retains nested hierarchy, labels, external URLs and literal code', async () => {

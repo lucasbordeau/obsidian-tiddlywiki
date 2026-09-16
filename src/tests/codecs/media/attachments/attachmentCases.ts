@@ -1,5 +1,5 @@
-import { readSample } from '../../../support/samples/readSample';
-import { AttachmentCase } from './AttachmentCase';
+import { readSample } from '@/tests/support/samples/readSample';
+import { AttachmentCase } from '@/tests/codecs/media/attachments/AttachmentCase';
 
 export const attachmentCases = JSON.parse(
   readSample('metadata/attachment-content-types.json'),

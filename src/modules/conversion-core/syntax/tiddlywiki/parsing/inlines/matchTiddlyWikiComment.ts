@@ -1,6 +1,6 @@
-import { decodePreservedSource } from '../../../../preservation/source/decodePreservedSource';
-import type { TiddlyWikiInlineMatch } from '../../types/TiddlyWikiInlineMatch';
-import type { TiddlyWikiParsingContext } from '../context/TiddlyWikiParsingContext';
+import { decodePreservedSource } from '@/modules/conversion-core/preservation/source/decodePreservedSource';
+import { TiddlyWikiInlineMatch } from '@/modules/conversion-core/syntax/tiddlywiki/types/TiddlyWikiInlineMatch';
+import { TiddlyWikiParsingContext } from '@/modules/conversion-core/syntax/tiddlywiki/parsing/context/TiddlyWikiParsingContext';
 
 export function matchTiddlyWikiComment(
   this: TiddlyWikiParsingContext,

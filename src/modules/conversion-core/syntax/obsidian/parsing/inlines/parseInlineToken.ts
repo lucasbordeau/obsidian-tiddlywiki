@@ -1,11 +1,11 @@
-import type { Token } from '../../types/Token';
-import type { TokenCursor } from '../../types/TokenCursor';
-import type { InlineCollector } from '../../types/InlineCollector';
-import type { InlineNode } from '../../../../model/inlines/InlineNode';
-import { parseMarkdownImage } from './parseMarkdownImage';
-import { parseWikiToken } from './parseWikiToken';
-import { createRawInline } from './createRawInline';
-import { parseHtmlInline } from './parseHtmlInline';
+import { Token } from '@/modules/conversion-core/syntax/obsidian/types/Token';
+import { TokenCursor } from '@/modules/conversion-core/syntax/obsidian/types/TokenCursor';
+import { InlineCollector } from '@/modules/conversion-core/syntax/obsidian/types/InlineCollector';
+import { InlineNode } from '@/modules/conversion-core/model/inlines/InlineNode';
+import { parseMarkdownImage } from '@/modules/conversion-core/syntax/obsidian/parsing/inlines/parseMarkdownImage';
+import { parseWikiToken } from '@/modules/conversion-core/syntax/obsidian/parsing/inlines/parseWikiToken';
+import { createRawInline } from '@/modules/conversion-core/syntax/obsidian/parsing/inlines/createRawInline';
+import { parseHtmlInline } from '@/modules/conversion-core/syntax/obsidian/parsing/inlines/parseHtmlInline';
 
 export function parseInlineToken(
   token: Token,

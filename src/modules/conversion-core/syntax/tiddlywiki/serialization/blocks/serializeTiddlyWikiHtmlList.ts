@@ -1,6 +1,6 @@
-import type { BlockNode } from '../../../../model/blocks/BlockNode';
-import type { TiddlyWikiSerializationContext } from '../context/TiddlyWikiSerializationContext';
-import { quoteTiddlyWikiAttribute } from '../quoteTiddlyWikiAttribute';
+import { BlockNode } from '@/modules/conversion-core/model/blocks/BlockNode';
+import { TiddlyWikiSerializationContext } from '@/modules/conversion-core/syntax/tiddlywiki/serialization/context/TiddlyWikiSerializationContext';
+import { quoteTiddlyWikiAttribute } from '@/modules/conversion-core/syntax/tiddlywiki/serialization/quoteTiddlyWikiAttribute';
 
 export function serializeTiddlyWikiHtmlList(
   this: TiddlyWikiSerializationContext,
@@ -11,23 +11,28 @@ export function serializeTiddlyWikiHtmlList(
   const startAttribute =
     block.ordered && block.start !== 1 ? ` start="${block.start}"` : '';
 
-  const entries = block.children.map((entry) => {
+  const serializedListItems = block.children.map((listItem) => {
     const marker =
-      entry.taskMarker === undefined
+      listItem.taskMarker === undefined
         ? ''
-        : ' data-task-marker=' + quoteTiddlyWikiAttribute(entry.taskMarker);
+        : ' data-task-marker=' + quoteTiddlyWikiAttribute(listItem.taskMarker);
 
     const checkbox =
-      entry.checked === undefined
+      listItem.checked === undefined
         ? ''
-        : `<input type="checkbox" disabled${entry.checked ? ' checked' : ''}${marker}/> `;
+        : `<input type="checkbox" disabled${listItem.checked ? ' checked' : ''}${marker}/> `;
 
     return (
-      '<li>\n\n' + checkbox + this.serializeBlocks(entry.blocks) + '\n\n</li>'
+      '<li>\n\n' +
+      checkbox +
+      this.serializeBlocks(listItem.blocks) +
+      '\n\n</li>'
     );
   });
 
   return (
-    `<${tag}${startAttribute}>\n\n` + entries.join('\n\n') + `\n\n</${tag}>`
+    `<${tag}${startAttribute}>\n\n` +
+    serializedListItems.join('\n\n') +
+    `\n\n</${tag}>`
   );
 }

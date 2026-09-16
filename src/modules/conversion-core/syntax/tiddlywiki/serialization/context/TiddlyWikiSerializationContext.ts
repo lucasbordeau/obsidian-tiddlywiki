@@ -1,9 +1,9 @@
-import type { BlockNode } from '../../../../model/blocks/BlockNode';
-import type { ConversionDiagnostic } from '../../../../conversion/ConversionDiagnostic';
-import type { ConversionOptions } from '../../../../conversion/ConversionOptions';
-import type { InlineNode } from '../../../../model/inlines/InlineNode';
-import type { ParsedDocument } from '../../../../model/ParsedDocument';
-import type { TiddlyWikiRangedNode } from '../../types/TiddlyWikiRangedNode';
+import { BlockNode } from '@/modules/conversion-core/model/blocks/BlockNode';
+import { ConversionDiagnostic } from '@/modules/conversion-core/conversion/ConversionDiagnostic';
+import { ConversionOptions } from '@/modules/conversion-core/conversion/ConversionOptions';
+import { InlineNode } from '@/modules/conversion-core/model/inlines/InlineNode';
+import { ParsedDocument } from '@/modules/conversion-core/model/ParsedDocument';
+import { TiddlyWikiRangedNode } from '@/modules/conversion-core/syntax/tiddlywiki/types/TiddlyWikiRangedNode';
 
 export type TiddlyWikiSerializationContext = {
   document: ParsedDocument;

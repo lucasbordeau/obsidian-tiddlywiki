@@ -1,6 +1,6 @@
-import { parseTidFile } from '../../../modules/conversion-core/codecs/tiddlywiki/parseTidFile';
-import { serializeTidFile } from '../../../modules/conversion-core/codecs/tiddlywiki/serializeTidFile';
-import { getCodecValue } from '../../support/getCodecValue';
+import { parseTidFile } from '@/modules/conversion-core/codecs/tiddlywiki/parseTidFile';
+import { serializeTidFile } from '@/modules/conversion-core/codecs/tiddlywiki/serializeTidFile';
+import { getCodecValue } from '@/tests/support/getCodecValue';
 
 describe('TiddlyWiki containers', () => {
   it.each(['\n', '\r\n', '\r'])(

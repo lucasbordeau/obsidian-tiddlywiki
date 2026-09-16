@@ -1,6 +1,6 @@
-import type { TiddlyWikiInlineMatch } from '../../types/TiddlyWikiInlineMatch';
-import { TIDDLYWIKI_BARE_EXTERNAL_LINK } from '../../constants/TiddlyWikiBareExternalLink.const';
-import type { TiddlyWikiParsingContext } from '../context/TiddlyWikiParsingContext';
+import { TiddlyWikiInlineMatch } from '@/modules/conversion-core/syntax/tiddlywiki/types/TiddlyWikiInlineMatch';
+import { TIDDLYWIKI_BARE_EXTERNAL_LINK } from '@/modules/conversion-core/syntax/tiddlywiki/constants/TiddlyWikiBareExternalLink.const';
+import { TiddlyWikiParsingContext } from '@/modules/conversion-core/syntax/tiddlywiki/parsing/context/TiddlyWikiParsingContext';
 
 export function matchTiddlyWikiSuppressedLink(
   this: TiddlyWikiParsingContext,

@@ -1,8 +1,8 @@
-import { parseObsidian } from '../../../../../modules/conversion-core/syntax/obsidian/parsing/parseObsidian';
-import { serializeObsidian } from '../../../../../modules/conversion-core/syntax/obsidian/serialization/serializeObsidian';
-import { parseObsidianBlocks } from '../../../../support/parseObsidianBlocks';
-import { stripSourceRanges as semanticBlocks } from '../../../../support/ast/stripSourceRanges';
-import { markdownImageDimensions } from './markdownImageDimensions';
+import { parseObsidian } from '@/modules/conversion-core/syntax/obsidian/parsing/parseObsidian';
+import { serializeObsidian } from '@/modules/conversion-core/syntax/obsidian/serialization/serializeObsidian';
+import { parseObsidianBlocks } from '@/tests/support/parseObsidianBlocks';
+import { stripSourceRanges as semanticBlocks } from '@/tests/support/ast/stripSourceRanges';
+import { markdownImageDimensions } from '@/tests/syntax/obsidian/features/images/markdownImageDimensions';
 
 describe('Obsidian documented extensions and structural regressions', () => {
   test.each(markdownImageDimensions)(

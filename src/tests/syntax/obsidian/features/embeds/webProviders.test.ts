@@ -1,7 +1,7 @@
-import { parseObsidian } from '../../../../../modules/conversion-core/syntax/obsidian/parsing/parseObsidian';
-import { convertText } from '../../../../../modules/conversion-core/conversion/convertText';
-import { webEmbedSources } from './webEmbedSources';
-import { ordinaryImageUrls } from './ordinaryImageUrls';
+import { parseObsidian } from '@/modules/conversion-core/syntax/obsidian/parsing/parseObsidian';
+import { convertText } from '@/modules/conversion-core/conversion/convertText';
+import { webEmbedSources } from '@/tests/syntax/obsidian/features/embeds/webEmbedSources';
+import { ordinaryImageUrls } from '@/tests/syntax/obsidian/features/embeds/ordinaryImageUrls';
 
 describe('Obsidian documented extensions and structural regressions', () => {
   test.each(webEmbedSources)(
@@ -61,6 +61,27 @@ describe('Obsidian documented extensions and structural regressions', () => {
 
     expect(convertText(converted.text, 'tiddlywiki', 'obsidian').text).toBe(
       source,
+    );
+  });
+
+  test('converts a canonical YouTube embed to a playable TiddlyWiki iframe', () => {
+    const source = '![](https://www.youtube.com/watch?v=KtCUr83XgyE)';
+
+    const converted = convertText(source, 'obsidian', 'tiddlywiki');
+
+    expect(converted.text).toBe(
+      '<iframe src="https://www.youtube.com/embed/KtCUr83XgyE" width="560" height="315" allowfullscreen></iframe>',
+    );
+  });
+
+  test('converts a canonical TiddlyWiki YouTube iframe to an Obsidian embed', () => {
+    const source =
+      '<iframe src="https://www.youtube.com/embed/KtCUr83XgyE" width="560" height="315" allowfullscreen></iframe>';
+
+    const converted = convertText(source, 'tiddlywiki', 'obsidian');
+
+    expect(converted.text).toBe(
+      '![](https://www.youtube.com/watch?v=KtCUr83XgyE)',
     );
   });
 });

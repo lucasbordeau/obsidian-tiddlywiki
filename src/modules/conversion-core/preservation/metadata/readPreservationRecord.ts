@@ -1,5 +1,5 @@
-import { isRecord } from '../../validation/isRecord';
-import type { PreservationRecord } from './PreservationRecord';
+import { isRecord } from '@/modules/conversion-core/validation/isRecord';
+import { PreservationRecord } from '@/modules/conversion-core/preservation/metadata/PreservationRecord';
 
 export function readPreservationRecord(
   value: unknown,

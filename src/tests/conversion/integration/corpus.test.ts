@@ -1,11 +1,11 @@
 import { readdirSync } from 'fs';
-import { convertText } from '../../../modules/conversion-core/conversion/convertText';
-import { parseObsidian } from '../../../modules/conversion-core/syntax/obsidian/parsing/parseObsidian';
-import { parseTiddlyWiki } from '../../../modules/conversion-core/syntax/tiddlywiki/parsing/parseTiddlyWiki';
-import { Dialect } from '../../../modules/conversion-core/model/Dialect';
-import { normalizeSemanticBlocks } from '../../support/ast/normalizeSemanticBlocks';
-import { getSamplePath } from '../../support/samples/getSamplePath';
-import { readSample } from '../../support/samples/readSample';
+import { convertText } from '@/modules/conversion-core/conversion/convertText';
+import { parseObsidian } from '@/modules/conversion-core/syntax/obsidian/parsing/parseObsidian';
+import { parseTiddlyWiki } from '@/modules/conversion-core/syntax/tiddlywiki/parsing/parseTiddlyWiki';
+import { Dialect } from '@/modules/conversion-core/model/Dialect';
+import { normalizeSemanticBlocks } from '@/tests/support/ast/normalizeSemanticBlocks';
+import { getSamplePath } from '@/tests/support/samples/getSamplePath';
+import { readSample } from '@/tests/support/samples/readSample';
 
 describe('cross-dialect conversion', () => {
   describe.each<Dialect>(['obsidian', 'tiddlywiki'])(

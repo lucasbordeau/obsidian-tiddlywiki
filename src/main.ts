@@ -1,7 +1,7 @@
 import { Plugin } from 'obsidian';
-import { ObsidianTiddlyWikiSettingsTab } from './modules/plugin-core/settings/ObsidianTiddlyWikiSettingsTab';
-import { openImportJsonPicker } from './modules/plugin-core/settings/openImportJsonPicker';
-import { exportVaultToJson } from './modules/plugin-core/settings/exportVaultToJson';
+import { ObsidianTiddlyWikiSettingsTab } from '@/modules/plugin-core/settings/ObsidianTiddlyWikiSettingsTab';
+import { openImportJsonPicker } from '@/modules/plugin-core/settings/openImportJsonPicker';
+import { exportVaultToJson } from '@/modules/plugin-core/settings/exportVaultToJson';
 
 export default class ObsidianTiddlyWikiPlugin extends Plugin {
   async onload() {

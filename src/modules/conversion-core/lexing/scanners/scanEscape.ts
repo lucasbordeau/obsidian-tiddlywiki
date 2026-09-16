@@ -1,5 +1,5 @@
-import type { LexingContext } from '../LexingContext';
-import type { TokenMatch } from '../TokenMatch';
+import { LexingContext } from '@/modules/conversion-core/lexing/LexingContext';
+import { TokenMatch } from '@/modules/conversion-core/lexing/TokenMatch';
 
 export function scanEscape(context: LexingContext): TokenMatch | undefined {
   const { source, dialect, cursor } = context;

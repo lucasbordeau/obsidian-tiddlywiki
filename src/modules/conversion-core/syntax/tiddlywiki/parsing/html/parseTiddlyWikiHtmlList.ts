@@ -1,7 +1,7 @@
-import type { BlockNode } from '../../../../model/blocks/BlockNode';
-import type { ListItem } from '../../../../model/ListItem';
-import type { TiddlyWikiHtmlState } from './TiddlyWikiHtmlState';
-import type { TiddlyWikiParsingContext } from '../context/TiddlyWikiParsingContext';
+import { BlockNode } from '@/modules/conversion-core/model/blocks/BlockNode';
+import { ListItem } from '@/modules/conversion-core/model/ListItem';
+import { TiddlyWikiHtmlState } from '@/modules/conversion-core/syntax/tiddlywiki/parsing/html/TiddlyWikiHtmlState';
+import { TiddlyWikiParsingContext } from '@/modules/conversion-core/syntax/tiddlywiki/parsing/context/TiddlyWikiParsingContext';
 
 export function parseTiddlyWikiHtmlList(
   this: TiddlyWikiParsingContext,
@@ -22,7 +22,7 @@ export function parseTiddlyWikiHtmlList(
     return undefined;
   }
 
-  const children: ListItem[] = [];
+  const listItems: ListItem[] = [];
   let cursor = openEnd;
 
   while (cursor < closeStart) {
@@ -69,23 +69,23 @@ export function parseTiddlyWikiHtmlList(
 
     const blocks = this.parseFragment(contentStart, contentEnd);
 
-    const entry: ListItem = {
+    const listItem: ListItem = {
       blocks,
       range: { start: itemStart, end: itemEnd },
     };
 
     if (checkbox) {
-      entry.checked = Boolean(checkbox[1]);
+      listItem.checked = Boolean(checkbox[1]);
     }
 
     const hasCustomTaskMarker =
       checkbox && (checkbox[2] !== undefined || checkbox[3] !== undefined);
 
     if (hasCustomTaskMarker) {
-      entry.taskMarker = checkbox[2] ?? checkbox[3];
+      listItem.taskMarker = checkbox[2] ?? checkbox[3];
     }
 
-    children.push(entry);
+    listItems.push(listItem);
 
     cursor = itemEnd;
   }
@@ -94,7 +94,7 @@ export function parseTiddlyWikiHtmlList(
     type: 'list',
     ordered: tag === 'ol',
     start: Number(attributes.start ?? 1),
-    children,
+    children: listItems,
     range,
   };
 }

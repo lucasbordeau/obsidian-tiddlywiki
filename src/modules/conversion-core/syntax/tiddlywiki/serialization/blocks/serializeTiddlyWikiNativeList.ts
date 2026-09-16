@@ -1,5 +1,5 @@
-import type { BlockNode } from '../../../../model/blocks/BlockNode';
-import type { TiddlyWikiSerializationContext } from '../context/TiddlyWikiSerializationContext';
+import { BlockNode } from '@/modules/conversion-core/model/blocks/BlockNode';
+import { TiddlyWikiSerializationContext } from '@/modules/conversion-core/syntax/tiddlywiki/serialization/context/TiddlyWikiSerializationContext';
 
 export function serializeTiddlyWikiNativeList(
   this: TiddlyWikiSerializationContext,
@@ -7,22 +7,22 @@ export function serializeTiddlyWikiNativeList(
   parentPrefix: string,
 ): string {
   const prefix = parentPrefix + (block.ordered ? '#' : '*');
-  const renderedEntries: string[] = [];
+  const renderedListItems: string[] = [];
 
-  for (const entry of block.children) {
-    const [first, ...nestedLists] = entry.blocks;
+  for (const listItem of block.children) {
+    const [first, ...nestedLists] = listItem.blocks;
 
     const contents =
       first?.type === 'paragraph' ? this.serializeInline(first.children) : '';
 
-    renderedEntries.push(prefix + ' ' + contents);
+    renderedListItems.push(prefix + ' ' + contents);
 
     for (const nested of nestedLists) {
       if (nested.type === 'list') {
-        renderedEntries.push(this.serializeList(nested, prefix));
+        renderedListItems.push(this.serializeList(nested, prefix));
       }
     }
   }
 
-  return renderedEntries.join('\n');
+  return renderedListItems.join('\n');
 }

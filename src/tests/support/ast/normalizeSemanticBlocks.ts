@@ -1,5 +1,5 @@
-import { BlockNode } from '../../../modules/conversion-core/model/blocks/BlockNode';
-import { isRecord } from '../../../modules/conversion-core/validation/isRecord';
+import { BlockNode } from '@/modules/conversion-core/model/blocks/BlockNode';
+import { isRecord } from '@/modules/conversion-core/validation/isRecord';
 
 export function normalizeSemanticBlocks(blocks: BlockNode[]): unknown {
   function normalize(value: unknown): unknown {

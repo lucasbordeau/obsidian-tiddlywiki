@@ -1,4 +1,4 @@
-import { FeatureCase } from '../FeatureCase';
+import { FeatureCase } from '@/tests/syntax/tiddlywiki/features/FeatureCase';
 
 export const nativeCases: FeatureCase[] = [
   { id: 'TW-IMAGE-PNG', source: '[img[assets/photo.png]]' },

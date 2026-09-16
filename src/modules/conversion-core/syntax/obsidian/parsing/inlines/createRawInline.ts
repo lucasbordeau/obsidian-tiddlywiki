@@ -1,5 +1,5 @@
-import type { InlineNode } from '../../../../model/inlines/InlineNode';
-import { decodePreservedSource } from '../../../../preservation/source/decodePreservedSource';
+import { InlineNode } from '@/modules/conversion-core/model/inlines/InlineNode';
+import { decodePreservedSource } from '@/modules/conversion-core/preservation/source/decodePreservedSource';
 
 export function createRawInline(value: string, reason: string): InlineNode {
   const preserved = decodePreservedSource(value);

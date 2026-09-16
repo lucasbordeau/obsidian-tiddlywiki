@@ -1,6 +1,6 @@
-import { convertText } from '../../../modules/conversion-core/conversion/convertText';
-import { parseObsidian } from '../../../modules/conversion-core/syntax/obsidian/parsing/parseObsidian';
-import { normalizeSemanticBlocks } from '../../support/ast/normalizeSemanticBlocks';
+import { convertText } from '@/modules/conversion-core/conversion/convertText';
+import { parseObsidian } from '@/modules/conversion-core/syntax/obsidian/parsing/parseObsidian';
+import { normalizeSemanticBlocks } from '@/tests/support/ast/normalizeSemanticBlocks';
 
 describe('cross-dialect conversion', () => {
   test.each([

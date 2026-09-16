@@ -110,6 +110,12 @@ exact original bodies/front matter while respecting subsequent edits. Collisions
 with user-owned namespaced fields use distinct keys. Repeated edited cycles
 consume previous records to keep metadata growth bounded.
 
+The portable conversion API preserves unsupported source and round-trip metadata
+by default. The Obsidian vault importer selects a clean migration mode: static
+representations are emitted and unsupported dynamic source and round-trip records
+are omitted from generated Markdown notes. Diagnostics continue to identify
+omitted source.
+
 Binary, document and developer MIME bodies follow an opaque-content route. Tests
 cover payload identity separately from media references in note syntax. File
 copying, attachment extraction and safe import destinations remain host IO work.

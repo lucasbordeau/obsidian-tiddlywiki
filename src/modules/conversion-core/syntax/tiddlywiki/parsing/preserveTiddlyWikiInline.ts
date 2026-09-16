@@ -1,5 +1,5 @@
-import type { InlineNode } from '../../../model/inlines/InlineNode';
-import type { TiddlyWikiParsingContext } from './context/TiddlyWikiParsingContext';
+import { InlineNode } from '@/modules/conversion-core/model/inlines/InlineNode';
+import { TiddlyWikiParsingContext } from '@/modules/conversion-core/syntax/tiddlywiki/parsing/context/TiddlyWikiParsingContext';
 
 export function preserveTiddlyWikiInline(
   this: TiddlyWikiParsingContext,

@@ -1,18 +1,30 @@
-import type { Token } from '../../types/Token';
-import type { InlineNode } from '../../../../model/inlines/InlineNode';
-import { getInlinePlainText } from './getInlinePlainText';
-import { isObsidianWebEmbed } from '../../rules/inline/isObsidianWebEmbed';
-import { createRawInline } from './createRawInline';
+import { Token } from '@/modules/conversion-core/syntax/obsidian/types/Token';
+import { InlineNode } from '@/modules/conversion-core/model/inlines/InlineNode';
+import { getInlinePlainText } from '@/modules/conversion-core/syntax/obsidian/parsing/inlines/getInlinePlainText';
+import { isObsidianWebEmbed } from '@/modules/conversion-core/syntax/obsidian/rules/inline/isObsidianWebEmbed';
+import { createRawInline } from '@/modules/conversion-core/syntax/obsidian/parsing/inlines/createRawInline';
 
 export function parseMarkdownImage(
   token: Token,
   children: InlineNode[],
 ): InlineNode {
   const alt = getInlinePlainText(children);
+  const sourceTarget = token.attrGet('src') ?? '';
+  const externalTarget = /^(?:[a-z][a-z\d+.-]*:|\/\/)/i.test(sourceTarget);
+
+  let target = sourceTarget;
+
+  if (!externalTarget) {
+    try {
+      target = decodeURI(sourceTarget);
+    } catch {
+      target = sourceTarget;
+    }
+  }
 
   const embed: InlineNode = {
     type: 'embed',
-    target: token.attrGet('src') ?? '',
+    target,
     alt,
     kind: 'image',
   };

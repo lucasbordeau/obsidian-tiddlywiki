@@ -1,10 +1,34 @@
-import type { Token } from '../../types/Token';
-import type { ParseContext } from '../../types/ParseContext';
-import type { SourceRange } from '../../../../model/SourceRange';
-import type { BlockNode } from '../../../../model/blocks/BlockNode';
-import { decodePreservedSource } from '../../../../preservation/source/decodePreservedSource';
-import { parseStaticHtmlInline } from '../html/parseStaticHtmlInline';
-import { collectInlineNodes } from '../inlines/collectInlineNodes';
+import { Token } from '@/modules/conversion-core/syntax/obsidian/types/Token';
+import { ParseContext } from '@/modules/conversion-core/syntax/obsidian/types/ParseContext';
+import { SourceRange } from '@/modules/conversion-core/model/SourceRange';
+import { BlockNode } from '@/modules/conversion-core/model/blocks/BlockNode';
+import { decodePreservedSource } from '@/modules/conversion-core/preservation/source/decodePreservedSource';
+import { parseStaticHtmlInline } from '@/modules/conversion-core/syntax/obsidian/parsing/html/parseStaticHtmlInline';
+import { collectInlineNodes } from '@/modules/conversion-core/syntax/obsidian/parsing/inlines/collectInlineNodes';
+
+function removeStructuralIndent(value: string): string {
+  const sourceLines = value.split('\n');
+  const contentLines = sourceLines.filter((sourceLine) => sourceLine.trim());
+  let sharedIndent = /^\s*/.exec(contentLines[0] ?? '')?.[0] ?? '';
+
+  for (const contentLine of contentLines.slice(1)) {
+    while (sharedIndent && !contentLine.startsWith(sharedIndent)) {
+      sharedIndent = sharedIndent.slice(0, -1);
+    }
+  }
+
+  if (!sharedIndent) {
+    return value;
+  }
+
+  return sourceLines
+    .map((sourceLine) =>
+      sourceLine.startsWith(sharedIndent)
+        ? sourceLine.slice(sharedIndent.length)
+        : sourceLine,
+    )
+    .join('\n');
+}
 
 export function parseRawBlock(
   token: Token,
@@ -13,9 +37,12 @@ export function parseRawBlock(
 ): BlockNode {
   const useOriginalSource = range !== undefined && token.level === 0;
 
+  const tokenContent =
+    token.level > 0 ? removeStructuralIndent(token.content) : token.content;
+
   const value = useOriginalSource
     ? context.source.slice(range.start, range.end).replace(/\r?\n$/, '')
-    : token.content.replace(/\n$/, '');
+    : tokenContent.replace(/\n$/, '');
 
   const preserved = decodePreservedSource(value.trim());
 
@@ -36,10 +63,10 @@ export function parseRawBlock(
   } else if (startsPreservation) {
     const inlineTokens: Token[] = [];
 
-    context.markdown.inline.parse(
+    context.obsidianParser.inline.parse(
       value,
-      context.markdown,
-      context.environment,
+      context.obsidianParser,
+      context.parserEnvironment,
       inlineTokens,
     );
 

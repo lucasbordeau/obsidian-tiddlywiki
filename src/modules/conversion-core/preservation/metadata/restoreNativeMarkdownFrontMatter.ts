@@ -1,10 +1,10 @@
-import { areMetadataValuesEqual } from './areMetadataValuesEqual';
-import type { FrontMatterDocument } from '../../codecs/obsidian/FrontMatterDocument';
-import { isMarkdownContentType } from '../../notes/isMarkdownContentType';
-import { parseObsidianFrontMatter } from '../../codecs/obsidian/parseObsidianFrontMatter';
-import type { PreservationRecord } from './PreservationRecord';
-import { serializeObsidianFrontMatter } from '../../codecs/obsidian/serializeObsidianFrontMatter';
-import type { TiddlerFields } from '../../codecs/tiddlywiki/TiddlerFields';
+import { areMetadataValuesEqual } from '@/modules/conversion-core/preservation/metadata/areMetadataValuesEqual';
+import { FrontMatterDocument } from '@/modules/conversion-core/codecs/obsidian/FrontMatterDocument';
+import { isMarkdownContentType } from '@/modules/conversion-core/notes/isMarkdownContentType';
+import { parseObsidianFrontMatter } from '@/modules/conversion-core/codecs/obsidian/parseObsidianFrontMatter';
+import { PreservationRecord } from '@/modules/conversion-core/preservation/metadata/PreservationRecord';
+import { serializeObsidianFrontMatter } from '@/modules/conversion-core/codecs/obsidian/serializeObsidianFrontMatter';
+import { TiddlerFields } from '@/modules/conversion-core/codecs/tiddlywiki/TiddlerFields';
 
 export function restoreNativeMarkdownFrontMatter(
   fields: TiddlerFields,

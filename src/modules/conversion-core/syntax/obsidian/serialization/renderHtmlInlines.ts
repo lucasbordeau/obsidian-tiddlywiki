@@ -1,7 +1,7 @@
-import type { InlineNode } from '../../../model/inlines/InlineNode';
-import type { SerializationContext } from '../types/SerializationContext';
-import { escapeHtml } from './escaping/escapeHtml';
-import { resolveLinkTarget } from './links/resolveLinkTarget';
+import { InlineNode } from '@/modules/conversion-core/model/inlines/InlineNode';
+import { SerializationContext } from '@/modules/conversion-core/syntax/obsidian/types/SerializationContext';
+import { escapeHtml } from '@/modules/conversion-core/syntax/obsidian/serialization/escaping/escapeHtml';
+import { resolveLinkTarget } from '@/modules/conversion-core/syntax/obsidian/serialization/links/resolveLinkTarget';
 
 export function renderHtmlInlines(
   nodes: InlineNode[],

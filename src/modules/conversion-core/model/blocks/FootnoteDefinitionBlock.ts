@@ -1,4 +1,4 @@
-import type { BlockNode } from './BlockNode';
+import { BlockNode } from '@/modules/conversion-core/model/blocks/BlockNode';
 
 export type FootnoteDefinitionBlock = {
   type: 'footnoteDefinition';

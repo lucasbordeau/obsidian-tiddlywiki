@@ -1,4 +1,4 @@
-import type { ConversionDiagnostic } from '../conversion/ConversionDiagnostic';
+import { ConversionDiagnostic } from '@/modules/conversion-core/conversion/ConversionDiagnostic';
 
 export function createCodecDiagnostic(
   code: string,

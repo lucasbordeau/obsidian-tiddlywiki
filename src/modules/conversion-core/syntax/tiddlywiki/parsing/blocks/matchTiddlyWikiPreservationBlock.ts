@@ -1,8 +1,8 @@
-import type { BlockNode } from '../../../../model/blocks/BlockNode';
-import { decodePreservedSource } from '../../../../preservation/source/decodePreservedSource';
-import type { TiddlyWikiBlockState } from './TiddlyWikiBlockState';
-import type { TiddlyWikiBlockMatch } from './TiddlyWikiBlockMatch';
-import type { TiddlyWikiParsingContext } from '../context/TiddlyWikiParsingContext';
+import { BlockNode } from '@/modules/conversion-core/model/blocks/BlockNode';
+import { decodePreservedSource } from '@/modules/conversion-core/preservation/source/decodePreservedSource';
+import { TiddlyWikiBlockState } from '@/modules/conversion-core/syntax/tiddlywiki/parsing/blocks/TiddlyWikiBlockState';
+import { TiddlyWikiBlockMatch } from '@/modules/conversion-core/syntax/tiddlywiki/parsing/blocks/TiddlyWikiBlockMatch';
+import { TiddlyWikiParsingContext } from '@/modules/conversion-core/syntax/tiddlywiki/parsing/context/TiddlyWikiParsingContext';
 
 export function matchTiddlyWikiPreservationBlock(
   this: TiddlyWikiParsingContext,

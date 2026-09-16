@@ -1,4 +1,4 @@
-import { parseObsidianBlocks } from '../../../support/parseObsidianBlocks';
+import { parseObsidianBlocks } from '@/tests/support/parseObsidianBlocks';
 
 describe('Obsidian structural parsing', () => {
   test('parses CommonMark mixed lists, non-one starts, tasks and loose item blocks', () => {

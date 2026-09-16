@@ -1,5 +1,5 @@
-import type { SourceRange } from '../../../../model/SourceRange';
-import type { TiddlyWikiParsingContext } from '../context/TiddlyWikiParsingContext';
+import { SourceRange } from '@/modules/conversion-core/model/SourceRange';
+import { TiddlyWikiParsingContext } from '@/modules/conversion-core/syntax/tiddlywiki/parsing/context/TiddlyWikiParsingContext';
 
 export function splitTiddlyWikiTableCells(
   this: TiddlyWikiParsingContext,

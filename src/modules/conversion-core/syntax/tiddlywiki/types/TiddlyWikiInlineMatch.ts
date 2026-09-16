@@ -1,3 +1,3 @@
-import type { InlineNode } from '../../../model/inlines/InlineNode';
+import { InlineNode } from '@/modules/conversion-core/model/inlines/InlineNode';
 
 export type TiddlyWikiInlineMatch = { node: InlineNode; end: number };

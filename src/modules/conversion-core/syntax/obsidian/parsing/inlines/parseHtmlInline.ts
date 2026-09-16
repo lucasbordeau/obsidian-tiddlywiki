@@ -1,6 +1,6 @@
-import type { InlineNode } from '../../../../model/inlines/InlineNode';
-import { parseStaticHtmlInline } from '../html/parseStaticHtmlInline';
-import { createRawInline } from './createRawInline';
+import { InlineNode } from '@/modules/conversion-core/model/inlines/InlineNode';
+import { parseStaticHtmlInline } from '@/modules/conversion-core/syntax/obsidian/parsing/html/parseStaticHtmlInline';
+import { createRawInline } from '@/modules/conversion-core/syntax/obsidian/parsing/inlines/createRawInline';
 
 export function parseHtmlInline(value: string): InlineNode {
   const staticNodes = parseStaticHtmlInline(value);

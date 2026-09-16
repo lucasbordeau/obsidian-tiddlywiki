@@ -49,6 +49,7 @@ export function createPluginBuildContext({
     logLevel: 'info',
     sourcemap: production ? false : 'inline',
     treeShaking: true,
+    tsconfig: 'tsconfig.json',
     outfile,
     plugins,
   };

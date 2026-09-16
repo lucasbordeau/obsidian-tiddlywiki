@@ -1,15 +1,17 @@
-import { ObsidianNote } from '../obsidian/ObsidianNote';
-import { Tiddler } from '../tiddlywiki/Tiddler';
-import { exportObsidianNote } from '../conversion-core/notes/exportObsidianNote';
+import { ObsidianNote } from '@/modules/obsidian/ObsidianNote';
+import { Tiddler } from '@/modules/tiddlywiki/Tiddler';
+import { exportObsidianNote } from '@/modules/conversion-core/notes/exportObsidianNote';
 
 export function convertObsidianNoteToTiddler(note: ObsidianNote): Tiddler {
-  const result = exportObsidianNote(note);
+  const exportResult = exportObsidianNote(note);
 
-  if (!result.value) {
+  if (!exportResult.value) {
     throw new Error(
-      result.diagnostics.map((diagnostic) => diagnostic.message).join('\n'),
+      exportResult.diagnostics
+        .map((diagnostic) => diagnostic.message)
+        .join('\n'),
     );
   }
 
-  return result.value;
+  return exportResult.value;
 }

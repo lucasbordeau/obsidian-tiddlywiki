@@ -1,5 +1,5 @@
-import type { PreservationRecord } from './PreservationRecord';
-import { readPreservationRecord } from './readPreservationRecord';
+import { PreservationRecord } from '@/modules/conversion-core/preservation/metadata/PreservationRecord';
+import { readPreservationRecord } from '@/modules/conversion-core/preservation/metadata/readPreservationRecord';
 
 export type ExtractedPreservationComment = {
   body: string;

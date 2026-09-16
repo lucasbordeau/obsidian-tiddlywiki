@@ -1,7 +1,7 @@
-import type { BlockNode } from './blocks/BlockNode';
-import type { ConversionDiagnostic } from '../conversion/ConversionDiagnostic';
-import type { Dialect } from './Dialect';
-import type { SyntaxToken } from './SyntaxToken';
+import { BlockNode } from '@/modules/conversion-core/model/blocks/BlockNode';
+import { ConversionDiagnostic } from '@/modules/conversion-core/conversion/ConversionDiagnostic';
+import { Dialect } from '@/modules/conversion-core/model/Dialect';
+import { SyntaxToken } from '@/modules/conversion-core/model/SyntaxToken';
 
 export type ParsedDocument = {
   dialect: Dialect;

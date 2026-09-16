@@ -1,7 +1,7 @@
-import type { BlockNode } from '../../../../model/blocks/BlockNode';
-import type { ListItem } from '../../../../model/ListItem';
-import type { TiddlyWikiListBlock } from '../../types/TiddlyWikiListBlock';
-import type { TiddlyWikiParsingContext } from '../context/TiddlyWikiParsingContext';
+import { BlockNode } from '@/modules/conversion-core/model/blocks/BlockNode';
+import { ListItem } from '@/modules/conversion-core/model/ListItem';
+import { TiddlyWikiListBlock } from '@/modules/conversion-core/syntax/tiddlywiki/types/TiddlyWikiListBlock';
+import { TiddlyWikiParsingContext } from '@/modules/conversion-core/syntax/tiddlywiki/parsing/context/TiddlyWikiParsingContext';
 
 export function parseTiddlyWikiLists(
   this: TiddlyWikiParsingContext,

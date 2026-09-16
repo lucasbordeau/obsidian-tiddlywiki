@@ -1,7 +1,7 @@
-import type { CodecResult } from '../CodecResult';
-import { createCodecDiagnostic } from '../createCodecDiagnostic';
-import { parseTiddlyWikiJson } from './parseTiddlyWikiJson';
-import type { TiddlerFields } from './TiddlerFields';
+import { CodecResult } from '@/modules/conversion-core/codecs/CodecResult';
+import { createCodecDiagnostic } from '@/modules/conversion-core/codecs/createCodecDiagnostic';
+import { parseTiddlyWikiJson } from '@/modules/conversion-core/codecs/tiddlywiki/parseTiddlyWikiJson';
+import { TiddlerFields } from '@/modules/conversion-core/codecs/tiddlywiki/TiddlerFields';
 
 export function serializeTidFile(tiddler: TiddlerFields): CodecResult<string> {
   const validation = parseTiddlyWikiJson(JSON.stringify([tiddler]));

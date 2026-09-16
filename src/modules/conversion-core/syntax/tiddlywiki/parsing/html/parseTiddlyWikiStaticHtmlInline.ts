@@ -1,9 +1,10 @@
-import type { InlineNode } from '../../../../model/inlines/InlineNode';
-import type { TiddlyWikiFormattingType } from '../../types/TiddlyWikiFormattingType';
-import type { TiddlyWikiParsingContext } from '../context/TiddlyWikiParsingContext';
-import { parseTiddlyWikiHtmlImage } from './parseTiddlyWikiHtmlImage';
-import { parseTiddlyWikiHtmlInlineCode } from './parseTiddlyWikiHtmlInlineCode';
-import { parseTiddlyWikiHtmlLink } from './parseTiddlyWikiHtmlLink';
+import { InlineNode } from '@/modules/conversion-core/model/inlines/InlineNode';
+import { TiddlyWikiFormattingType } from '@/modules/conversion-core/syntax/tiddlywiki/types/TiddlyWikiFormattingType';
+import { TiddlyWikiParsingContext } from '@/modules/conversion-core/syntax/tiddlywiki/parsing/context/TiddlyWikiParsingContext';
+import { parseTiddlyWikiHtmlImage } from '@/modules/conversion-core/syntax/tiddlywiki/parsing/html/parseTiddlyWikiHtmlImage';
+import { parseTiddlyWikiHtmlInlineCode } from '@/modules/conversion-core/syntax/tiddlywiki/parsing/html/parseTiddlyWikiHtmlInlineCode';
+import { parseTiddlyWikiHtmlLink } from '@/modules/conversion-core/syntax/tiddlywiki/parsing/html/parseTiddlyWikiHtmlLink';
+import { parseTiddlyWikiHtmlTransclusion } from '@/modules/conversion-core/syntax/tiddlywiki/parsing/html/parseTiddlyWikiHtmlTransclusion';
 
 export function parseTiddlyWikiStaticHtmlInline(
   this: TiddlyWikiParsingContext,
@@ -62,6 +63,18 @@ export function parseTiddlyWikiStaticHtmlInline(
       { start, end, tag, openEnd, closeStart, attributes, range },
       depth,
     );
+  }
+
+  if (tag === '$transclude') {
+    return parseTiddlyWikiHtmlTransclusion.call(this, {
+      start,
+      end,
+      tag,
+      openEnd,
+      closeStart,
+      attributes,
+      range,
+    });
   }
 
   if (closeStart < openEnd) {

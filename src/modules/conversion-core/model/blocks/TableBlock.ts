@@ -1,5 +1,5 @@
-import type { TableAlignment } from './TableAlignment';
-import type { InlineNode } from '../inlines/InlineNode';
+import { TableAlignment } from '@/modules/conversion-core/model/blocks/TableAlignment';
+import { InlineNode } from '@/modules/conversion-core/model/inlines/InlineNode';
 
 export type TableBlock = {
   type: 'table';

@@ -1,5 +1,5 @@
-import { escapeHtml } from './escaping/escapeHtml';
-import { getLongestDelimiterRun } from './getLongestDelimiterRun';
+import { escapeHtml } from '@/modules/conversion-core/syntax/obsidian/serialization/escaping/escapeHtml';
+import { getLongestDelimiterRun } from '@/modules/conversion-core/syntax/obsidian/serialization/getLongestDelimiterRun';
 
 export function serializeCodeSpan(value: string): string {
   if (value.includes('\n')) {

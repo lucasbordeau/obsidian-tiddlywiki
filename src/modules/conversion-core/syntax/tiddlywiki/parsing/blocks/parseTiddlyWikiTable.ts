@@ -1,6 +1,6 @@
-import type { BlockNode } from '../../../../model/blocks/BlockNode';
-import type { InlineNode } from '../../../../model/inlines/InlineNode';
-import type { TiddlyWikiParsingContext } from '../context/TiddlyWikiParsingContext';
+import { BlockNode } from '@/modules/conversion-core/model/blocks/BlockNode';
+import { InlineNode } from '@/modules/conversion-core/model/inlines/InlineNode';
+import { TiddlyWikiParsingContext } from '@/modules/conversion-core/syntax/tiddlywiki/parsing/context/TiddlyWikiParsingContext';
 
 export function parseTiddlyWikiTable(
   this: TiddlyWikiParsingContext,

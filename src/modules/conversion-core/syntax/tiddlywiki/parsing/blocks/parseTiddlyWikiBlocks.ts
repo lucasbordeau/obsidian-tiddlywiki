@@ -1,17 +1,17 @@
-import type { BlockNode } from '../../../../model/blocks/BlockNode';
-import type { TiddlyWikiBlockState } from './TiddlyWikiBlockState';
-import type { TiddlyWikiParsingContext } from '../context/TiddlyWikiParsingContext';
-import { matchTiddlyWikiStyledOrTypedBlock } from './matchTiddlyWikiStyledOrTypedBlock';
-import { matchTiddlyWikiConditionalBlock } from './matchTiddlyWikiConditionalBlock';
-import { matchTiddlyWikiPreservationBlock } from './matchTiddlyWikiPreservationBlock';
-import { matchTiddlyWikiCodeBlock } from './matchTiddlyWikiCodeBlock';
-import { matchTiddlyWikiQuoteBlock } from './matchTiddlyWikiQuoteBlock';
-import { matchTiddlyWikiHeadingBlock } from './matchTiddlyWikiHeadingBlock';
-import { matchTiddlyWikiThematicBreak } from './matchTiddlyWikiThematicBreak';
-import { matchTiddlyWikiListBlock } from './matchTiddlyWikiListBlock';
-import { matchTiddlyWikiTableBlock } from './matchTiddlyWikiTableBlock';
-import { matchTiddlyWikiHtmlBlock } from './matchTiddlyWikiHtmlBlock';
-import { matchTiddlyWikiParagraphBlock } from './matchTiddlyWikiParagraphBlock';
+import { BlockNode } from '@/modules/conversion-core/model/blocks/BlockNode';
+import { TiddlyWikiBlockState } from '@/modules/conversion-core/syntax/tiddlywiki/parsing/blocks/TiddlyWikiBlockState';
+import { TiddlyWikiParsingContext } from '@/modules/conversion-core/syntax/tiddlywiki/parsing/context/TiddlyWikiParsingContext';
+import { matchTiddlyWikiStyledOrTypedBlock } from '@/modules/conversion-core/syntax/tiddlywiki/parsing/blocks/matchTiddlyWikiStyledOrTypedBlock';
+import { matchTiddlyWikiConditionalBlock } from '@/modules/conversion-core/syntax/tiddlywiki/parsing/blocks/matchTiddlyWikiConditionalBlock';
+import { matchTiddlyWikiPreservationBlock } from '@/modules/conversion-core/syntax/tiddlywiki/parsing/blocks/matchTiddlyWikiPreservationBlock';
+import { matchTiddlyWikiCodeBlock } from '@/modules/conversion-core/syntax/tiddlywiki/parsing/blocks/matchTiddlyWikiCodeBlock';
+import { matchTiddlyWikiQuoteBlock } from '@/modules/conversion-core/syntax/tiddlywiki/parsing/blocks/matchTiddlyWikiQuoteBlock';
+import { matchTiddlyWikiHeadingBlock } from '@/modules/conversion-core/syntax/tiddlywiki/parsing/blocks/matchTiddlyWikiHeadingBlock';
+import { matchTiddlyWikiThematicBreak } from '@/modules/conversion-core/syntax/tiddlywiki/parsing/blocks/matchTiddlyWikiThematicBreak';
+import { matchTiddlyWikiListBlock } from '@/modules/conversion-core/syntax/tiddlywiki/parsing/blocks/matchTiddlyWikiListBlock';
+import { matchTiddlyWikiTableBlock } from '@/modules/conversion-core/syntax/tiddlywiki/parsing/blocks/matchTiddlyWikiTableBlock';
+import { matchTiddlyWikiHtmlBlock } from '@/modules/conversion-core/syntax/tiddlywiki/parsing/blocks/matchTiddlyWikiHtmlBlock';
+import { matchTiddlyWikiParagraphBlock } from '@/modules/conversion-core/syntax/tiddlywiki/parsing/blocks/matchTiddlyWikiParagraphBlock';
 
 export function parseTiddlyWikiBlocks(
   this: TiddlyWikiParsingContext,

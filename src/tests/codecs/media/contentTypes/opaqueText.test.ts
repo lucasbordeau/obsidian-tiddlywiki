@@ -1,9 +1,9 @@
-import { exportObsidianNote } from '../../../../modules/conversion-core/notes/exportObsidianNote';
-import { importTiddler } from '../../../../modules/conversion-core/notes/importTiddler';
-import { parseObsidianFrontMatter } from '../../../../modules/conversion-core/codecs/obsidian/parseObsidianFrontMatter';
-import { extractPreservationComment } from '../../../../modules/conversion-core/preservation/metadata/extractPreservationComment';
-import { getCodecValue } from '../../../support/getCodecValue';
-import { textualCases } from './textualCases';
+import { exportObsidianNote } from '@/modules/conversion-core/notes/exportObsidianNote';
+import { importTiddler } from '@/modules/conversion-core/notes/importTiddler';
+import { parseObsidianFrontMatter } from '@/modules/conversion-core/codecs/obsidian/parseObsidianFrontMatter';
+import { extractPreservationComment } from '@/modules/conversion-core/preservation/metadata/extractPreservationComment';
+import { getCodecValue } from '@/tests/support/getCodecValue';
+import { textualCases } from '@/tests/codecs/media/contentTypes/textualCases';
 
 describe('textual and extension content types', () => {
   it.each(textualCases)(

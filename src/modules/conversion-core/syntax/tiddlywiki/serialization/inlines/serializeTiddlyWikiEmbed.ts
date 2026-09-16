@@ -1,6 +1,6 @@
-import type { InlineNode } from '../../../../model/inlines/InlineNode';
-import type { TiddlyWikiSerializationContext } from '../context/TiddlyWikiSerializationContext';
-import { quoteTiddlyWikiAttribute } from '../quoteTiddlyWikiAttribute';
+import { InlineNode } from '@/modules/conversion-core/model/inlines/InlineNode';
+import { TiddlyWikiSerializationContext } from '@/modules/conversion-core/syntax/tiddlywiki/serialization/context/TiddlyWikiSerializationContext';
+import { quoteTiddlyWikiAttribute } from '@/modules/conversion-core/syntax/tiddlywiki/serialization/quoteTiddlyWikiAttribute';
 
 export function serializeTiddlyWikiEmbed(
   this: TiddlyWikiSerializationContext,
@@ -13,13 +13,19 @@ export function serializeTiddlyWikiEmbed(
       ? this.options.resolveLink(node.target, 'embed')
       : node.target;
 
-  if (node.kind === 'note') {
-    const needsPreservation = /[{}|!#]/.test(target);
+  if (node.kind === 'transclusion') {
+    const hasDisplayOptions =
+      node.alt.length > 0 ||
+      node.width !== undefined ||
+      node.height !== undefined ||
+      node.title !== undefined;
+
+    const needsPreservation = /[{}|#]/.test(target) || hasDisplayOptions;
 
     if (needsPreservation) {
       return this.preserve(
         node,
-        'The note embed needs block, heading or field mapping before conversion.',
+        'The transclusion needs block, heading or display-option mapping before conversion.',
       );
     }
 

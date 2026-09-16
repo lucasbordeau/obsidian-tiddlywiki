@@ -1,19 +1,37 @@
-import { importTiddler } from '../conversion-core/notes/importTiddler';
-import { ObsidianNote } from '../obsidian/ObsidianNote';
-import { Tiddler } from '../tiddlywiki/Tiddler';
+import { importTiddler } from '@/modules/conversion-core/notes/importTiddler';
+import { ObsidianNote } from '@/modules/obsidian/ObsidianNote';
+import { Tiddler } from '@/modules/tiddlywiki/Tiddler';
 
 export function convertTiddlersToObsidianNotes(
   tiddlers: Tiddler[],
+  referenceTiddlers: Tiddler[] = tiddlers,
 ): ObsidianNote[] {
-  return tiddlers.map((tiddler) => {
-    const result = importTiddler(tiddler);
+  const canonicalTargets = new Map(
+    referenceTiddlers.flatMap((tiddler) => {
+      const canonicalUri = tiddler._canonical_uri;
 
-    if (!result.value) {
+      return canonicalUri ? [[tiddler.title, canonicalUri] as const] : [];
+    }),
+  );
+
+  const resolveImportedTarget = (target: string): string =>
+    canonicalTargets.get(target) ?? target;
+
+  return tiddlers.map((tiddler) => {
+    const importResult = importTiddler(tiddler, {
+      preserveRoundTripMetadata: false,
+      preserveUnsupportedSource: false,
+      resolveLink: resolveImportedTarget,
+    });
+
+    if (!importResult.value) {
       throw new Error(
-        result.diagnostics.map((diagnostic) => diagnostic.message).join('\n'),
+        importResult.diagnostics
+          .map((diagnostic) => diagnostic.message)
+          .join('\n'),
       );
     }
 
-    return result.value;
+    return importResult.value;
   });
 }

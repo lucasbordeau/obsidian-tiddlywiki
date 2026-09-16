@@ -1,5 +1,5 @@
-import type { InlineNode } from '../../../../model/inlines/InlineNode';
-import { parseChildren } from './parseChildren';
+import { InlineNode } from '@/modules/conversion-core/model/inlines/InlineNode';
+import { parseChildren } from '@/modules/conversion-core/syntax/obsidian/parsing/html/parseChildren';
 
 export function parseStaticHtmlInline(
   source: string,

@@ -1,4 +1,4 @@
-import type { ListItem } from '../ListItem';
+import { ListItem } from '@/modules/conversion-core/model/ListItem';
 
 export type ListBlock = {
   type: 'list';

@@ -1,22 +1,22 @@
-import { convertText } from '../conversion/convertText';
-import type { CodecResult } from '../codecs/CodecResult';
-import { collectObsidianTags } from '../metadata/collectObsidianTags';
-import { createCodecDiagnostic } from '../codecs/createCodecDiagnostic';
-import { encodeMetadataField } from '../metadata/encodeMetadataField';
-import { extractPreservationComment } from '../preservation/metadata/extractPreservationComment';
-import { formatTiddlyWikiTimestamp } from '../metadata/formatTiddlyWikiTimestamp';
-import { findPreservationRecord } from '../preservation/metadata/findPreservationRecord';
-import { getPreservationKey } from '../preservation/metadata/getPreservationKey';
-import { getTiddlerProperties } from '../metadata/getTiddlerProperties';
-import type { MarkdownNote } from './MarkdownNote';
-import { parseObsidianFrontMatter } from '../codecs/obsidian/parseObsidianFrontMatter';
-import { PRESERVATION_FIELD } from '../preservation/metadata/PreservationField.const';
-import { PRESERVATION_PROPERTY } from '../preservation/metadata/PreservationProperty.const';
-import type { PreservationRecord } from '../preservation/metadata/PreservationRecord';
-import { readObsidianTags } from '../metadata/readObsidianTags';
-import { restoreTiddlerFromNote } from '../preservation/metadata/restoreTiddlerFromNote';
-import { serializeTiddlyWikiTags } from '../metadata/serializeTiddlyWikiTags';
-import type { TiddlerFields } from '../codecs/tiddlywiki/TiddlerFields';
+import { convertText } from '@/modules/conversion-core/conversion/convertText';
+import { CodecResult } from '@/modules/conversion-core/codecs/CodecResult';
+import { collectObsidianTags } from '@/modules/conversion-core/metadata/collectObsidianTags';
+import { createCodecDiagnostic } from '@/modules/conversion-core/codecs/createCodecDiagnostic';
+import { encodeMetadataField } from '@/modules/conversion-core/metadata/encodeMetadataField';
+import { extractPreservationComment } from '@/modules/conversion-core/preservation/metadata/extractPreservationComment';
+import { formatTiddlyWikiTimestamp } from '@/modules/conversion-core/metadata/formatTiddlyWikiTimestamp';
+import { findPreservationRecord } from '@/modules/conversion-core/preservation/metadata/findPreservationRecord';
+import { getPreservationKey } from '@/modules/conversion-core/preservation/metadata/getPreservationKey';
+import { getTiddlerProperties } from '@/modules/conversion-core/metadata/getTiddlerProperties';
+import { MarkdownNote } from '@/modules/conversion-core/notes/MarkdownNote';
+import { parseObsidianFrontMatter } from '@/modules/conversion-core/codecs/obsidian/parseObsidianFrontMatter';
+import { PRESERVATION_FIELD } from '@/modules/conversion-core/preservation/metadata/PreservationField.const';
+import { PRESERVATION_PROPERTY } from '@/modules/conversion-core/preservation/metadata/PreservationProperty.const';
+import { PreservationRecord } from '@/modules/conversion-core/preservation/metadata/PreservationRecord';
+import { readObsidianTags } from '@/modules/conversion-core/metadata/readObsidianTags';
+import { restoreTiddlerFromNote } from '@/modules/conversion-core/preservation/metadata/restoreTiddlerFromNote';
+import { serializeTiddlyWikiTags } from '@/modules/conversion-core/metadata/serializeTiddlyWikiTags';
+import { TiddlerFields } from '@/modules/conversion-core/codecs/tiddlywiki/TiddlerFields';
 
 export function exportObsidianNote(
   note: MarkdownNote,
@@ -33,13 +33,13 @@ export function exportObsidianNote(
     };
   }
 
-  const parsed = parseObsidianFrontMatter(note.content);
+  const frontMatterResult = parseObsidianFrontMatter(note.content);
 
-  if (!parsed.value) {
-    return { diagnostics: parsed.diagnostics };
+  if (!frontMatterResult.value) {
+    return { diagnostics: frontMatterResult.diagnostics };
   }
 
-  const document = parsed.value;
+  const document = frontMatterResult.value;
   const preservedBody = extractPreservationComment(document.body);
   const documentWithoutComment = { ...document, body: preservedBody.body };
 
@@ -62,7 +62,7 @@ export function exportObsidianNote(
     );
   }
 
-  const converted = convertText(
+  const bodyConversion = convertText(
     documentWithoutComment.body,
     'obsidian',
     'tiddlywiki',
@@ -71,7 +71,7 @@ export function exportObsidianNote(
   const fields: TiddlerFields = Object.create(null);
 
   fields.title = note.title;
-  fields.text = converted.text;
+  fields.text = bodyConversion.text;
   fields.type = 'text/vnd.tiddlywiki';
 
   for (const [name, value] of Object.entries(document.properties)) {
@@ -88,7 +88,7 @@ export function exportObsidianNote(
   }
 
   const propertyTags = readObsidianTags(document.properties.tags);
-  const bodyTags = collectObsidianTags(converted.document);
+  const bodyTags = collectObsidianTags(bodyConversion.document);
   const tags = [...new Set([...propertyTags, ...bodyTags])];
 
   const hasTags =
@@ -105,7 +105,7 @@ export function exportObsidianNote(
     origin: 'obsidian',
     identity: note.title,
     sourceBody: document.body,
-    targetBody: converted.text,
+    targetBody: bodyConversion.text,
     sourceProperties: document.properties,
     targetProperties: getTiddlerProperties(fields),
     sourceFrontMatter: document.rawFrontMatter,
@@ -117,6 +117,9 @@ export function exportObsidianNote(
 
   return {
     value: fields,
-    diagnostics: [...parsed.diagnostics, ...converted.diagnostics],
+    diagnostics: [
+      ...frontMatterResult.diagnostics,
+      ...bodyConversion.diagnostics,
+    ],
   };
 }

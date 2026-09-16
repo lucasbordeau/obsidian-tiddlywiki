@@ -1,4 +1,4 @@
-import { FeatureCase } from '../FeatureCase';
+import { FeatureCase } from '@/tests/syntax/tiddlywiki/features/FeatureCase';
 
 export const preservedCases: FeatureCase[] = [
   { id: 'TW-EMBED-FIELD', source: '{{MyTiddler!!field}}' },
@@ -11,6 +11,14 @@ export const preservedCases: FeatureCase[] = [
   {
     id: 'TW-EMBED-TEMPLATE-PARAMETERS',
     source: '{{MyTiddler||Template|one|two}}',
+  },
+  {
+    id: 'TW-TRANSCLUDE-WIDGET-FIELD',
+    source: '<$transclude $tiddler="MyTiddler" $field="caption"/>',
+  },
+  {
+    id: 'TW-TRANSCLUDE-WIDGET-DYNAMIC',
+    source: '<$transclude $tiddler=<<target>>/>',
   },
   {
     id: 'TW-FILTERED-TRANSCLUSION',

@@ -1,7 +1,7 @@
-import { parseObsidian } from '../../../../../modules/conversion-core/syntax/obsidian/parsing/parseObsidian';
-import { readSample } from '../../../../support/samples/readSample';
-import { collectAllInlines } from '../../../../support/ast/collectAllInlines';
-import { assertStableRoundTrip } from '../../../../support/assertStableRoundTrip';
+import { parseObsidian } from '@/modules/conversion-core/syntax/obsidian/parsing/parseObsidian';
+import { readSample } from '@/tests/support/samples/readSample';
+import { collectAllInlines } from '@/tests/support/ast/collectAllInlines';
+import { assertStableRoundTrip } from '@/tests/support/assertStableRoundTrip';
 
 describe('official Obsidian feature inventory', () => {
   test('O-COMPOUND: the media laboratory survives repeated whole-document conversion', () => {

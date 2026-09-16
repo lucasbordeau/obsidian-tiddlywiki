@@ -1,7 +1,7 @@
-import { parseObsidian } from '../../../../modules/conversion-core/syntax/obsidian/parsing/parseObsidian';
-import { serializeObsidian } from '../../../../modules/conversion-core/syntax/obsidian/serialization/serializeObsidian';
-import { parseObsidianBlocks } from '../../../support/parseObsidianBlocks';
-import { stripSourceRanges as semanticBlocks } from '../../../support/ast/stripSourceRanges';
+import { parseObsidian } from '@/modules/conversion-core/syntax/obsidian/parsing/parseObsidian';
+import { serializeObsidian } from '@/modules/conversion-core/syntax/obsidian/serialization/serializeObsidian';
+import { parseObsidianBlocks } from '@/tests/support/parseObsidianBlocks';
+import { stripSourceRanges as semanticBlocks } from '@/tests/support/ast/stripSourceRanges';
 
 describe('Obsidian structural parsing', () => {
   test('does not apply markdown formatting inside raw HTML or comments', () => {

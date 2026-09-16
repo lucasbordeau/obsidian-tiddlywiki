@@ -1,4 +1,4 @@
-import { FeatureCase } from '../FeatureCase';
+import { FeatureCase } from '@/tests/syntax/tiddlywiki/features/FeatureCase';
 
 export const preservedCases: FeatureCase[] = [
   { id: 'TW-CONDITIONAL', source: '<%if [tag[A]] %>yes<%else%>no<%endif%>' },

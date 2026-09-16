@@ -1,6 +1,6 @@
-import { parseObsidian } from '../../../../../modules/conversion-core/syntax/obsidian/parsing/parseObsidian';
-import { convertText } from '../../../../../modules/conversion-core/conversion/convertText';
-import { stripSourceRanges as semanticBlocks } from '../../../../support/ast/stripSourceRanges';
+import { parseObsidian } from '@/modules/conversion-core/syntax/obsidian/parsing/parseObsidian';
+import { convertText } from '@/modules/conversion-core/conversion/convertText';
+import { stripSourceRanges as semanticBlocks } from '@/tests/support/ast/stripSourceRanges';
 
 describe('Obsidian documented extensions and structural regressions', () => {
   test.each(['query', 'base', 'mermaid'])(

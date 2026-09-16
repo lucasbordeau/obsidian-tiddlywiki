@@ -1,8 +1,8 @@
-import type { Token } from '../../types/Token';
-import type { TokenCursor } from '../../types/TokenCursor';
-import type { BlockNode } from '../../../../model/blocks/BlockNode';
-import type { InlineNode } from '../../../../model/inlines/InlineNode';
-import { collectInlineChildren } from '../inlines/collectInlineChildren';
+import { Token } from '@/modules/conversion-core/syntax/obsidian/types/Token';
+import { TokenCursor } from '@/modules/conversion-core/syntax/obsidian/types/TokenCursor';
+import { BlockNode } from '@/modules/conversion-core/model/blocks/BlockNode';
+import { InlineNode } from '@/modules/conversion-core/model/inlines/InlineNode';
+import { collectInlineChildren } from '@/modules/conversion-core/syntax/obsidian/parsing/inlines/collectInlineChildren';
 
 export function parseTable(tokens: Token[], cursor: TokenCursor): BlockNode {
   const header: InlineNode[][] = [];

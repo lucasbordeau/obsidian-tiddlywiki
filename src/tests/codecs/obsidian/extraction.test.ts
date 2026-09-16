@@ -1,4 +1,4 @@
-import { extractTagsFromObsidianNote } from '../../../modules/obsidian/splitTagsAndTextFromObsidianNote';
+import { extractTagsFromObsidianNote } from '@/modules/obsidian/extractTagsFromObsidianNote';
 
 describe('metadata-aware, edit-aware interchange', () => {
   it('keeps underscore tag names inside emphasis and skips hashes in inline literal HTML', () => {

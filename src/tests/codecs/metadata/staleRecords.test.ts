@@ -1,10 +1,10 @@
-import { exportObsidianNote } from '../../../modules/conversion-core/notes/exportObsidianNote';
-import { importTiddler } from '../../../modules/conversion-core/notes/importTiddler';
-import { parseObsidianFrontMatter } from '../../../modules/conversion-core/codecs/obsidian/parseObsidianFrontMatter';
-import { serializeObsidianFrontMatter } from '../../../modules/conversion-core/codecs/obsidian/serializeObsidianFrontMatter';
-import { extractPreservationComment } from '../../../modules/conversion-core/preservation/metadata/extractPreservationComment';
-import { PRESERVATION_FIELD } from '../../../modules/conversion-core/preservation/metadata/PreservationField.const';
-import { getCodecValue } from '../../support/getCodecValue';
+import { exportObsidianNote } from '@/modules/conversion-core/notes/exportObsidianNote';
+import { importTiddler } from '@/modules/conversion-core/notes/importTiddler';
+import { parseObsidianFrontMatter } from '@/modules/conversion-core/codecs/obsidian/parseObsidianFrontMatter';
+import { serializeObsidianFrontMatter } from '@/modules/conversion-core/codecs/obsidian/serializeObsidianFrontMatter';
+import { extractPreservationComment } from '@/modules/conversion-core/preservation/metadata/extractPreservationComment';
+import { PRESERVATION_FIELD } from '@/modules/conversion-core/preservation/metadata/PreservationField.const';
+import { getCodecValue } from '@/tests/support/getCodecValue';
 
 describe('field and preservation boundaries', () => {
   it('does not restore stale Markdown after a tiddler MIME change', () => {

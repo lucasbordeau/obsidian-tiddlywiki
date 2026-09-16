@@ -1,9 +1,9 @@
-import { parseObsidian } from '../../../../modules/conversion-core/syntax/obsidian/parsing/parseObsidian';
-import { serializeObsidian } from '../../../../modules/conversion-core/syntax/obsidian/serialization/serializeObsidian';
-import { encodePreservedSource } from '../../../../modules/conversion-core/preservation/source/encodePreservedSource';
-import { ParsedDocument } from '../../../../modules/conversion-core/model/ParsedDocument';
-import { parseObsidianBlocks } from '../../../support/parseObsidianBlocks';
-import { readMarkdownSample as fixture } from '../../../support/samples/readMarkdownSample';
+import { parseObsidian } from '@/modules/conversion-core/syntax/obsidian/parsing/parseObsidian';
+import { serializeObsidian } from '@/modules/conversion-core/syntax/obsidian/serialization/serializeObsidian';
+import { encodePreservedSource } from '@/modules/conversion-core/preservation/source/encodePreservedSource';
+import { ParsedDocument } from '@/modules/conversion-core/model/ParsedDocument';
+import { parseObsidianBlocks } from '@/tests/support/parseObsidianBlocks';
+import { readMarkdownSample as fixture } from '@/tests/support/samples/readMarkdownSample';
 
 describe('Obsidian semantic serialization', () => {
   test('foreign capsules restore exact dialect/source, including hostile comment terminators', () => {

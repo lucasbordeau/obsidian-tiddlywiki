@@ -1,11 +1,11 @@
-import { convertText } from '../../../../../modules/conversion-core/conversion/convertText';
-import { parseTiddlyWiki } from '../../../../../modules/conversion-core/syntax/tiddlywiki/parsing/parseTiddlyWiki';
-import { renderTiddlyWiki } from '../../../../support/runtime/renderTiddlyWiki';
-import { imageExtensions } from './imageExtensions';
+import { convertText } from '@/modules/conversion-core/conversion/convertText';
+import { parseTiddlyWiki } from '@/modules/conversion-core/syntax/tiddlywiki/parsing/parseTiddlyWiki';
+import { renderTiddlyWiki } from '@/tests/support/runtime/renderTiddlyWiki';
+import { imageExtensions } from '@/tests/syntax/tiddlywiki/features/images/imageExtensions';
 
 describe('official TiddlyWiki feature inventory', () => {
   test.each(imageExtensions)(
-    'TW-EMBED-IMAGE-%s: image transclusion retains its operation through nearby edits',
+    'TW-EMBED-IMAGE-%s: typed transclusion uses a native Obsidian embed',
     (extension) => {
       const source = '{{assets/diagram.' + extension + '}}';
 
@@ -15,13 +15,16 @@ describe('official TiddlyWiki feature inventory', () => {
         children: [
           {
             type: 'embed',
-            kind: 'note',
+            kind: 'transclusion',
             target: 'assets/diagram.' + extension,
           },
         ],
       });
 
       const outgoing = convertText(source, 'tiddlywiki', 'obsidian');
+
+      expect(outgoing.diagnostics).toEqual([]);
+      expect(outgoing.text).toBe('![[assets/diagram.' + extension + ']]');
 
       const incoming = convertText(
         outgoing.text + '\n\nEdited nearby.',
@@ -33,6 +36,31 @@ describe('official TiddlyWiki feature inventory', () => {
       expect(incoming.text).toContain('Edited nearby.');
     },
   );
+
+  test('keeps explicit images distinct from typed transclusions', () => {
+    const image = convertText(
+      '[img[assets/diagram.png]]',
+      'tiddlywiki',
+      'obsidian',
+    );
+
+    const transclusion = convertText(
+      '{{assets/diagram.png}}',
+      'tiddlywiki',
+      'obsidian',
+    );
+
+    expect(image.text).toBe('![](<assets/diagram.png>)');
+    expect(transclusion.text).toBe('![[assets/diagram.png]]');
+
+    expect(convertText(image.text, 'obsidian', 'tiddlywiki').text).toContain(
+      '[img',
+    );
+
+    expect(convertText(transclusion.text, 'obsidian', 'tiddlywiki').text).toBe(
+      '{{assets/diagram.png}}',
+    );
+  });
 
   test('TW-IMAGE-SEMANTICS: alt, tooltip, dimensions, quoting and literal URLs remain distinct', async () => {
     const source =

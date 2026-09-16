@@ -1,7 +1,7 @@
-import { parseObsidian } from '../../../../../modules/conversion-core/syntax/obsidian/parsing/parseObsidian';
-import { serializeObsidian } from '../../../../../modules/conversion-core/syntax/obsidian/serialization/serializeObsidian';
-import { convertText } from '../../../../../modules/conversion-core/conversion/convertText';
-import { stripSourceRanges as semanticBlocks } from '../../../../support/ast/stripSourceRanges';
+import { parseObsidian } from '@/modules/conversion-core/syntax/obsidian/parsing/parseObsidian';
+import { serializeObsidian } from '@/modules/conversion-core/syntax/obsidian/serialization/serializeObsidian';
+import { convertText } from '@/modules/conversion-core/conversion/convertText';
+import { stripSourceRanges as semanticBlocks } from '@/tests/support/ast/stripSourceRanges';
 
 describe('Obsidian documented extensions and structural regressions', () => {
   test('retains balanced inline footnotes exactly, including escaped brackets and code closers', () => {

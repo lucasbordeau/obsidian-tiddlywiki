@@ -1,5 +1,5 @@
-import { Base64Object } from 'src/modules/file-manipulation/Base64Object';
-import { Tiddler } from './Tiddler';
+import { Base64Object } from '@/modules/file-manipulation/Base64Object';
+import { Tiddler } from '@/modules/tiddlywiki/Tiddler';
 
 export function convertBase64ObjectToTiddler(
   base64Object: Base64Object,

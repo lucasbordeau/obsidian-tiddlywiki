@@ -1,14 +1,16 @@
-import type { ParsedDocument } from '../../../model/ParsedDocument';
-import type { ConversionOptions } from '../../../conversion/ConversionOptions';
-import type { ConversionDiagnostic } from '../../../conversion/ConversionDiagnostic';
-import type { BlockNode } from '../../../model/blocks/BlockNode';
-import type { InlineNode } from '../../../model/inlines/InlineNode';
+import { ParsedDocument } from '@/modules/conversion-core/model/ParsedDocument';
+import { ConversionOptions } from '@/modules/conversion-core/conversion/ConversionOptions';
+import { ConversionDiagnostic } from '@/modules/conversion-core/conversion/ConversionDiagnostic';
+import { BlockNode } from '@/modules/conversion-core/model/blocks/BlockNode';
+import { InlineNode } from '@/modules/conversion-core/model/inlines/InlineNode';
+
+export type BlockRenderMode = 'document' | 'list-item';
 
 export type SerializationContext = {
   document: ParsedDocument;
   options: ConversionOptions;
   diagnostics: ConversionDiagnostic[];
-  renderBlocks: (blocks: BlockNode[]) => string;
+  renderBlocks: (blocks: BlockNode[], mode?: BlockRenderMode) => string;
   renderInlines: (nodes: InlineNode[], parentMarker?: string) => string;
   renderInline: (node: InlineNode, marker?: string) => string;
 };

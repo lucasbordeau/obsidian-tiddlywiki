@@ -1,5 +1,5 @@
-import { BlockNode } from '../../../modules/conversion-core/model/blocks/BlockNode';
-import { InlineNode } from '../../../modules/conversion-core/model/inlines/InlineNode';
+import { BlockNode } from '@/modules/conversion-core/model/blocks/BlockNode';
+import { InlineNode } from '@/modules/conversion-core/model/inlines/InlineNode';
 
 export function collectAllInlines(blocks: BlockNode[]): InlineNode[] {
   const descendants: InlineNode[] = [];

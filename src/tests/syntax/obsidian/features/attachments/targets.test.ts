@@ -1,9 +1,9 @@
-import { convertText } from '../../../../../modules/conversion-core/conversion/convertText';
-import { parseObsidian } from '../../../../../modules/conversion-core/syntax/obsidian/parsing/parseObsidian';
-import { collectAllInlines } from '../../../../support/ast/collectAllInlines';
-import { assertStableRoundTrip } from '../../../../support/assertStableRoundTrip';
-import { attachmentExtensions } from './attachmentExtensions';
-import { embeddedSectionTargets } from './embeddedSectionTargets';
+import { convertText } from '@/modules/conversion-core/conversion/convertText';
+import { parseObsidian } from '@/modules/conversion-core/syntax/obsidian/parsing/parseObsidian';
+import { collectAllInlines } from '@/tests/support/ast/collectAllInlines';
+import { assertStableRoundTrip } from '@/tests/support/assertStableRoundTrip';
+import { attachmentExtensions } from '@/tests/syntax/obsidian/features/attachments/attachmentExtensions';
+import { embeddedSectionTargets } from '@/tests/syntax/obsidian/features/attachments/embeddedSectionTargets';
 
 describe('official Obsidian feature inventory', () => {
   test.each(attachmentExtensions)(
@@ -19,7 +19,11 @@ describe('official Obsidian feature inventory', () => {
       expect(references).toEqual(
         expect.arrayContaining([
           expect.objectContaining({ type: 'link', target }),
-          expect.objectContaining({ type: 'embed', kind: 'note', target }),
+          expect.objectContaining({
+            type: 'embed',
+            kind: 'transclusion',
+            target,
+          }),
         ]),
       );
 

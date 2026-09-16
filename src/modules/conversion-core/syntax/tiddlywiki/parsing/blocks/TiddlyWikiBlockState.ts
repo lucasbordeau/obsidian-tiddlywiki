@@ -1,4 +1,4 @@
-import type { TiddlyWikiSourceLine } from '../../types/TiddlyWikiSourceLine';
+import { TiddlyWikiSourceLine } from '@/modules/conversion-core/syntax/tiddlywiki/types/TiddlyWikiSourceLine';
 
 export type TiddlyWikiBlockState = {
   lineIndex: number;

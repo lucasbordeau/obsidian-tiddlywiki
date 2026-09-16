@@ -1,10 +1,10 @@
-import { exportObsidianNote } from '../../../modules/conversion-core/notes/exportObsidianNote';
-import { importTiddler } from '../../../modules/conversion-core/notes/importTiddler';
-import { parseObsidianFrontMatter } from '../../../modules/conversion-core/codecs/obsidian/parseObsidianFrontMatter';
-import { serializeObsidianFrontMatter } from '../../../modules/conversion-core/codecs/obsidian/serializeObsidianFrontMatter';
-import { extractPreservationComment } from '../../../modules/conversion-core/preservation/metadata/extractPreservationComment';
-import { getCodecValue } from '../../support/getCodecValue';
-import { opaqueContentTypes } from './opaqueContentTypes';
+import { exportObsidianNote } from '@/modules/conversion-core/notes/exportObsidianNote';
+import { importTiddler } from '@/modules/conversion-core/notes/importTiddler';
+import { parseObsidianFrontMatter } from '@/modules/conversion-core/codecs/obsidian/parseObsidianFrontMatter';
+import { serializeObsidianFrontMatter } from '@/modules/conversion-core/codecs/obsidian/serializeObsidianFrontMatter';
+import { extractPreservationComment } from '@/modules/conversion-core/preservation/metadata/extractPreservationComment';
+import { getCodecValue } from '@/tests/support/getCodecValue';
+import { opaqueContentTypes } from '@/tests/codecs/metadata/opaqueContentTypes';
 
 describe('metadata-aware, edit-aware interchange', () => {
   it('keeps native Markdown and its own YAML front matter on the native MIME route', () => {

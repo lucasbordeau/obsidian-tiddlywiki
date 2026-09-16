@@ -1,6 +1,6 @@
-import { parseTiddlyWiki } from '../../../../modules/conversion-core/syntax/tiddlywiki/parsing/parseTiddlyWiki';
-import { serializeTiddlyWiki } from '../../../../modules/conversion-core/syntax/tiddlywiki/serialization/serializeTiddlyWiki';
-import { renderTiddlyWiki } from '../../../support/runtime/renderTiddlyWiki';
+import { parseTiddlyWiki } from '@/modules/conversion-core/syntax/tiddlywiki/parsing/parseTiddlyWiki';
+import { serializeTiddlyWiki } from '@/modules/conversion-core/syntax/tiddlywiki/serialization/serializeTiddlyWiki';
+import { renderTiddlyWiki } from '@/tests/support/runtime/renderTiddlyWiki';
 
 describe('TiddlyWiki structural parsing and serialization', () => {
   test('global regex regressions stay protected inside links, code and fenced code', () => {

@@ -1,19 +1,20 @@
 import { build } from 'esbuild';
 
-const formats = [
+const bundleFormats = [
   { format: 'esm', outfile: 'dist/conversion-core.mjs' },
   { format: 'cjs', outfile: 'dist/conversion-core.cjs' },
 ];
 
-for (const output of formats) {
+for (const bundleFormat of bundleFormats) {
   await build({
     entryPoints: ['src/conversion.ts'],
     bundle: true,
     platform: 'browser',
     target: 'es2018',
-    format: output.format,
-    outfile: output.outfile,
+    format: bundleFormat.format,
+    outfile: bundleFormat.outfile,
     sourcemap: true,
     logLevel: 'info',
+    tsconfig: 'tsconfig.json',
   });
 }

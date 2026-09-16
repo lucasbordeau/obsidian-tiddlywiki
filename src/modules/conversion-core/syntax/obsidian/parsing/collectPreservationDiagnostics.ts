@@ -1,8 +1,8 @@
-import type { BlockNode } from '../../../model/blocks/BlockNode';
-import type { ParseContext } from '../types/ParseContext';
-import type { SourceRange } from '../../../model/SourceRange';
-import { recordPreservedSyntaxDiagnostic } from './recordPreservedSyntaxDiagnostic';
-import { collectInlinePreservationDiagnostics } from './collectInlinePreservationDiagnostics';
+import { BlockNode } from '@/modules/conversion-core/model/blocks/BlockNode';
+import { ParseContext } from '@/modules/conversion-core/syntax/obsidian/types/ParseContext';
+import { SourceRange } from '@/modules/conversion-core/model/SourceRange';
+import { recordPreservedSyntaxDiagnostic } from '@/modules/conversion-core/syntax/obsidian/parsing/recordPreservedSyntaxDiagnostic';
+import { collectInlinePreservationDiagnostics } from '@/modules/conversion-core/syntax/obsidian/parsing/collectInlinePreservationDiagnostics';
 
 export function collectPreservationDiagnostics(
   blocks: BlockNode[],
@@ -34,8 +34,8 @@ export function collectPreservationDiagnostics(
     }
 
     if (block.type === 'list') {
-      for (const entry of block.children) {
-        collectPreservationDiagnostics(entry.blocks, context, range);
+      for (const listItem of block.children) {
+        collectPreservationDiagnostics(listItem.blocks, context, range);
       }
     }
 

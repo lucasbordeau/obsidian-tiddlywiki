@@ -1,6 +1,6 @@
-import type { App } from 'obsidian';
+import { App } from 'obsidian';
 import * as path from 'path';
-import { getVaultDirectory } from './getVaultDirectory';
+import { getVaultDirectory } from '@/modules/plugin-core/settings/getVaultDirectory';
 
 export function getImportPath(app: App): string {
   const currentDate = new Date().toISOString().replace(/:/g, '_');

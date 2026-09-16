@@ -1,4 +1,4 @@
-import type { InlineNode } from '../../../../model/inlines/InlineNode';
+import { InlineNode } from '@/modules/conversion-core/model/inlines/InlineNode';
 
 export function getPlainLinkLabel(label: InlineNode[]): string | undefined {
   const onlyText = label.every((node) => node.type === 'text');

@@ -1,9 +1,9 @@
-import type { BlockNode } from '../../../../model/blocks/BlockNode';
-import type { ConversionDiagnostic } from '../../../../conversion/ConversionDiagnostic';
-import type { InlineNode } from '../../../../model/inlines/InlineNode';
-import type { SourceRange } from '../../../../model/SourceRange';
-import type { TiddlyWikiSourceLine } from '../../types/TiddlyWikiSourceLine';
-import type { TiddlyWikiInlineMatch } from '../../types/TiddlyWikiInlineMatch';
+import { BlockNode } from '@/modules/conversion-core/model/blocks/BlockNode';
+import { ConversionDiagnostic } from '@/modules/conversion-core/conversion/ConversionDiagnostic';
+import { InlineNode } from '@/modules/conversion-core/model/inlines/InlineNode';
+import { SourceRange } from '@/modules/conversion-core/model/SourceRange';
+import { TiddlyWikiSourceLine } from '@/modules/conversion-core/syntax/tiddlywiki/types/TiddlyWikiSourceLine';
+import { TiddlyWikiInlineMatch } from '@/modules/conversion-core/syntax/tiddlywiki/types/TiddlyWikiInlineMatch';
 
 export type TiddlyWikiParsingContext = {
   source: string;

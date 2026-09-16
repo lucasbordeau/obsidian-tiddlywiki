@@ -1,8 +1,8 @@
 import MarkdownIt from 'markdown-it';
-import { parseFrontMatterBlock } from './parseFrontMatterBlock';
-import { parseMathBlock } from './parseMathBlock';
-import { parseFootnoteDefinitionBlock } from './parseFootnoteDefinitionBlock';
-import { parseCommentBlock } from './parseCommentBlock';
+import { parseFrontMatterBlock } from '@/modules/conversion-core/syntax/obsidian/rules/block/parseFrontMatterBlock';
+import { parseMathBlock } from '@/modules/conversion-core/syntax/obsidian/rules/block/parseMathBlock';
+import { parseFootnoteDefinitionBlock } from '@/modules/conversion-core/syntax/obsidian/rules/block/parseFootnoteDefinitionBlock';
+import { parseCommentBlock } from '@/modules/conversion-core/syntax/obsidian/rules/block/parseCommentBlock';
 
 export function parseObsidianBlock(
   state: MarkdownIt.StateBlock,

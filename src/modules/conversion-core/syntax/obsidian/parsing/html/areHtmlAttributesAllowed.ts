@@ -1,4 +1,4 @@
-import type { HtmlAttributes } from '../../types/HtmlAttributes';
+import { HtmlAttributes } from '@/modules/conversion-core/syntax/obsidian/types/HtmlAttributes';
 
 export function areHtmlAttributesAllowed(
   attributes: HtmlAttributes,

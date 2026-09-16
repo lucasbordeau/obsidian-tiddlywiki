@@ -1,7 +1,7 @@
-import type { InlineNode } from '../../../model/inlines/InlineNode';
-import type { BlockNode } from '../../../model/blocks/BlockNode';
-import type { ParseContext } from '../types/ParseContext';
-import type { SourceRange } from '../../../model/SourceRange';
+import { InlineNode } from '@/modules/conversion-core/model/inlines/InlineNode';
+import { BlockNode } from '@/modules/conversion-core/model/blocks/BlockNode';
+import { ParseContext } from '@/modules/conversion-core/syntax/obsidian/types/ParseContext';
+import { SourceRange } from '@/modules/conversion-core/model/SourceRange';
 
 export function recordPreservedSyntaxDiagnostic(
   node: InlineNode | BlockNode,

@@ -1,8 +1,8 @@
-import { parseObsidian } from '../../../../modules/conversion-core/syntax/obsidian/parsing/parseObsidian';
-import { serializeObsidian } from '../../../../modules/conversion-core/syntax/obsidian/serialization/serializeObsidian';
-import { readMarkdownSample as fixture } from '../../../support/samples/readMarkdownSample';
-import { stripSourceRanges as semanticBlocks } from '../../../support/ast/stripSourceRanges';
-import { compoundMarkdownSources } from './compoundMarkdownSources';
+import { parseObsidian } from '@/modules/conversion-core/syntax/obsidian/parsing/parseObsidian';
+import { serializeObsidian } from '@/modules/conversion-core/syntax/obsidian/serialization/serializeObsidian';
+import { readMarkdownSample as fixture } from '@/tests/support/samples/readMarkdownSample';
+import { stripSourceRanges as semanticBlocks } from '@/tests/support/ast/stripSourceRanges';
+import { compoundMarkdownSources } from '@/tests/syntax/obsidian/serialization/compoundMarkdownSources';
 
 describe('Obsidian semantic serialization', () => {
   test.each(compoundMarkdownSources)(

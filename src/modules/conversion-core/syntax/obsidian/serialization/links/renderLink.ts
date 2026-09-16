@@ -1,10 +1,10 @@
-import type { InlineNode } from '../../../../model/inlines/InlineNode';
-import type { SerializationContext } from '../../types/SerializationContext';
-import { resolveLinkTarget } from './resolveLinkTarget';
-import { getPlainLinkLabel } from './getPlainLinkLabel';
-import { escapeWikiPart } from '../escaping/escapeWikiPart';
-import { serializeMarkdownDestination } from './serializeMarkdownDestination';
-import { serializeMarkdownTitle } from './serializeMarkdownTitle';
+import { InlineNode } from '@/modules/conversion-core/model/inlines/InlineNode';
+import { SerializationContext } from '@/modules/conversion-core/syntax/obsidian/types/SerializationContext';
+import { resolveLinkTarget } from '@/modules/conversion-core/syntax/obsidian/serialization/links/resolveLinkTarget';
+import { getPlainLinkLabel } from '@/modules/conversion-core/syntax/obsidian/serialization/links/getPlainLinkLabel';
+import { escapeWikiPart } from '@/modules/conversion-core/syntax/obsidian/serialization/escaping/escapeWikiPart';
+import { serializeMarkdownDestination } from '@/modules/conversion-core/syntax/obsidian/serialization/links/serializeMarkdownDestination';
+import { serializeMarkdownTitle } from '@/modules/conversion-core/syntax/obsidian/serialization/links/serializeMarkdownTitle';
 
 export function renderLink(
   node: Extract<InlineNode, { type: 'link' }>,

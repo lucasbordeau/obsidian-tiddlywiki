@@ -19,13 +19,13 @@ test('deploys successful builds, preserves the working bundle on failure, and re
   const sourcePath = path.join(projectFolder, 'source.js');
   const installedBundlePath = path.join(pluginFolder, 'main.js');
   const manifest = JSON.stringify({ id: 'example', version: '1.0.0' });
-  let context;
+  let esbuildContext;
 
   try {
     await writeFile(sourcePath, 'console.log("initial build");');
     await writeFile(path.join(projectFolder, 'manifest.json'), manifest);
 
-    context = await esbuild.context({
+    esbuildContext = await esbuild.context({
       absWorkingDir: projectFolder,
       entryPoints: ['source.js'],
       outfile: 'main.js',
@@ -34,7 +34,7 @@ test('deploys successful builds, preserves the working bundle on failure, and re
       plugins: [createDevVaultPlugin(pluginFolder)],
     });
 
-    await context.rebuild();
+    await esbuildContext.rebuild();
 
     assert.match(await readFile(installedBundlePath, 'utf8'), /initial build/);
 
@@ -49,7 +49,7 @@ test('deploys successful builds, preserves the working bundle on failure, and re
     );
 
     await writeFile(sourcePath, 'console.log("second build");');
-    await context.rebuild();
+    await esbuildContext.rebuild();
 
     const workingBundle = await readFile(installedBundlePath, 'utf8');
 
@@ -57,18 +57,18 @@ test('deploys successful builds, preserves the working bundle on failure, and re
 
     await writeFile(sourcePath, 'const broken = ;');
 
-    await assert.rejects(context.rebuild(), /Build failed/);
+    await assert.rejects(esbuildContext.rebuild(), /Build failed/);
     assert.equal(await readFile(installedBundlePath, 'utf8'), workingBundle);
 
     await writeFile(sourcePath, 'console.log("recovered build");');
-    await context.rebuild();
+    await esbuildContext.rebuild();
 
     assert.match(
       await readFile(installedBundlePath, 'utf8'),
       /recovered build/,
     );
   } finally {
-    await context?.dispose();
+    await esbuildContext?.dispose();
     await rm(projectFolder, { recursive: true, force: true });
   }
 });

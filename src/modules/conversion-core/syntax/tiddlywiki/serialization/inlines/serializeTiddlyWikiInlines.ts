@@ -1,5 +1,5 @@
-import type { InlineNode } from '../../../../model/inlines/InlineNode';
-import type { TiddlyWikiSerializationContext } from '../context/TiddlyWikiSerializationContext';
+import { InlineNode } from '@/modules/conversion-core/model/inlines/InlineNode';
+import { TiddlyWikiSerializationContext } from '@/modules/conversion-core/syntax/tiddlywiki/serialization/context/TiddlyWikiSerializationContext';
 
 export function serializeTiddlyWikiInlines(
   this: TiddlyWikiSerializationContext,

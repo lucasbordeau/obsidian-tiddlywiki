@@ -1,15 +1,15 @@
 import MarkdownIt from 'markdown-it';
-import { registerObsidianRules } from '../rules/registerObsidianRules';
+import { registerObsidianRules } from '@/modules/conversion-core/syntax/obsidian/rules/registerObsidianRules';
 
 export function createObsidianParser(): MarkdownIt {
-  const markdown = new MarkdownIt({
+  const obsidianParser = new MarkdownIt({
     html: true,
     linkify: true,
     breaks: false,
     typographer: false,
   });
 
-  registerObsidianRules(markdown);
+  registerObsidianRules(obsidianParser);
 
-  return markdown;
+  return obsidianParser;
 }

@@ -1,5 +1,5 @@
-import { convertText } from '../../../../../modules/conversion-core/conversion/convertText';
-import { preservedCases } from './preservedCases';
+import { convertText } from '@/modules/conversion-core/conversion/convertText';
+import { preservedCases } from '@/tests/syntax/tiddlywiki/features/styles/preservedCases';
 
 describe('official TiddlyWiki feature inventory', () => {
   test.each(preservedCases)(

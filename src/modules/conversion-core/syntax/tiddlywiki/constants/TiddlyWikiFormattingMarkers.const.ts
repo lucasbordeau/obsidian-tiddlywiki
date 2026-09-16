@@ -1,4 +1,4 @@
-import type { TiddlyWikiFormattingType } from '../types/TiddlyWikiFormattingType';
+import { TiddlyWikiFormattingType } from '@/modules/conversion-core/syntax/tiddlywiki/types/TiddlyWikiFormattingType';
 
 export const TIDDLYWIKI_FORMATTING_MARKERS: [
   string,

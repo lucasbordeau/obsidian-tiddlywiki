@@ -1,5 +1,5 @@
-import type { SerializationContext } from '../types/SerializationContext';
-import type { SourceRange } from '../../../model/SourceRange';
+import { SerializationContext } from '@/modules/conversion-core/syntax/obsidian/types/SerializationContext';
+import { SourceRange } from '@/modules/conversion-core/model/SourceRange';
 
 export function emitDiagnostic(
   context: SerializationContext,

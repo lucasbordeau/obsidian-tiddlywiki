@@ -1,5 +1,5 @@
-import { parseObsidian } from '../../../../modules/conversion-core/syntax/obsidian/parsing/parseObsidian';
-import { parseObsidianBlocks } from '../../../support/parseObsidianBlocks';
+import { parseObsidian } from '@/modules/conversion-core/syntax/obsidian/parsing/parseObsidian';
+import { parseObsidianBlocks } from '@/tests/support/parseObsidianBlocks';
 
 describe('Obsidian structural parsing', () => {
   test('parses nested callouts and footnotes without consuming following blocks', () => {

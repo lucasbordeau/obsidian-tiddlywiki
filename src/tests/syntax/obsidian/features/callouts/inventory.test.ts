@@ -1,6 +1,6 @@
-import { parseObsidian } from '../../../../../modules/conversion-core/syntax/obsidian/parsing/parseObsidian';
-import { assertStableRoundTrip } from '../../../../support/assertStableRoundTrip';
-import { calloutTypes } from './calloutTypes';
+import { parseObsidian } from '@/modules/conversion-core/syntax/obsidian/parsing/parseObsidian';
+import { assertStableRoundTrip } from '@/tests/support/assertStableRoundTrip';
+import { calloutTypes } from '@/tests/syntax/obsidian/features/callouts/calloutTypes';
 
 describe('official Obsidian feature inventory', () => {
   test.each(calloutTypes)(

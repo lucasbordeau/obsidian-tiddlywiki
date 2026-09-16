@@ -1,8 +1,8 @@
-import { serializeObsidian } from '../../../../modules/conversion-core/syntax/obsidian/serialization/serializeObsidian';
-import { ParsedDocument } from '../../../../modules/conversion-core/model/ParsedDocument';
-import { InlineNode } from '../../../../modules/conversion-core/model/inlines/InlineNode';
-import { parseObsidianBlocks } from '../../../support/parseObsidianBlocks';
-import { formatOrders } from './formatOrders';
+import { serializeObsidian } from '@/modules/conversion-core/syntax/obsidian/serialization/serializeObsidian';
+import { ParsedDocument } from '@/modules/conversion-core/model/ParsedDocument';
+import { InlineNode } from '@/modules/conversion-core/model/inlines/InlineNode';
+import { parseObsidianBlocks } from '@/tests/support/parseObsidianBlocks';
+import { formatOrders } from '@/tests/syntax/obsidian/serialization/formatOrders';
 
 describe('Obsidian documented extensions and structural regressions', () => {
   test.each(formatOrders.map((order) => [order.join('/'), order] as const))(

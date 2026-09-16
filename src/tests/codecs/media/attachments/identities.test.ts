@@ -1,9 +1,9 @@
-import { exportObsidianNote } from '../../../../modules/conversion-core/notes/exportObsidianNote';
-import { importTiddler } from '../../../../modules/conversion-core/notes/importTiddler';
-import { parseObsidianFrontMatter } from '../../../../modules/conversion-core/codecs/obsidian/parseObsidianFrontMatter';
-import { parseTiddlyWikiJson } from '../../../../modules/conversion-core/codecs/tiddlywiki/parseTiddlyWikiJson';
-import { serializeObsidianFrontMatter } from '../../../../modules/conversion-core/codecs/obsidian/serializeObsidianFrontMatter';
-import { getCodecValue } from '../../../support/getCodecValue';
+import { exportObsidianNote } from '@/modules/conversion-core/notes/exportObsidianNote';
+import { importTiddler } from '@/modules/conversion-core/notes/importTiddler';
+import { parseObsidianFrontMatter } from '@/modules/conversion-core/codecs/obsidian/parseObsidianFrontMatter';
+import { parseTiddlyWikiJson } from '@/modules/conversion-core/codecs/tiddlywiki/parseTiddlyWikiJson';
+import { serializeObsidianFrontMatter } from '@/modules/conversion-core/codecs/obsidian/serializeObsidianFrontMatter';
+import { getCodecValue } from '@/tests/support/getCodecValue';
 
 describe('attachment payload and MIME transport', () => {
   it('preserves textual SVG as UTF-8 source rather than treating it as base64', () => {

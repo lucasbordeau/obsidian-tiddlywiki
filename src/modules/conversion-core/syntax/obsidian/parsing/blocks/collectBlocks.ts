@@ -1,14 +1,14 @@
-import type { Token } from '../../types/Token';
-import type { TokenCursor } from '../../types/TokenCursor';
-import type { ParseContext } from '../../types/ParseContext';
-import type { BlockNode } from '../../../../model/blocks/BlockNode';
-import { getTokenSourceRange } from '../getTokenSourceRange';
-import { collectInlineChildren } from '../inlines/collectInlineChildren';
-import { parseList } from './parseList';
-import { parseQuote } from './parseQuote';
-import { parseTable } from './parseTable';
-import { parseFootnoteDefinition } from './parseFootnoteDefinition';
-import { parseRawBlock } from './parseRawBlock';
+import { Token } from '@/modules/conversion-core/syntax/obsidian/types/Token';
+import { TokenCursor } from '@/modules/conversion-core/syntax/obsidian/types/TokenCursor';
+import { ParseContext } from '@/modules/conversion-core/syntax/obsidian/types/ParseContext';
+import { BlockNode } from '@/modules/conversion-core/model/blocks/BlockNode';
+import { getTokenSourceRange } from '@/modules/conversion-core/syntax/obsidian/parsing/getTokenSourceRange';
+import { collectInlineChildren } from '@/modules/conversion-core/syntax/obsidian/parsing/inlines/collectInlineChildren';
+import { parseList } from '@/modules/conversion-core/syntax/obsidian/parsing/blocks/parseList';
+import { parseQuote } from '@/modules/conversion-core/syntax/obsidian/parsing/blocks/parseQuote';
+import { parseTable } from '@/modules/conversion-core/syntax/obsidian/parsing/blocks/parseTable';
+import { parseFootnoteDefinition } from '@/modules/conversion-core/syntax/obsidian/parsing/blocks/parseFootnoteDefinition';
+import { parseRawBlock } from '@/modules/conversion-core/syntax/obsidian/parsing/blocks/parseRawBlock';
 
 export function collectBlocks(
   tokens: Token[],

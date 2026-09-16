@@ -1,6 +1,6 @@
-import type { LexingContext } from '../LexingContext';
-import type { TokenMatch } from '../TokenMatch';
-import { findQuotedEnd } from '../boundaries/findQuotedEnd';
+import { LexingContext } from '@/modules/conversion-core/lexing/LexingContext';
+import { TokenMatch } from '@/modules/conversion-core/lexing/TokenMatch';
+import { findQuotedEnd } from '@/modules/conversion-core/lexing/boundaries/findQuotedEnd';
 
 export function scanMacro(context: LexingContext): TokenMatch | undefined {
   const { source, dialect, cursor } = context;

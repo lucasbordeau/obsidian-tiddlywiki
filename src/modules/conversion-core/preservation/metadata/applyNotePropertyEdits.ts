@@ -1,10 +1,10 @@
-import { areMetadataValuesEqual } from './areMetadataValuesEqual';
-import { encodeMetadataField } from '../../metadata/encodeMetadataField';
-import { formatTiddlyWikiTimestamp } from '../../metadata/formatTiddlyWikiTimestamp';
-import type { PreservationRecord } from './PreservationRecord';
-import { readObsidianTags } from '../../metadata/readObsidianTags';
-import { serializeTiddlyWikiTags } from '../../metadata/serializeTiddlyWikiTags';
-import type { TiddlerFields } from '../../codecs/tiddlywiki/TiddlerFields';
+import { areMetadataValuesEqual } from '@/modules/conversion-core/preservation/metadata/areMetadataValuesEqual';
+import { encodeMetadataField } from '@/modules/conversion-core/metadata/encodeMetadataField';
+import { formatTiddlyWikiTimestamp } from '@/modules/conversion-core/metadata/formatTiddlyWikiTimestamp';
+import { PreservationRecord } from '@/modules/conversion-core/preservation/metadata/PreservationRecord';
+import { readObsidianTags } from '@/modules/conversion-core/metadata/readObsidianTags';
+import { serializeTiddlyWikiTags } from '@/modules/conversion-core/metadata/serializeTiddlyWikiTags';
+import { TiddlerFields } from '@/modules/conversion-core/codecs/tiddlywiki/TiddlerFields';
 
 export function applyNotePropertyEdits(
   fields: TiddlerFields,

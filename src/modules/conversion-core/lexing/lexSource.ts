@@ -1,6 +1,6 @@
-import type { Dialect } from '../model/Dialect';
-import type { SyntaxToken } from '../model/SyntaxToken';
-import { scanNextToken } from './scanners/scanNextToken';
+import { Dialect } from '@/modules/conversion-core/model/Dialect';
+import { SyntaxToken } from '@/modules/conversion-core/model/SyntaxToken';
+import { scanNextToken } from '@/modules/conversion-core/lexing/scanners/scanNextToken';
 
 /** Concrete UTF-16 source regions; every source character belongs to one token. */
 export function lexSource(source: string, dialect: Dialect): SyntaxToken[] {

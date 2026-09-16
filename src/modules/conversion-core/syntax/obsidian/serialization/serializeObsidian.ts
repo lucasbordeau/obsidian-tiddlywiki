@@ -1,11 +1,11 @@
-import type { ParsedDocument } from '../../../model/ParsedDocument';
-import type { ConversionOptions } from '../../../conversion/ConversionOptions';
-import type { SerializationResult } from '../../../conversion/SerializationResult';
-import type { ConversionDiagnostic } from '../../../conversion/ConversionDiagnostic';
-import type { SerializationContext } from '../types/SerializationContext';
-import { renderBlocks } from './blocks/renderBlocks';
-import { renderInlines } from './inlines/renderInlines';
-import { renderInline } from './inlines/renderInline';
+import { ParsedDocument } from '@/modules/conversion-core/model/ParsedDocument';
+import { ConversionOptions } from '@/modules/conversion-core/conversion/ConversionOptions';
+import { SerializationResult } from '@/modules/conversion-core/conversion/SerializationResult';
+import { ConversionDiagnostic } from '@/modules/conversion-core/conversion/ConversionDiagnostic';
+import { SerializationContext } from '@/modules/conversion-core/syntax/obsidian/types/SerializationContext';
+import { renderBlocks } from '@/modules/conversion-core/syntax/obsidian/serialization/blocks/renderBlocks';
+import { renderInlines } from '@/modules/conversion-core/syntax/obsidian/serialization/inlines/renderInlines';
+import { renderInline } from '@/modules/conversion-core/syntax/obsidian/serialization/inlines/renderInline';
 
 export function serializeObsidian(
   document: ParsedDocument,
@@ -13,17 +13,19 @@ export function serializeObsidian(
 ): SerializationResult {
   const diagnostics: ConversionDiagnostic[] = [];
 
-  const context: SerializationContext = {
+  const serializationContext: SerializationContext = {
     document,
     options,
     diagnostics,
-    renderBlocks: (blocks) => renderBlocks(blocks, context),
+    renderBlocks: (blocks, mode) =>
+      renderBlocks(blocks, serializationContext, mode),
     renderInlines: (nodes, parentMarker) =>
-      renderInlines(nodes, context, parentMarker),
-    renderInline: (node, marker) => renderInline(node, context, marker),
+      renderInlines(nodes, serializationContext, parentMarker),
+    renderInline: (node, marker) =>
+      renderInline(node, serializationContext, marker),
   };
 
-  const text = renderBlocks(document.blocks, context);
+  const text = renderBlocks(document.blocks, serializationContext);
 
   return { text, diagnostics };
 }

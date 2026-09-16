@@ -1,9 +1,10 @@
-import type { BlockNode } from '../../../../model/blocks/BlockNode';
-import type { TiddlyWikiParsingContext } from '../context/TiddlyWikiParsingContext';
-import { parseTiddlyWikiHtmlCallout } from './parseTiddlyWikiHtmlCallout';
-import { parseTiddlyWikiHtmlFootnote } from './parseTiddlyWikiHtmlFootnote';
-import { parseTiddlyWikiHtmlCodeBlock } from './parseTiddlyWikiHtmlCodeBlock';
-import { parseTiddlyWikiHtmlList } from './parseTiddlyWikiHtmlList';
+import { BlockNode } from '@/modules/conversion-core/model/blocks/BlockNode';
+import { TiddlyWikiParsingContext } from '@/modules/conversion-core/syntax/tiddlywiki/parsing/context/TiddlyWikiParsingContext';
+import { parseTiddlyWikiHtmlCallout } from '@/modules/conversion-core/syntax/tiddlywiki/parsing/html/parseTiddlyWikiHtmlCallout';
+import { parseTiddlyWikiHtmlFootnote } from '@/modules/conversion-core/syntax/tiddlywiki/parsing/html/parseTiddlyWikiHtmlFootnote';
+import { parseTiddlyWikiHtmlCodeBlock } from '@/modules/conversion-core/syntax/tiddlywiki/parsing/html/parseTiddlyWikiHtmlCodeBlock';
+import { parseTiddlyWikiHtmlExampleBox } from '@/modules/conversion-core/syntax/tiddlywiki/parsing/html/parseTiddlyWikiHtmlExampleBox';
+import { parseTiddlyWikiHtmlList } from '@/modules/conversion-core/syntax/tiddlywiki/parsing/html/parseTiddlyWikiHtmlList';
 
 export function parseTiddlyWikiStaticHtmlBlock(
   this: TiddlyWikiParsingContext,
@@ -50,7 +51,7 @@ export function parseTiddlyWikiStaticHtmlBlock(
   }
 
   if (tag === 'div') {
-    return parseTiddlyWikiHtmlFootnote.call(this, {
+    const state = {
       start,
       end,
       tag,
@@ -58,7 +59,12 @@ export function parseTiddlyWikiStaticHtmlBlock(
       closeStart,
       attributes,
       range,
-    });
+    };
+
+    return (
+      parseTiddlyWikiHtmlExampleBox.call(this, state) ??
+      parseTiddlyWikiHtmlFootnote.call(this, state)
+    );
   }
 
   if (tag === 'pre') {

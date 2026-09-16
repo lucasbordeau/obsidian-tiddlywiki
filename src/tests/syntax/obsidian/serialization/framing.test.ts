@@ -1,10 +1,10 @@
-import { parseObsidian } from '../../../../modules/conversion-core/syntax/obsidian/parsing/parseObsidian';
-import { serializeObsidian } from '../../../../modules/conversion-core/syntax/obsidian/serialization/serializeObsidian';
-import { ParsedDocument } from '../../../../modules/conversion-core/model/ParsedDocument';
-import { parseObsidianBlocks } from '../../../support/parseObsidianBlocks';
-import { fencedCodeValues } from './fencedCodeValues';
-import { tableCodeValues } from './tableCodeValues';
-import { inlineCodeValues } from './inlineCodeValues';
+import { parseObsidian } from '@/modules/conversion-core/syntax/obsidian/parsing/parseObsidian';
+import { serializeObsidian } from '@/modules/conversion-core/syntax/obsidian/serialization/serializeObsidian';
+import { ParsedDocument } from '@/modules/conversion-core/model/ParsedDocument';
+import { parseObsidianBlocks } from '@/tests/support/parseObsidianBlocks';
+import { fencedCodeValues } from '@/tests/syntax/obsidian/serialization/fencedCodeValues';
+import { tableCodeValues } from '@/tests/syntax/obsidian/serialization/tableCodeValues';
+import { inlineCodeValues } from '@/tests/syntax/obsidian/serialization/inlineCodeValues';
 
 describe('Obsidian semantic serialization', () => {
   test.each(fencedCodeValues)(

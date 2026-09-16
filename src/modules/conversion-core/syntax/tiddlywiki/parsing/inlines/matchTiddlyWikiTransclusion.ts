@@ -1,6 +1,6 @@
-import type { InlineNode } from '../../../../model/inlines/InlineNode';
-import type { TiddlyWikiInlineMatch } from '../../types/TiddlyWikiInlineMatch';
-import type { TiddlyWikiParsingContext } from '../context/TiddlyWikiParsingContext';
+import { InlineNode } from '@/modules/conversion-core/model/inlines/InlineNode';
+import { TiddlyWikiInlineMatch } from '@/modules/conversion-core/syntax/tiddlywiki/types/TiddlyWikiInlineMatch';
+import { TiddlyWikiParsingContext } from '@/modules/conversion-core/syntax/tiddlywiki/parsing/context/TiddlyWikiParsingContext';
 
 export function matchTiddlyWikiTransclusion(
   this: TiddlyWikiParsingContext,
@@ -13,20 +13,28 @@ export function matchTiddlyWikiTransclusion(
   if (tail.startsWith('{{')) {
     const final = this.findDelimitedEnd(start, end, '{{', '}}');
     const closed = this.source.slice(final - 2, final) === '}}';
-    const target = this.source.slice(start + 2, closed ? final - 2 : final);
+
+    const sourceTarget = this.source.slice(
+      start + 2,
+      closed ? final - 2 : final,
+    );
+
+    const explicitTextField = /^(.*)!!text$/.exec(sourceTarget);
+    const target = explicitTextField?.[1] ?? sourceTarget;
 
     const simpleReference =
       closed &&
       target.length > 0 &&
-      !/[|!{}]/.test(target) &&
-      !target.includes('##');
+      !/[|{}#]/.test(target) &&
+      !target.includes('!!') &&
+      (sourceTarget === target || explicitTextField !== null);
 
     const node: InlineNode = simpleReference
       ? {
           type: 'embed',
           target,
           alt: '',
-          kind: 'note',
+          kind: 'transclusion',
           range: { start, end: final },
         }
       : this.rawInline(

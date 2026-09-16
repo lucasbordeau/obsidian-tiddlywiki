@@ -1,10 +1,10 @@
-import type { BlockNode } from '../../../model/blocks/BlockNode';
-import type { InlineNode } from '../../../model/inlines/InlineNode';
-import type { ParsedDocument } from '../../../model/ParsedDocument';
-import { encodePreservedSource } from '../../../preservation/source/encodePreservedSource';
-import { serializeObsidian } from '../../obsidian/serialization/serializeObsidian';
-import type { TiddlyWikiRangedNode } from '../types/TiddlyWikiRangedNode';
-import type { TiddlyWikiSerializationContext } from './context/TiddlyWikiSerializationContext';
+import { BlockNode } from '@/modules/conversion-core/model/blocks/BlockNode';
+import { InlineNode } from '@/modules/conversion-core/model/inlines/InlineNode';
+import { ParsedDocument } from '@/modules/conversion-core/model/ParsedDocument';
+import { encodePreservedSource } from '@/modules/conversion-core/preservation/source/encodePreservedSource';
+import { serializeObsidian } from '@/modules/conversion-core/syntax/obsidian/serialization/serializeObsidian';
+import { TiddlyWikiRangedNode } from '@/modules/conversion-core/syntax/tiddlywiki/types/TiddlyWikiRangedNode';
+import { TiddlyWikiSerializationContext } from '@/modules/conversion-core/syntax/tiddlywiki/serialization/context/TiddlyWikiSerializationContext';
 
 export function preserveTiddlyWikiForeignSource(
   this: TiddlyWikiSerializationContext,

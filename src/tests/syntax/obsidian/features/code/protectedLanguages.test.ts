@@ -1,6 +1,6 @@
-import { parseObsidian } from '../../../../../modules/conversion-core/syntax/obsidian/parsing/parseObsidian';
-import { assertStableRoundTrip } from '../../../../support/assertStableRoundTrip';
-import { pluginFenceBodies } from './pluginFenceBodies';
+import { parseObsidian } from '@/modules/conversion-core/syntax/obsidian/parsing/parseObsidian';
+import { assertStableRoundTrip } from '@/tests/support/assertStableRoundTrip';
+import { pluginFenceBodies } from '@/tests/syntax/obsidian/features/code/pluginFenceBodies';
 
 describe('official Obsidian feature inventory', () => {
   test.each(pluginFenceBodies)(

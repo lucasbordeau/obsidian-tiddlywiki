@@ -1,4 +1,4 @@
-import type { SourceRange } from '../../../../model/SourceRange';
+import { SourceRange } from '@/modules/conversion-core/model/SourceRange';
 
 export function shiftTiddlyWikiSourceRanges(
   value: unknown,

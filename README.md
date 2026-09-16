@@ -14,7 +14,9 @@ Windows/Linux, then search for **TiddlyWiki**. The plugin provides two commands:
 - **Import/Export TiddlyWiki: Import TiddlyWiki JSON** — choose a TiddlyWiki JSON
   export to import its notes and attachments into a timestamped
   `TiddlyWiki-Import-*` folder in the current vault. Create the source JSON in
-  TiddlyWiki with **Tools → Export all → JSON File**.
+  TiddlyWiki with **Tools → Export all → JSON File**. The vault import emits
+  native Obsidian content, converts static example boxes to callouts, and omits
+  unsupported dynamic TiddlyWiki source instead of inserting encoded comments.
 - **Import/Export TiddlyWiki: Export vault to TiddlyWiki JSON** — export the whole
   current vault to a downloadable JSON file. In TiddlyWiki, use **Tools → Import**
   to import that file.
@@ -23,41 +25,19 @@ The import and export buttons are also available under **Settings →
 Import/Export TiddlyWiki**. To assign a direct keyboard shortcut to either
 command, open **Settings → Hotkeys** and search for **TiddlyWiki**.
 
-## Try the current version
+## Try the conversion demo
 
-With Node 24 and the Obsidian desktop app installed:
+Open the single self-contained TiddlyWiki fixture in the default browser:
 
 ```sh
-npm run test:manual
+npm run demo:tw
 ```
 
-The command installs dependencies when needed, then opens a separate Obsidian
-instance directly in a populated mock vault with the current plugin and Hot
-Reload installed and enabled. It opens `MANUAL-TEST.md` with two checks: import
-the prepared TiddlyWiki JSON, then export back into the supplied blank wiki.
-
-The native import picker opens automatically at the versioned
-`manual-test/tiddlywiki/import.json`. Choose **Open**. If you close it, press
-**Cmd+P** or **Ctrl+P** and run **Import/Export TiddlyWiki: Import TiddlyWiki
-JSON**.
-
-To exercise TiddlyWiki's export yourself, open the versioned self-contained
-`manual-test/tiddlywiki/source.html`, choose **Tools → Export all → JSON File**,
-and import the downloaded JSON with the same Obsidian command.
-
-Keep the terminal running. Source edits rebuild and reload the plugin in the
-test vault. Press **Ctrl+C** to stop watching; the Obsidian window stays open.
-
-The samples include real image/audio files, working internal links, formatting,
-metadata, and preservation examples. The complete source mocks are versioned in
-[`manual-test/`](./manual-test/README.md). Each run creates a fresh directory
-under `manual-test/runs/` and retains earlier runs. Setup requires no `.env`;
-the pinned Hot Reload plugin is bundled in the repository.
-
-Use `npm run test:manual -- --no-open` to prepare the files and exit without
-launching Obsidian or starting a watcher. See
-[manual testing](./docs/development/manual-testing.md) for expected results and
-repeated round trips.
+Start with **Basic Notes — Start**, follow its suggested route, then export the
+wiki as JSON and import that file with the Obsidian command. The fixture covers
+nested formatting, lists, quotes, tables, links, metadata, transclusion, and
+local and external media. See [manual testing](./docs/development/manual-testing.md)
+for the route and accepted conversion limits.
 
 ## How to dev
 

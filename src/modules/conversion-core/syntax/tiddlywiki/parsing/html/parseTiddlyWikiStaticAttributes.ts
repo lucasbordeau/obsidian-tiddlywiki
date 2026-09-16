@@ -1,4 +1,4 @@
-import type { TiddlyWikiParsingContext } from '../context/TiddlyWikiParsingContext';
+import { TiddlyWikiParsingContext } from '@/modules/conversion-core/syntax/tiddlywiki/parsing/context/TiddlyWikiParsingContext';
 
 export function parseTiddlyWikiStaticAttributes(
   this: TiddlyWikiParsingContext,
@@ -9,7 +9,7 @@ export function parseTiddlyWikiStaticAttributes(
   const value = this.source.slice(start, end).replace(/\/?\s*>$/, '');
 
   const pattern =
-    /\s*([\w:-]+)(?:\s*=\s*(?:"""([\s\S]*?)"""|"([^"]*)"|'([^']*)'|([^\s<>"'=]+)))?/gy;
+    /\s*([$\w:-]+)(?:\s*=\s*(?:"""([\s\S]*?)"""|"([^"]*)"|'([^']*)'|([^\s<>"'=]+)))?/gy;
 
   let cursor = 0;
 

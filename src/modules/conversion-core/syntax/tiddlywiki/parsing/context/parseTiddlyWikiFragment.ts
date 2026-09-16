@@ -1,6 +1,6 @@
-import type { BlockNode } from '../../../../model/blocks/BlockNode';
-import type { TiddlyWikiParsingContext } from './TiddlyWikiParsingContext';
-import { shiftTiddlyWikiSourceRanges } from './shiftTiddlyWikiSourceRanges';
+import { BlockNode } from '@/modules/conversion-core/model/blocks/BlockNode';
+import { TiddlyWikiParsingContext } from '@/modules/conversion-core/syntax/tiddlywiki/parsing/context/TiddlyWikiParsingContext';
+import { shiftTiddlyWikiSourceRanges } from '@/modules/conversion-core/syntax/tiddlywiki/parsing/context/shiftTiddlyWikiSourceRanges';
 
 export function parseTiddlyWikiFragment(
   this: TiddlyWikiParsingContext,

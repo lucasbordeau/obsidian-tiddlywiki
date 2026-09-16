@@ -1,4 +1,4 @@
-import type { SerializationContext } from '../../types/SerializationContext';
+import { SerializationContext } from '@/modules/conversion-core/syntax/obsidian/types/SerializationContext';
 
 export function resolveLinkTarget(
   target: string,

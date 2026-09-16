@@ -1,6 +1,6 @@
 import MarkdownIt from 'markdown-it';
-import { getLineText } from './getLineText';
-import { pushBlockToken } from './pushBlockToken';
+import { getLineText } from '@/modules/conversion-core/syntax/obsidian/rules/block/getLineText';
+import { pushBlockToken } from '@/modules/conversion-core/syntax/obsidian/rules/block/pushBlockToken';
 
 export function parseCommentBlock(
   state: MarkdownIt.StateBlock,

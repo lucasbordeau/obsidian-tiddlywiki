@@ -1,9 +1,9 @@
-import { convertText } from '../../../modules/conversion-core/conversion/convertText';
-import { parseObsidian } from '../../../modules/conversion-core/syntax/obsidian/parsing/parseObsidian';
-import { parseTiddlyWiki } from '../../../modules/conversion-core/syntax/tiddlywiki/parsing/parseTiddlyWiki';
-import { Dialect } from '../../../modules/conversion-core/model/Dialect';
-import { normalizeSemanticBlocks } from '../../support/ast/normalizeSemanticBlocks';
-import { readConversionSample as fixture } from '../../support/samples/readConversionSample';
+import { convertText } from '@/modules/conversion-core/conversion/convertText';
+import { parseObsidian } from '@/modules/conversion-core/syntax/obsidian/parsing/parseObsidian';
+import { parseTiddlyWiki } from '@/modules/conversion-core/syntax/tiddlywiki/parsing/parseTiddlyWiki';
+import { Dialect } from '@/modules/conversion-core/model/Dialect';
+import { normalizeSemanticBlocks } from '@/tests/support/ast/normalizeSemanticBlocks';
+import { readConversionSample as fixture } from '@/tests/support/samples/readConversionSample';
 
 describe('cross-dialect conversion', () => {
   test.each<Dialect>(['obsidian', 'tiddlywiki'])(

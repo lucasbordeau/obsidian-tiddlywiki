@@ -1,7 +1,7 @@
-import type { HtmlCursor } from '../../types/HtmlCursor';
-import type { InlineNode } from '../../../../model/inlines/InlineNode';
-import { parseElement } from './parseElement';
-import { decodeHtml } from './decodeHtml';
+import { HtmlCursor } from '@/modules/conversion-core/syntax/obsidian/types/HtmlCursor';
+import { InlineNode } from '@/modules/conversion-core/model/inlines/InlineNode';
+import { parseElement } from '@/modules/conversion-core/syntax/obsidian/parsing/html/parseElement';
+import { decodeHtml } from '@/modules/conversion-core/syntax/obsidian/parsing/html/decodeHtml';
 
 export function parseChildren(
   source: string,

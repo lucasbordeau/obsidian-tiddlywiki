@@ -1,15 +1,15 @@
-import type { ParsedDocument } from '../../../model/ParsedDocument';
-import { lexSource } from '../../../lexing/lexSource';
-import { createTiddlyWikiParsingContext } from './context/createTiddlyWikiParsingContext';
+import { ParsedDocument } from '@/modules/conversion-core/model/ParsedDocument';
+import { lexSource } from '@/modules/conversion-core/lexing/lexSource';
+import { createTiddlyWikiParsingContext } from '@/modules/conversion-core/syntax/tiddlywiki/parsing/context/createTiddlyWikiParsingContext';
 
 export function parseTiddlyWiki(source: string): ParsedDocument {
-  const parser = createTiddlyWikiParsingContext(source);
+  const parsingContext = createTiddlyWikiParsingContext(source);
 
   return {
     dialect: 'tiddlywiki',
     source,
-    blocks: parser.parseBlocks(0, parser.lines.length),
+    blocks: parsingContext.parseBlocks(0, parsingContext.lines.length),
     tokens: lexSource(source, 'tiddlywiki'),
-    diagnostics: parser.diagnostics,
+    diagnostics: parsingContext.diagnostics,
   };
 }

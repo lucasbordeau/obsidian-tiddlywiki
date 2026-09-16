@@ -1,10 +1,10 @@
-import { convertText } from '../../../../modules/conversion-core/conversion/convertText';
-import { parseTiddlyWiki } from '../../../../modules/conversion-core/syntax/tiddlywiki/parsing/parseTiddlyWiki';
-import { serializeTiddlyWiki } from '../../../../modules/conversion-core/syntax/tiddlywiki/serialization/serializeTiddlyWiki';
-import { normalizeSemanticBlocks } from '../../../support/ast/normalizeSemanticBlocks';
-import { renderTiddlyWiki } from '../../../support/runtime/renderTiddlyWiki';
-import { createDocumentFromBlocks } from '../../../support/ast/createDocumentFromBlocks';
-import { createParagraph } from '../../../support/ast/createParagraph';
+import { convertText } from '@/modules/conversion-core/conversion/convertText';
+import { parseTiddlyWiki } from '@/modules/conversion-core/syntax/tiddlywiki/parsing/parseTiddlyWiki';
+import { serializeTiddlyWiki } from '@/modules/conversion-core/syntax/tiddlywiki/serialization/serializeTiddlyWiki';
+import { normalizeSemanticBlocks } from '@/tests/support/ast/normalizeSemanticBlocks';
+import { renderTiddlyWiki } from '@/tests/support/runtime/renderTiddlyWiki';
+import { createDocumentFromBlocks } from '@/tests/support/ast/createDocumentFromBlocks';
+import { createParagraph } from '@/tests/support/ast/createParagraph';
 
 describe('TiddlyWiki structural parsing and serialization', () => {
   test('decodes named, decimal and hexadecimal HTML entities in text', () => {

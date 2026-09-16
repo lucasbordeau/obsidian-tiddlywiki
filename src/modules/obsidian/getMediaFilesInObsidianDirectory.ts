@@ -1,10 +1,10 @@
 import * as fs from 'fs';
 import * as path from 'path';
-import { MediaFile } from 'src/modules/file-manipulation/MediaFile';
-import { getFileDates } from 'src/modules/file-manipulation/getFileDates';
-import { getMimeTypeFromFilePath } from 'src/modules/file-manipulation/getMimeTypeFromFilePath';
+import { MediaFile } from '@/modules/file-manipulation/MediaFile';
+import { getFileDates } from '@/modules/file-manipulation/getFileDates';
+import { getMimeTypeFromFilePath } from '@/modules/file-manipulation/getMimeTypeFromFilePath';
 
-export async function getMediaFilesInDirectory(
+export async function getMediaFilesInObsidianDirectory(
   directoryPath: string,
 ): Promise<MediaFile[]> {
   const files = fs.readdirSync(directoryPath);
@@ -21,7 +21,8 @@ export async function getMediaFilesInDirectory(
 
     if (fs.statSync(filePath).isDirectory()) {
       // Recurse into subdirectory
-      const mediaFilesInSubdirectory = await getMediaFilesInDirectory(filePath);
+      const mediaFilesInSubdirectory =
+        await getMediaFilesInObsidianDirectory(filePath);
 
       mediaFiles.push(...mediaFilesInSubdirectory);
     } else if (path.extname(filePath) !== '.md') {

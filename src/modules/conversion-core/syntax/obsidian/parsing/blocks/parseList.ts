@@ -1,11 +1,11 @@
-import type { Token } from '../../types/Token';
-import type { TokenCursor } from '../../types/TokenCursor';
-import type { ParseContext } from '../../types/ParseContext';
-import type { BlockCollector } from '../../types/BlockCollector';
-import type { BlockNode } from '../../../../model/blocks/BlockNode';
-import type { ListItem } from '../../../../model/ListItem';
-import { getTokenSourceRange } from '../getTokenSourceRange';
-import { collectInlineNodes } from '../inlines/collectInlineNodes';
+import { Token } from '@/modules/conversion-core/syntax/obsidian/types/Token';
+import { TokenCursor } from '@/modules/conversion-core/syntax/obsidian/types/TokenCursor';
+import { ParseContext } from '@/modules/conversion-core/syntax/obsidian/types/ParseContext';
+import { BlockCollector } from '@/modules/conversion-core/syntax/obsidian/types/BlockCollector';
+import { BlockNode } from '@/modules/conversion-core/model/blocks/BlockNode';
+import { ListItem } from '@/modules/conversion-core/model/ListItem';
+import { getTokenSourceRange } from '@/modules/conversion-core/syntax/obsidian/parsing/getTokenSourceRange';
+import { collectInlineNodes } from '@/modules/conversion-core/syntax/obsidian/parsing/inlines/collectInlineNodes';
 
 export function parseList(
   tokens: Token[],
@@ -14,7 +14,7 @@ export function parseList(
   context: ParseContext,
   collectNestedBlocks: BlockCollector,
 ): BlockNode {
-  const listEntries: ListItem[] = [];
+  const listItems: ListItem[] = [];
   const closingType = opening.type.replace('_open', '_close');
 
   while (cursor.position < tokens.length) {
@@ -24,9 +24,9 @@ export function parseList(
       break;
     }
 
-    const entryToken = tokens[cursor.position++];
+    const listItemToken = tokens[cursor.position++];
 
-    if (entryToken.type !== 'list_item_open') {
+    if (listItemToken.type !== 'list_item_open') {
       continue;
     }
 
@@ -47,35 +47,35 @@ export function parseList(
       'list_item_close',
     );
 
-    const entry: ListItem = { blocks };
-    const range = getTokenSourceRange(entryToken, context);
+    const listItem: ListItem = { blocks };
+    const range = getTokenSourceRange(listItemToken, context);
 
     if (range) {
-      entry.range = range;
+      listItem.range = range;
     }
 
     const firstBlock = blocks[0];
 
     if (task && firstInlineToken && firstBlock?.type === 'paragraph') {
-      entry.checked = task[1] !== ' ';
+      listItem.checked = task[1] !== ' ';
 
-      if (entry.checked && task[1] !== 'x') {
-        entry.taskMarker = task[1];
+      if (listItem.checked && task[1] !== 'x') {
+        listItem.taskMarker = task[1];
       }
 
       const taskBodyTokens: Token[] = [];
 
-      context.markdown.inline.parse(
+      context.obsidianParser.inline.parse(
         firstInlineToken.content.slice(task[0].length),
-        context.markdown,
-        context.environment,
+        context.obsidianParser,
+        context.parserEnvironment,
         taskBodyTokens,
       );
 
       firstBlock.children = collectInlineNodes(taskBodyTokens, { position: 0 });
     }
 
-    listEntries.push(entry);
+    listItems.push(listItem);
   }
 
   if (cursor.position < tokens.length) {
@@ -86,6 +86,6 @@ export function parseList(
     type: 'list',
     ordered: opening.type === 'ordered_list_open',
     start: Number(opening.attrGet('start') ?? 1),
-    children: listEntries,
+    children: listItems,
   };
 }

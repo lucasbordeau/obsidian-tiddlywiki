@@ -1,4 +1,4 @@
-import type { InlineNode } from '../../../../model/inlines/InlineNode';
+import { InlineNode } from '@/modules/conversion-core/model/inlines/InlineNode';
 
 export function getInlinePlainText(nodes: InlineNode[]): string {
   return nodes

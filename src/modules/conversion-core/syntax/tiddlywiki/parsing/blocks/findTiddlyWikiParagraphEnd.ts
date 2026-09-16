@@ -1,4 +1,4 @@
-import type { TiddlyWikiParsingContext } from '../context/TiddlyWikiParsingContext';
+import { TiddlyWikiParsingContext } from '@/modules/conversion-core/syntax/tiddlywiki/parsing/context/TiddlyWikiParsingContext';
 
 export function findTiddlyWikiParagraphEnd(
   this: TiddlyWikiParsingContext,

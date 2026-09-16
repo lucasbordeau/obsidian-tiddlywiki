@@ -1,6 +1,6 @@
-import type { App } from 'obsidian';
+import { App } from 'obsidian';
 import { Setting } from 'obsidian';
-import { openImportJsonPicker } from './openImportJsonPicker';
+import { openImportJsonPicker } from '@/modules/plugin-core/settings/openImportJsonPicker';
 
 export function renderImportJsonButton(
   app: App,

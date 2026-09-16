@@ -1,6 +1,6 @@
-import type { App } from 'obsidian';
+import { App } from 'obsidian';
 import { Setting } from 'obsidian';
-import { exportVaultToJson } from './exportVaultToJson';
+import { exportVaultToJson } from '@/modules/plugin-core/settings/exportVaultToJson';
 
 export function renderExportJsonButton(
   app: App,

@@ -1,5 +1,5 @@
-import type { BlockNode } from '../../../../model/blocks/BlockNode';
-import type { TiddlyWikiSerializationContext } from '../context/TiddlyWikiSerializationContext';
+import { BlockNode } from '@/modules/conversion-core/model/blocks/BlockNode';
+import { TiddlyWikiSerializationContext } from '@/modules/conversion-core/syntax/tiddlywiki/serialization/context/TiddlyWikiSerializationContext';
 
 export function isSimpleTiddlyWikiList(
   this: TiddlyWikiSerializationContext,
@@ -9,12 +9,12 @@ export function isSimpleTiddlyWikiList(
     return false;
   }
 
-  return block.children.every((entry) => {
-    if (entry.checked !== undefined) {
+  return block.children.every((listItem) => {
+    if (listItem.checked !== undefined) {
       return false;
     }
 
-    const [first, ...remaining] = entry.blocks;
+    const [first, ...remaining] = listItem.blocks;
 
     if (!first || first.type !== 'paragraph') {
       return false;

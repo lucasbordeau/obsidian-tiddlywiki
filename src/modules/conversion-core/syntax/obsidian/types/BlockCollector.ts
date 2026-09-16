@@ -1,7 +1,7 @@
-import type { Token } from './Token';
-import type { TokenCursor } from './TokenCursor';
-import type { ParseContext } from './ParseContext';
-import type { BlockNode } from '../../../model/blocks/BlockNode';
+import { Token } from '@/modules/conversion-core/syntax/obsidian/types/Token';
+import { TokenCursor } from '@/modules/conversion-core/syntax/obsidian/types/TokenCursor';
+import { ParseContext } from '@/modules/conversion-core/syntax/obsidian/types/ParseContext';
+import { BlockNode } from '@/modules/conversion-core/model/blocks/BlockNode';
 
 export type BlockCollector = (
   tokens: Token[],

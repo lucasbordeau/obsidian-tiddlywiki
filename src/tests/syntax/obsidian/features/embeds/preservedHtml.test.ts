@@ -1,8 +1,8 @@
-import { convertText } from '../../../../../modules/conversion-core/conversion/convertText';
-import { parseObsidian } from '../../../../../modules/conversion-core/syntax/obsidian/parsing/parseObsidian';
-import { collectAllInlines } from '../../../../support/ast/collectAllInlines';
-import { assertStableRoundTrip } from '../../../../support/assertStableRoundTrip';
-import { preservedHtmlSources } from './preservedHtmlSources';
+import { convertText } from '@/modules/conversion-core/conversion/convertText';
+import { parseObsidian } from '@/modules/conversion-core/syntax/obsidian/parsing/parseObsidian';
+import { collectAllInlines } from '@/tests/support/ast/collectAllInlines';
+import { assertStableRoundTrip } from '@/tests/support/assertStableRoundTrip';
+import { preservedHtmlSources } from '@/tests/syntax/obsidian/features/embeds/preservedHtmlSources';
 
 describe('official Obsidian feature inventory', () => {
   test.each(preservedHtmlSources)(

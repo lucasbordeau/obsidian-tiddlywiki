@@ -1,8 +1,8 @@
-import { parseTiddlyWiki } from '../../../../modules/conversion-core/syntax/tiddlywiki/parsing/parseTiddlyWiki';
-import { serializeTiddlyWiki } from '../../../../modules/conversion-core/syntax/tiddlywiki/serialization/serializeTiddlyWiki';
-import { parseObsidian } from '../../../../modules/conversion-core/syntax/obsidian/parsing/parseObsidian';
-import { normalizeSemanticBlocks } from '../../../support/ast/normalizeSemanticBlocks';
-import { renderTiddlyWiki } from '../../../support/runtime/renderTiddlyWiki';
+import { parseTiddlyWiki } from '@/modules/conversion-core/syntax/tiddlywiki/parsing/parseTiddlyWiki';
+import { serializeTiddlyWiki } from '@/modules/conversion-core/syntax/tiddlywiki/serialization/serializeTiddlyWiki';
+import { parseObsidian } from '@/modules/conversion-core/syntax/obsidian/parsing/parseObsidian';
+import { normalizeSemanticBlocks } from '@/tests/support/ast/normalizeSemanticBlocks';
+import { renderTiddlyWiki } from '@/tests/support/runtime/renderTiddlyWiki';
 
 describe('TiddlyWiki structural parsing and serialization', () => {
   test('complex continuation/task/start-number lists survive the static HTML representation', async () => {

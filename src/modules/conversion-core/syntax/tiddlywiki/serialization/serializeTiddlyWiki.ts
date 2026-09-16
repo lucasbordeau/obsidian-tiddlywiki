@@ -1,16 +1,19 @@
-import type { ConversionOptions } from '../../../conversion/ConversionOptions';
-import type { ParsedDocument } from '../../../model/ParsedDocument';
-import type { SerializationResult } from '../../../conversion/SerializationResult';
-import { createTiddlyWikiSerializationContext } from './context/createTiddlyWikiSerializationContext';
+import { ConversionOptions } from '@/modules/conversion-core/conversion/ConversionOptions';
+import { ParsedDocument } from '@/modules/conversion-core/model/ParsedDocument';
+import { SerializationResult } from '@/modules/conversion-core/conversion/SerializationResult';
+import { createTiddlyWikiSerializationContext } from '@/modules/conversion-core/syntax/tiddlywiki/serialization/context/createTiddlyWikiSerializationContext';
 
 export function serializeTiddlyWiki(
   document: ParsedDocument,
   options: ConversionOptions = {},
 ): SerializationResult {
-  const serializer = createTiddlyWikiSerializationContext(document, options);
+  const serializationContext = createTiddlyWikiSerializationContext(
+    document,
+    options,
+  );
 
   return {
-    text: serializer.serializeBlocks(document.blocks),
-    diagnostics: serializer.diagnostics,
+    text: serializationContext.serializeBlocks(document.blocks),
+    diagnostics: serializationContext.diagnostics,
   };
 }

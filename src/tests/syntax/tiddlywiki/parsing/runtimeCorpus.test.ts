@@ -1,10 +1,10 @@
-import { parseTiddlyWiki } from '../../../../modules/conversion-core/syntax/tiddlywiki/parsing/parseTiddlyWiki';
-import { serializeTiddlyWiki } from '../../../../modules/conversion-core/syntax/tiddlywiki/serialization/serializeTiddlyWiki';
-import { normalizeSemanticBlocks } from '../../../support/ast/normalizeSemanticBlocks';
-import { renderTiddlyWiki } from '../../../support/runtime/renderTiddlyWiki';
-import { stressSource } from './stressSource';
-import { collectAllNodeTypes } from '../../../support/ast/collectAllNodeTypes';
-import { nativeSourceSamples } from './nativeSourceSamples';
+import { parseTiddlyWiki } from '@/modules/conversion-core/syntax/tiddlywiki/parsing/parseTiddlyWiki';
+import { serializeTiddlyWiki } from '@/modules/conversion-core/syntax/tiddlywiki/serialization/serializeTiddlyWiki';
+import { normalizeSemanticBlocks } from '@/tests/support/ast/normalizeSemanticBlocks';
+import { renderTiddlyWiki } from '@/tests/support/runtime/renderTiddlyWiki';
+import { stressSource } from '@/tests/syntax/tiddlywiki/parsing/stressSource';
+import { collectAllNodeTypes } from '@/tests/support/ast/collectAllNodeTypes';
+import { nativeSourceSamples } from '@/tests/syntax/tiddlywiki/parsing/nativeSourceSamples';
 
 describe('TiddlyWiki structural parsing and serialization', () => {
   test('compound fixture retains native semantics and actual TW rendering across repeated serialization', async () => {

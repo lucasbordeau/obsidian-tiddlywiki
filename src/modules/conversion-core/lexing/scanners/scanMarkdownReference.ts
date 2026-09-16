@@ -1,6 +1,6 @@
-import type { LexingContext } from '../LexingContext';
-import type { TokenMatch } from '../TokenMatch';
-import { findMarkdownLinkEnd } from '../boundaries/findMarkdownLinkEnd';
+import { LexingContext } from '@/modules/conversion-core/lexing/LexingContext';
+import { TokenMatch } from '@/modules/conversion-core/lexing/TokenMatch';
+import { findMarkdownLinkEnd } from '@/modules/conversion-core/lexing/boundaries/findMarkdownLinkEnd';
 
 export function scanMarkdownReference(
   context: LexingContext,

@@ -1,4 +1,4 @@
-import type { PreservationRecord } from './PreservationRecord';
+import { PreservationRecord } from '@/modules/conversion-core/preservation/metadata/PreservationRecord';
 
 export function encodePreservationComment(record: PreservationRecord): string {
   const payload = encodeURIComponent(JSON.stringify(record)).replace(

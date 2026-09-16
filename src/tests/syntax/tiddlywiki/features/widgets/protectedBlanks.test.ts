@@ -1,4 +1,4 @@
-import { convertText } from '../../../../../modules/conversion-core/conversion/convertText';
+import { convertText } from '@/modules/conversion-core/conversion/convertText';
 
 describe('official TiddlyWiki feature inventory', () => {
   test('TW-PROTECTED-BLANKS: multiline inline widgets and code span blank lines without exposing their bodies', () => {

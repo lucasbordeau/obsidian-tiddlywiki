@@ -1,12 +1,12 @@
-import type { InlineNode } from '../../../../model/inlines/InlineNode';
-import type { SerializationContext } from '../../types/SerializationContext';
-import { escapeText } from '../escaping/escapeText';
-import { serializeCodeSpan } from '../serializeCodeSpan';
-import { needsStaticFormatting } from '../formatting/needsStaticFormatting';
-import { renderHtmlInlines } from '../renderHtmlInlines';
-import { renderLink } from '../links/renderLink';
-import { renderEmbed } from '../links/renderEmbed';
-import { emitRaw } from '../emitRaw';
+import { InlineNode } from '@/modules/conversion-core/model/inlines/InlineNode';
+import { SerializationContext } from '@/modules/conversion-core/syntax/obsidian/types/SerializationContext';
+import { escapeText } from '@/modules/conversion-core/syntax/obsidian/serialization/escaping/escapeText';
+import { serializeCodeSpan } from '@/modules/conversion-core/syntax/obsidian/serialization/serializeCodeSpan';
+import { needsStaticFormatting } from '@/modules/conversion-core/syntax/obsidian/serialization/formatting/needsStaticFormatting';
+import { renderHtmlInlines } from '@/modules/conversion-core/syntax/obsidian/serialization/renderHtmlInlines';
+import { renderLink } from '@/modules/conversion-core/syntax/obsidian/serialization/links/renderLink';
+import { renderEmbed } from '@/modules/conversion-core/syntax/obsidian/serialization/links/renderEmbed';
+import { emitRaw } from '@/modules/conversion-core/syntax/obsidian/serialization/emitRaw';
 
 export function renderInline(
   node: InlineNode,

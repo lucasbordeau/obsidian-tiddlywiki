@@ -1,36 +1,36 @@
 import MarkdownIt from 'markdown-it';
-import { createObsidianParser } from '../syntax/obsidian/parsing/createObsidianParser';
-import type { ParsedDocument } from '../model/ParsedDocument';
+import { createObsidianParser } from '@/modules/conversion-core/syntax/obsidian/parsing/createObsidianParser';
+import { ParsedDocument } from '@/modules/conversion-core/model/ParsedDocument';
 
 export function collectObsidianTags(document: ParsedDocument): string[] {
-  const parser = createObsidianParser();
+  const obsidianParser = createObsidianParser();
 
-  parser.core.ruler.disable('text_join');
+  obsidianParser.core.ruler.disable('text_join');
 
-  const markdownTokens = parser.parse(document.source, {});
+  const obsidianTokens = obsidianParser.parse(document.source, {});
 
   const tags = new Set<string>();
 
-  const pattern = new RegExp(
+  const bodyTagPattern = new RegExp(
     '(?:^|[\\s(\\[{,;:!?])#([\\p{L}\\p{N}\\p{M}\\p{S}\\u200D_/-]+)',
     'gu',
   );
 
-  const numericCharacters = new RegExp('^\\p{N}+$', 'u');
+  const numericTagPattern = new RegExp('^\\p{N}+$', 'u');
 
-  function visitInline(tokens: MarkdownIt.Token[]): void {
+  function visitInline(inlineTokens: MarkdownIt.Token[]): void {
     let linkDepth = 0;
     let literalHtmlDepth = 0;
 
-    for (const token of tokens) {
-      if (token.type === 'link_open') {
+    for (const inlineToken of inlineTokens) {
+      if (inlineToken.type === 'link_open') {
         linkDepth++;
-      } else if (token.type === 'link_close') {
+      } else if (inlineToken.type === 'link_close') {
         linkDepth--;
-      } else if (token.type === 'html_inline') {
+      } else if (inlineToken.type === 'html_inline') {
         const literalTag =
           /^<(\/)?(?:script|style|pre|code|textarea)(?:\s|>)/i.exec(
-            token.content,
+            inlineToken.content,
           );
 
         if (literalTag) {
@@ -41,13 +41,15 @@ export function collectObsidianTags(document: ParsedDocument): string[] {
         }
       } else {
         const isTagText =
-          token.type === 'text' && linkDepth === 0 && literalHtmlDepth === 0;
+          inlineToken.type === 'text' &&
+          linkDepth === 0 &&
+          literalHtmlDepth === 0;
 
         if (isTagText) {
-          for (const match of token.content.matchAll(pattern)) {
+          for (const match of inlineToken.content.matchAll(bodyTagPattern)) {
             const tag = match[1];
 
-            if (!numericCharacters.test(tag)) {
+            if (!numericTagPattern.test(tag)) {
               tags.add(tag);
             }
           }
@@ -56,11 +58,12 @@ export function collectObsidianTags(document: ParsedDocument): string[] {
     }
   }
 
-  for (const token of markdownTokens) {
-    const isInlineContent = token.type === 'inline' && token.children !== null;
+  for (const obsidianToken of obsidianTokens) {
+    const isInlineContent =
+      obsidianToken.type === 'inline' && obsidianToken.children !== null;
 
-    if (isInlineContent && token.children) {
-      visitInline(token.children);
+    if (isInlineContent && obsidianToken.children) {
+      visitInline(obsidianToken.children);
     }
   }
 

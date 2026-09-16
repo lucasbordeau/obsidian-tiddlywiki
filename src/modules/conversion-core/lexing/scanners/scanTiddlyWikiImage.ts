@@ -1,6 +1,6 @@
-import type { LexingContext } from '../LexingContext';
-import type { TokenMatch } from '../TokenMatch';
-import { findTiddlyWikiImageEnd } from '../boundaries/findTiddlyWikiImageEnd';
+import { LexingContext } from '@/modules/conversion-core/lexing/LexingContext';
+import { TokenMatch } from '@/modules/conversion-core/lexing/TokenMatch';
+import { findTiddlyWikiImageEnd } from '@/modules/conversion-core/lexing/boundaries/findTiddlyWikiImageEnd';
 
 export function scanTiddlyWikiImage(
   context: LexingContext,

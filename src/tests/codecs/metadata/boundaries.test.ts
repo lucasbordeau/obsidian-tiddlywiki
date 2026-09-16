@@ -1,13 +1,13 @@
-import { exportObsidianNote } from '../../../modules/conversion-core/notes/exportObsidianNote';
-import { importTiddler } from '../../../modules/conversion-core/notes/importTiddler';
-import { parseTiddlyWikiJson } from '../../../modules/conversion-core/codecs/tiddlywiki/parseTiddlyWikiJson';
-import { parseTidFile } from '../../../modules/conversion-core/codecs/tiddlywiki/parseTidFile';
-import { serializeTiddlyWikiJson } from '../../../modules/conversion-core/codecs/tiddlywiki/serializeTiddlyWikiJson';
-import { serializeTidFile } from '../../../modules/conversion-core/codecs/tiddlywiki/serializeTidFile';
-import { PRESERVATION_FIELD } from '../../../modules/conversion-core/preservation/metadata/PreservationField.const';
-import { PRESERVATION_PROPERTY } from '../../../modules/conversion-core/preservation/metadata/PreservationProperty.const';
-import { TiddlerFields } from '../../../modules/conversion-core/codecs/tiddlywiki/TiddlerFields';
-import { getCodecValue } from '../../support/getCodecValue';
+import { exportObsidianNote } from '@/modules/conversion-core/notes/exportObsidianNote';
+import { importTiddler } from '@/modules/conversion-core/notes/importTiddler';
+import { parseTiddlyWikiJson } from '@/modules/conversion-core/codecs/tiddlywiki/parseTiddlyWikiJson';
+import { parseTidFile } from '@/modules/conversion-core/codecs/tiddlywiki/parseTidFile';
+import { serializeTiddlyWikiJson } from '@/modules/conversion-core/codecs/tiddlywiki/serializeTiddlyWikiJson';
+import { serializeTidFile } from '@/modules/conversion-core/codecs/tiddlywiki/serializeTidFile';
+import { PRESERVATION_FIELD } from '@/modules/conversion-core/preservation/metadata/PreservationField.const';
+import { PRESERVATION_PROPERTY } from '@/modules/conversion-core/preservation/metadata/PreservationProperty.const';
+import { TiddlerFields } from '@/modules/conversion-core/codecs/tiddlywiki/TiddlerFields';
+import { getCodecValue } from '@/tests/support/getCodecValue';
 
 describe('field and preservation boundaries', () => {
   it('preserves prototype-like fields without changing JavaScript prototypes', () => {

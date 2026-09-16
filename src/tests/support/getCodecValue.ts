@@ -1,4 +1,4 @@
-import { CodecResult } from '../../modules/conversion-core/codecs/CodecResult';
+import { CodecResult } from '@/modules/conversion-core/codecs/CodecResult';
 
 export function getCodecValue<Value>(result: CodecResult<Value>): Value {
   if (result.value === undefined) {

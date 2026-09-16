@@ -1,11 +1,11 @@
-import type { BlockNode } from '../../../../model/blocks/BlockNode';
-import type { SerializationContext } from '../../types/SerializationContext';
-import { renderInlines } from '../inlines/renderInlines';
-import { renderCode } from './renderCode';
-import { renderList } from './renderList';
-import { renderTable } from './renderTable';
-import { emitRaw } from '../emitRaw';
-import { escapeText } from '../escaping/escapeText';
+import { BlockNode } from '@/modules/conversion-core/model/blocks/BlockNode';
+import { SerializationContext } from '@/modules/conversion-core/syntax/obsidian/types/SerializationContext';
+import { renderInlines } from '@/modules/conversion-core/syntax/obsidian/serialization/inlines/renderInlines';
+import { renderCode } from '@/modules/conversion-core/syntax/obsidian/serialization/blocks/renderCode';
+import { renderList } from '@/modules/conversion-core/syntax/obsidian/serialization/blocks/renderList';
+import { renderTable } from '@/modules/conversion-core/syntax/obsidian/serialization/blocks/renderTable';
+import { emitRaw } from '@/modules/conversion-core/syntax/obsidian/serialization/emitRaw';
+import { escapeText } from '@/modules/conversion-core/syntax/obsidian/serialization/escaping/escapeText';
 
 export function renderBlock(
   block: BlockNode,

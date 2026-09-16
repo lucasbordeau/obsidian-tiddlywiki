@@ -1,6 +1,6 @@
-import type { LexingContext } from '../LexingContext';
-import type { TokenMatch } from '../TokenMatch';
-import { findFenceEnd } from '../boundaries/findFenceEnd';
+import { LexingContext } from '@/modules/conversion-core/lexing/LexingContext';
+import { TokenMatch } from '@/modules/conversion-core/lexing/TokenMatch';
+import { findFenceEnd } from '@/modules/conversion-core/lexing/boundaries/findFenceEnd';
 
 export function scanFence(context: LexingContext): TokenMatch | undefined {
   const { source, dialect, cursor, rest, isLinePrefix } = context;

@@ -1,5 +1,5 @@
-import type { InlineNode } from '../../../../model/inlines/InlineNode';
-import { isAsteriskFormatting } from './isAsteriskFormatting';
+import { InlineNode } from '@/modules/conversion-core/model/inlines/InlineNode';
+import { isAsteriskFormatting } from '@/modules/conversion-core/syntax/obsidian/serialization/formatting/isAsteriskFormatting';
 
 export function getFormattingDepth(node: InlineNode): number {
   if (!('children' in node)) {

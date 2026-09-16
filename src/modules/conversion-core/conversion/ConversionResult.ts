@@ -1,5 +1,5 @@
-import type { ParsedDocument } from '../model/ParsedDocument';
-import type { SerializationResult } from './SerializationResult';
+import { ParsedDocument } from '@/modules/conversion-core/model/ParsedDocument';
+import { SerializationResult } from '@/modules/conversion-core/conversion/SerializationResult';
 
 export type ConversionResult = SerializationResult & {
   document: ParsedDocument;

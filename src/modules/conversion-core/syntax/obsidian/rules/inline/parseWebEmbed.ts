@@ -1,6 +1,6 @@
 import MarkdownIt from 'markdown-it';
-import { isObsidianWebEmbed } from './isObsidianWebEmbed';
-import { pushInlineToken } from './pushInlineToken';
+import { isObsidianWebEmbed } from '@/modules/conversion-core/syntax/obsidian/rules/inline/isObsidianWebEmbed';
+import { pushInlineToken } from '@/modules/conversion-core/syntax/obsidian/rules/inline/pushInlineToken';
 
 export function parseWebEmbed(
   state: MarkdownIt.StateInline,

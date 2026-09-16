@@ -1,6 +1,6 @@
-import { parseObsidianFrontMatter } from '../../../modules/conversion-core/codecs/obsidian/parseObsidianFrontMatter';
-import { serializeObsidianFrontMatter } from '../../../modules/conversion-core/codecs/obsidian/serializeObsidianFrontMatter';
-import { invalidFrontMatterSources } from './invalidFrontMatterSources';
+import { parseObsidianFrontMatter } from '@/modules/conversion-core/codecs/obsidian/parseObsidianFrontMatter';
+import { serializeObsidianFrontMatter } from '@/modules/conversion-core/codecs/obsidian/serializeObsidianFrontMatter';
+import { invalidFrontMatterSources } from '@/tests/codecs/obsidian/invalidFrontMatterSources';
 
 describe('structural front matter and metadata values', () => {
   it('limits alias expansion before converting metadata into plain values', () => {

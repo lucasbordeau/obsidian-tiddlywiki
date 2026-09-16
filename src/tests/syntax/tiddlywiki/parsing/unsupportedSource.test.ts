@@ -1,8 +1,8 @@
-import { parseTiddlyWiki } from '../../../../modules/conversion-core/syntax/tiddlywiki/parsing/parseTiddlyWiki';
-import { convertText } from '../../../../modules/conversion-core/conversion/convertText';
-import { encodePreservedSource } from '../../../../modules/conversion-core/preservation/source/encodePreservedSource';
-import { dynamicSourceSamples } from './dynamicSourceSamples';
-import { unfinishedSourceSamples } from './unfinishedSourceSamples';
+import { parseTiddlyWiki } from '@/modules/conversion-core/syntax/tiddlywiki/parsing/parseTiddlyWiki';
+import { convertText } from '@/modules/conversion-core/conversion/convertText';
+import { encodePreservedSource } from '@/modules/conversion-core/preservation/source/encodePreservedSource';
+import { dynamicSourceSamples } from '@/tests/syntax/tiddlywiki/parsing/dynamicSourceSamples';
+import { unfinishedSourceSamples } from '@/tests/syntax/tiddlywiki/parsing/unfinishedSourceSamples';
 
 describe('TiddlyWiki structural parsing and serialization', () => {
   test.each(dynamicSourceSamples)(

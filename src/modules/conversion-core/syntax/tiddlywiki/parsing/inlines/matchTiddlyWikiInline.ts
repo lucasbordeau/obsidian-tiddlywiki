@@ -1,23 +1,23 @@
-import type { TiddlyWikiInlineMatch } from '../../types/TiddlyWikiInlineMatch';
-import type { TiddlyWikiParsingContext } from '../context/TiddlyWikiParsingContext';
-import { matchTiddlyWikiComment } from './matchTiddlyWikiComment';
-import { matchTiddlyWikiInlineCode } from './matchTiddlyWikiInlineCode';
-import { matchTiddlyWikiWikiLink } from './matchTiddlyWikiWikiLink';
-import { matchTiddlyWikiImagePrefix } from './matchTiddlyWikiImagePrefix';
-import { matchTiddlyWikiFilteredTransclusion } from './matchTiddlyWikiFilteredTransclusion';
-import { matchTiddlyWikiTransclusion } from './matchTiddlyWikiTransclusion';
-import { matchTiddlyWikiMacroCall } from './matchTiddlyWikiMacroCall';
-import { matchTiddlyWikiHtmlInline } from './matchTiddlyWikiHtmlInline';
-import { matchTiddlyWikiStyledInline } from './matchTiddlyWikiStyledInline';
-import { matchTiddlyWikiConditionalInline } from './matchTiddlyWikiConditionalInline';
-import { matchTiddlyWikiVariableDisplay } from './matchTiddlyWikiVariableDisplay';
-import { matchTiddlyWikiDash } from './matchTiddlyWikiDash';
-import { matchTiddlyWikiSystemLink } from './matchTiddlyWikiSystemLink';
-import { matchTiddlyWikiEntity } from './matchTiddlyWikiEntity';
-import { matchTiddlyWikiSuppressedLink } from './matchTiddlyWikiSuppressedLink';
-import { matchTiddlyWikiExternalLink } from './matchTiddlyWikiExternalLink';
-import { matchTiddlyWikiFormatting } from './matchTiddlyWikiFormatting';
-import { matchTiddlyWikiSoftBreak } from './matchTiddlyWikiSoftBreak';
+import { TiddlyWikiInlineMatch } from '@/modules/conversion-core/syntax/tiddlywiki/types/TiddlyWikiInlineMatch';
+import { TiddlyWikiParsingContext } from '@/modules/conversion-core/syntax/tiddlywiki/parsing/context/TiddlyWikiParsingContext';
+import { matchTiddlyWikiComment } from '@/modules/conversion-core/syntax/tiddlywiki/parsing/inlines/matchTiddlyWikiComment';
+import { matchTiddlyWikiInlineCode } from '@/modules/conversion-core/syntax/tiddlywiki/parsing/inlines/matchTiddlyWikiInlineCode';
+import { matchTiddlyWikiWikiLink } from '@/modules/conversion-core/syntax/tiddlywiki/parsing/inlines/matchTiddlyWikiWikiLink';
+import { matchTiddlyWikiImagePrefix } from '@/modules/conversion-core/syntax/tiddlywiki/parsing/inlines/matchTiddlyWikiImagePrefix';
+import { matchTiddlyWikiFilteredTransclusion } from '@/modules/conversion-core/syntax/tiddlywiki/parsing/inlines/matchTiddlyWikiFilteredTransclusion';
+import { matchTiddlyWikiTransclusion } from '@/modules/conversion-core/syntax/tiddlywiki/parsing/inlines/matchTiddlyWikiTransclusion';
+import { matchTiddlyWikiMacroCall } from '@/modules/conversion-core/syntax/tiddlywiki/parsing/inlines/matchTiddlyWikiMacroCall';
+import { matchTiddlyWikiHtmlInline } from '@/modules/conversion-core/syntax/tiddlywiki/parsing/inlines/matchTiddlyWikiHtmlInline';
+import { matchTiddlyWikiStyledInline } from '@/modules/conversion-core/syntax/tiddlywiki/parsing/inlines/matchTiddlyWikiStyledInline';
+import { matchTiddlyWikiConditionalInline } from '@/modules/conversion-core/syntax/tiddlywiki/parsing/inlines/matchTiddlyWikiConditionalInline';
+import { matchTiddlyWikiVariableDisplay } from '@/modules/conversion-core/syntax/tiddlywiki/parsing/inlines/matchTiddlyWikiVariableDisplay';
+import { matchTiddlyWikiDash } from '@/modules/conversion-core/syntax/tiddlywiki/parsing/inlines/matchTiddlyWikiDash';
+import { matchTiddlyWikiSystemLink } from '@/modules/conversion-core/syntax/tiddlywiki/parsing/inlines/matchTiddlyWikiSystemLink';
+import { matchTiddlyWikiEntity } from '@/modules/conversion-core/syntax/tiddlywiki/parsing/inlines/matchTiddlyWikiEntity';
+import { matchTiddlyWikiSuppressedLink } from '@/modules/conversion-core/syntax/tiddlywiki/parsing/inlines/matchTiddlyWikiSuppressedLink';
+import { matchTiddlyWikiExternalLink } from '@/modules/conversion-core/syntax/tiddlywiki/parsing/inlines/matchTiddlyWikiExternalLink';
+import { matchTiddlyWikiFormatting } from '@/modules/conversion-core/syntax/tiddlywiki/parsing/inlines/matchTiddlyWikiFormatting';
+import { matchTiddlyWikiSoftBreak } from '@/modules/conversion-core/syntax/tiddlywiki/parsing/inlines/matchTiddlyWikiSoftBreak';
 
 export function matchTiddlyWikiInline(
   this: TiddlyWikiParsingContext,

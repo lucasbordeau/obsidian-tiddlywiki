@@ -1,20 +1,20 @@
-import { applyNotePropertyEdits } from './applyNotePropertyEdits';
-import { restoreNativeMarkdownFrontMatter } from './restoreNativeMarkdownFrontMatter';
-import { areMetadataValuesEqual } from './areMetadataValuesEqual';
-import type { CodecResult } from '../../codecs/CodecResult';
-import { convertTiddlerBody } from '../../notes/convertTiddlerBody';
-import { createCodecDiagnostic } from '../../codecs/createCodecDiagnostic';
+import { applyNotePropertyEdits } from '@/modules/conversion-core/preservation/metadata/applyNotePropertyEdits';
+import { restoreNativeMarkdownFrontMatter } from '@/modules/conversion-core/preservation/metadata/restoreNativeMarkdownFrontMatter';
+import { areMetadataValuesEqual } from '@/modules/conversion-core/preservation/metadata/areMetadataValuesEqual';
+import { CodecResult } from '@/modules/conversion-core/codecs/CodecResult';
+import { convertTiddlerBody } from '@/modules/conversion-core/notes/convertTiddlerBody';
+import { createCodecDiagnostic } from '@/modules/conversion-core/codecs/createCodecDiagnostic';
 
-import type { FrontMatterDocument } from '../../codecs/obsidian/FrontMatterDocument';
-import { getTiddlerProperties } from '../../metadata/getTiddlerProperties';
-import { getPreservationKey } from './getPreservationKey';
+import { FrontMatterDocument } from '@/modules/conversion-core/codecs/obsidian/FrontMatterDocument';
+import { getTiddlerProperties } from '@/modules/conversion-core/metadata/getTiddlerProperties';
+import { getPreservationKey } from '@/modules/conversion-core/preservation/metadata/getPreservationKey';
 
-import { PRESERVATION_FIELD } from './PreservationField.const';
-import type { PreservationRecord } from './PreservationRecord';
+import { PRESERVATION_FIELD } from '@/modules/conversion-core/preservation/metadata/PreservationField.const';
+import { PreservationRecord } from '@/modules/conversion-core/preservation/metadata/PreservationRecord';
 
-import { serializeObsidianFrontMatter } from '../../codecs/obsidian/serializeObsidianFrontMatter';
+import { serializeObsidianFrontMatter } from '@/modules/conversion-core/codecs/obsidian/serializeObsidianFrontMatter';
 
-import type { TiddlerFields } from '../../codecs/tiddlywiki/TiddlerFields';
+import { TiddlerFields } from '@/modules/conversion-core/codecs/tiddlywiki/TiddlerFields';
 
 export function restoreTiddlerFromNote(
   title: string,
@@ -63,14 +63,14 @@ export function restoreTiddlerFromNote(
     record.targetProperties,
   );
 
-  const converted = convertTiddlerBody(document.body, fields.type, false);
+  const bodyConversion = convertTiddlerBody(document.body, fields.type, false);
   const diagnostics = [];
   const canRestoreBody = sameIdentity && sameContentType && sameBody;
 
-  fields.text = canRestoreBody ? record.sourceBody : converted.text;
+  fields.text = canRestoreBody ? record.sourceBody : bodyConversion.text;
 
   if (!canRestoreBody) {
-    diagnostics.push(...converted.diagnostics);
+    diagnostics.push(...bodyConversion.diagnostics);
   }
 
   if (!sameIdentity) {

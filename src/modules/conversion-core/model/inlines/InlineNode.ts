@@ -1,12 +1,12 @@
-import type { TextInline } from './TextInline';
-import type { FormattedInline } from './FormattedInline';
-import type { LinkInline } from './LinkInline';
-import type { EmbedInline } from './EmbedInline';
-import type { BreakInline } from './BreakInline';
-import type { MathInline } from './MathInline';
-import type { FootnoteReferenceInline } from './FootnoteReferenceInline';
-import type { RawInline } from './RawInline';
-import type { SourceRange } from '../SourceRange';
+import { TextInline } from '@/modules/conversion-core/model/inlines/TextInline';
+import { FormattedInline } from '@/modules/conversion-core/model/inlines/FormattedInline';
+import { LinkInline } from '@/modules/conversion-core/model/inlines/LinkInline';
+import { EmbedInline } from '@/modules/conversion-core/model/inlines/EmbedInline';
+import { BreakInline } from '@/modules/conversion-core/model/inlines/BreakInline';
+import { MathInline } from '@/modules/conversion-core/model/inlines/MathInline';
+import { FootnoteReferenceInline } from '@/modules/conversion-core/model/inlines/FootnoteReferenceInline';
+import { RawInline } from '@/modules/conversion-core/model/inlines/RawInline';
+import { SourceRange } from '@/modules/conversion-core/model/SourceRange';
 
 export type InlineNode = { range?: SourceRange } & (
   | TextInline

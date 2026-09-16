@@ -1,4 +1,4 @@
-import type { InlineNode } from './InlineNode';
+import { InlineNode } from '@/modules/conversion-core/model/inlines/InlineNode';
 
 export type LinkInline = {
   type: 'link';

@@ -1,39 +1,16 @@
-import type { InlineNode } from '../../../../model/inlines/InlineNode';
-import type { SerializationContext } from '../../types/SerializationContext';
-import { emitRaw } from '../emitRaw';
-import { renderHtmlInlines } from '../renderHtmlInlines';
-import { resolveLinkTarget } from './resolveLinkTarget';
-import { escapeWikiPart } from '../escaping/escapeWikiPart';
-import { escapeText } from '../escaping/escapeText';
-import { serializeMarkdownDestination } from './serializeMarkdownDestination';
-import { serializeMarkdownTitle } from './serializeMarkdownTitle';
+import { InlineNode } from '@/modules/conversion-core/model/inlines/InlineNode';
+import { SerializationContext } from '@/modules/conversion-core/syntax/obsidian/types/SerializationContext';
+import { renderHtmlInlines } from '@/modules/conversion-core/syntax/obsidian/serialization/renderHtmlInlines';
+import { resolveLinkTarget } from '@/modules/conversion-core/syntax/obsidian/serialization/links/resolveLinkTarget';
+import { escapeWikiPart } from '@/modules/conversion-core/syntax/obsidian/serialization/escaping/escapeWikiPart';
+import { escapeText } from '@/modules/conversion-core/syntax/obsidian/serialization/escaping/escapeText';
+import { serializeMarkdownDestination } from '@/modules/conversion-core/syntax/obsidian/serialization/links/serializeMarkdownDestination';
+import { serializeMarkdownTitle } from '@/modules/conversion-core/syntax/obsidian/serialization/links/serializeMarkdownTitle';
 
 export function renderEmbed(
   node: Extract<InlineNode, { type: 'embed' }>,
   context: SerializationContext,
 ): string {
-  const ambiguousImageTransclusion =
-    node.kind === 'note' &&
-    /\.(?:avif|bmp|gif|heic|jpeg|jpg|png|svg|webp)(?:#.*)?$/i.test(node.target);
-
-  if (ambiguousImageTransclusion) {
-    const source =
-      node.range && context.document.dialect === 'tiddlywiki'
-        ? context.document.source.slice(node.range.start, node.range.end)
-        : `{{${node.target}}}`;
-
-    return emitRaw(
-      {
-        type: 'raw',
-        dialect: 'tiddlywiki',
-        value: source,
-        reason: 'TiddlyWiki transclusion of an image-like title',
-        range: node.range,
-      },
-      context,
-    );
-  }
-
   const external = /^(?:[a-z][a-z\d+.-]*:|\/\/)/i.test(node.target);
   const hasSize = node.width !== undefined || node.height !== undefined;
   const literalNumericAlt = !hasSize && /^\d+(?:x\d+)?$/.test(node.alt);
@@ -52,12 +29,18 @@ export function renderEmbed(
   }
 
   const target = resolveLinkTarget(node.target, 'embed', context, external);
+  const targetIsExternal = /^(?:[a-z][a-z\d+.-]*:|\/\/)/i.test(target);
+  const externalTransclusion = node.kind === 'transclusion' && targetIsExternal;
+
+  if (externalTransclusion) {
+    const label = node.alt || node.target;
+
+    return `[${escapeText(label)}](${serializeMarkdownDestination(target)})`;
+  }
 
   const useWikiEmbed =
-    node.kind === 'note' ||
-    (!external &&
-      node.title === undefined &&
-      (!node.alt || node.width !== undefined));
+    node.kind === 'transclusion' ||
+    (!external && node.title === undefined && node.width !== undefined);
 
   if (useWikiEmbed) {
     let alias = node.alt;

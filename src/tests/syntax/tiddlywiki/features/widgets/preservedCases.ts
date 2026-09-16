@@ -1,5 +1,5 @@
-import { FeatureCase } from '../FeatureCase';
-import { widgetNames } from './widgetNames';
+import { FeatureCase } from '@/tests/syntax/tiddlywiki/features/FeatureCase';
+import { widgetNames } from '@/tests/syntax/tiddlywiki/features/widgets/widgetNames';
 
 export const preservedCases: FeatureCase[] = [];
 

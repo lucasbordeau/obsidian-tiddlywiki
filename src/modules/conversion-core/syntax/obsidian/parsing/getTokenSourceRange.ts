@@ -1,6 +1,6 @@
-import type { Token } from '../types/Token';
-import type { ParseContext } from '../types/ParseContext';
-import type { SourceRange } from '../../../model/SourceRange';
+import { Token } from '@/modules/conversion-core/syntax/obsidian/types/Token';
+import { ParseContext } from '@/modules/conversion-core/syntax/obsidian/types/ParseContext';
+import { SourceRange } from '@/modules/conversion-core/model/SourceRange';
 
 export function getTokenSourceRange(
   token: Token,

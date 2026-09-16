@@ -1,5 +1,5 @@
-import { TIDDLYWIKI_VOID_ELEMENTS } from '../../constants/TiddlyWikiVoidElements.const';
-import type { TiddlyWikiParsingContext } from '../context/TiddlyWikiParsingContext';
+import { TIDDLYWIKI_VOID_ELEMENTS } from '@/modules/conversion-core/syntax/tiddlywiki/constants/TiddlyWikiVoidElements.const';
+import { TiddlyWikiParsingContext } from '@/modules/conversion-core/syntax/tiddlywiki/parsing/context/TiddlyWikiParsingContext';
 
 export function findTiddlyWikiHtmlEnd(
   this: TiddlyWikiParsingContext,

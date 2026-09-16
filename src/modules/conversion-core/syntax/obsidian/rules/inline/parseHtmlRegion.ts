@@ -1,5 +1,5 @@
 import MarkdownIt from 'markdown-it';
-import { pushInlineToken } from './pushInlineToken';
+import { pushInlineToken } from '@/modules/conversion-core/syntax/obsidian/rules/inline/pushInlineToken';
 
 export function parseHtmlRegion(
   state: MarkdownIt.StateInline,

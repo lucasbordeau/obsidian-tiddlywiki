@@ -1,7 +1,7 @@
-import { exportObsidianNote } from '../../../../modules/conversion-core/notes/exportObsidianNote';
-import { importTiddler } from '../../../../modules/conversion-core/notes/importTiddler';
-import { getCodecValue } from '../../../support/getCodecValue';
-import { structuredAttachmentCases } from './structuredAttachmentCases';
+import { exportObsidianNote } from '@/modules/conversion-core/notes/exportObsidianNote';
+import { importTiddler } from '@/modules/conversion-core/notes/importTiddler';
+import { getCodecValue } from '@/tests/support/getCodecValue';
+import { structuredAttachmentCases } from '@/tests/codecs/media/contentTypes/structuredAttachmentCases';
 
 describe('textual and extension content types', () => {
   it.each(structuredAttachmentCases)(

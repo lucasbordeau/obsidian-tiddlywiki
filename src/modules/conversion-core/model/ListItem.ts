@@ -1,5 +1,5 @@
-import type { BlockNode } from './blocks/BlockNode';
-import type { SourceRange } from './SourceRange';
+import { BlockNode } from '@/modules/conversion-core/model/blocks/BlockNode';
+import { SourceRange } from '@/modules/conversion-core/model/SourceRange';
 
 export type ListItem = {
   blocks: BlockNode[];

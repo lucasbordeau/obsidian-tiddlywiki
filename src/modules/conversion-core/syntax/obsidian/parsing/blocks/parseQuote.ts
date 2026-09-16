@@ -1,9 +1,9 @@
-import type { Token } from '../../types/Token';
-import type { TokenCursor } from '../../types/TokenCursor';
-import type { ParseContext } from '../../types/ParseContext';
-import type { BlockCollector } from '../../types/BlockCollector';
-import type { BlockNode } from '../../../../model/blocks/BlockNode';
-import { getInlinePlainText } from '../inlines/getInlinePlainText';
+import { Token } from '@/modules/conversion-core/syntax/obsidian/types/Token';
+import { TokenCursor } from '@/modules/conversion-core/syntax/obsidian/types/TokenCursor';
+import { ParseContext } from '@/modules/conversion-core/syntax/obsidian/types/ParseContext';
+import { BlockCollector } from '@/modules/conversion-core/syntax/obsidian/types/BlockCollector';
+import { BlockNode } from '@/modules/conversion-core/model/blocks/BlockNode';
+import { getInlinePlainText } from '@/modules/conversion-core/syntax/obsidian/parsing/inlines/getInlinePlainText';
 
 export function parseQuote(
   tokens: Token[],

@@ -21,13 +21,20 @@ blocks, abrupt exits, declaration/operation boundaries and multiline statements.
 It preserves existing line endings and keeps comments attached to their statements.
 Consecutive imports and related single-line declarations can remain grouped.
 
+The repository-specific import rules keep module boundaries consistent:
+
+- `no-type-only-imports` requires regular imports for types and values and
+  autofixes both declaration-level and inline type modifiers.
+- `no-relative-source-imports` requires `@/` paths between modules under
+  `src`, including tests, while leaving scripts outside the source tree alone.
+
 Apply the [semantic spacing skill](../skills/semantic-code-spacing/SKILL.md) to
 each edited file after autofixing. It identifies changes of purpose such as
 preparing a field map and appending the completed tiddler, and keeps related
 assignments and assertions together. Both the rule and the agent-neutral skill
 are distributed in `ts-app-helpers`.
 
-`npm run lint` registers all four rules with the existing TypeScript/Prettier rules
+`npm run lint` registers all six rules with the existing TypeScript/Prettier rules
 and requires braces around control flow. It covers source, tests, scripts, local
 rules and top-level JavaScript configuration. Use `npm run lint -- --fix` to apply
 fixes and `npm run test:lint` to check rule behavior.

@@ -1,8 +1,8 @@
-import { parseTiddlyWiki } from '../../../../../modules/conversion-core/syntax/tiddlywiki/parsing/parseTiddlyWiki';
-import { serializeTiddlyWiki } from '../../../../../modules/conversion-core/syntax/tiddlywiki/serialization/serializeTiddlyWiki';
-import { renderTiddlyWiki } from '../../../../support/runtime/renderTiddlyWiki';
-import { normalizeSemanticBlocks } from '../../../../support/ast/normalizeSemanticBlocks';
-import { nativeCases } from './nativeCases';
+import { parseTiddlyWiki } from '@/modules/conversion-core/syntax/tiddlywiki/parsing/parseTiddlyWiki';
+import { serializeTiddlyWiki } from '@/modules/conversion-core/syntax/tiddlywiki/serialization/serializeTiddlyWiki';
+import { renderTiddlyWiki } from '@/tests/support/runtime/renderTiddlyWiki';
+import { normalizeSemanticBlocks } from '@/tests/support/ast/normalizeSemanticBlocks';
+import { nativeCases } from '@/tests/syntax/tiddlywiki/features/tables/nativeCases';
 
 describe('official TiddlyWiki feature inventory', () => {
   test.each(nativeCases)(

@@ -1,3 +1,3 @@
-import { readSample } from '../../../support/samples/readSample';
+import { readSample } from '@/tests/support/samples/readSample';
 
 export const stressSource = readSample('conversion-core/tiddlywiki-stress.tid');

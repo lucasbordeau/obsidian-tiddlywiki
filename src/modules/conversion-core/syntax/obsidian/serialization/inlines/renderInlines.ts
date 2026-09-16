@@ -1,8 +1,8 @@
-import type { InlineNode } from '../../../../model/inlines/InlineNode';
-import type { SerializationContext } from '../../types/SerializationContext';
-import { isAsteriskFormatting } from '../formatting/isAsteriskFormatting';
-import { escapeText } from '../escaping/escapeText';
-import { renderInline } from './renderInline';
+import { InlineNode } from '@/modules/conversion-core/model/inlines/InlineNode';
+import { SerializationContext } from '@/modules/conversion-core/syntax/obsidian/types/SerializationContext';
+import { isAsteriskFormatting } from '@/modules/conversion-core/syntax/obsidian/serialization/formatting/isAsteriskFormatting';
+import { escapeText } from '@/modules/conversion-core/syntax/obsidian/serialization/escaping/escapeText';
+import { renderInline } from '@/modules/conversion-core/syntax/obsidian/serialization/inlines/renderInline';
 
 function requiresFormattingBoundaryProtection(character: string): boolean {
   return !/[\s\p{P}]/u.test(character);

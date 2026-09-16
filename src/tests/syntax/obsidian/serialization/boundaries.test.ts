@@ -1,8 +1,9 @@
-import { parseObsidian } from '../../../../modules/conversion-core/syntax/obsidian/parsing/parseObsidian';
-import { serializeObsidian } from '../../../../modules/conversion-core/syntax/obsidian/serialization/serializeObsidian';
-import { ParsedDocument } from '../../../../modules/conversion-core/model/ParsedDocument';
-import { parseTiddlyWiki } from '../../../../modules/conversion-core/syntax/tiddlywiki/parsing/parseTiddlyWiki';
-import { parseObsidianBlocks } from '../../../support/parseObsidianBlocks';
+import { parseObsidian } from '@/modules/conversion-core/syntax/obsidian/parsing/parseObsidian';
+import { serializeObsidian } from '@/modules/conversion-core/syntax/obsidian/serialization/serializeObsidian';
+import { ParsedDocument } from '@/modules/conversion-core/model/ParsedDocument';
+import { parseTiddlyWiki } from '@/modules/conversion-core/syntax/tiddlywiki/parsing/parseTiddlyWiki';
+import { parseObsidianBlocks } from '@/tests/support/parseObsidianBlocks';
+import { normalizeSemanticBlocks } from '@/tests/support/ast/normalizeSemanticBlocks';
 
 describe('Obsidian documented extensions and structural regressions', () => {
   test('keeps repeated thematic rules distinct from YAML front matter', () => {
@@ -81,6 +82,56 @@ describe('Obsidian documented extensions and structural regressions', () => {
         ],
       },
     ]);
+  });
+
+  test('uses tight four-space indentation for nested TiddlyWiki lists', () => {
+    const source = [
+      '# first',
+      '#* child',
+      '#** grandchild',
+      '#* second child',
+      '# second',
+    ].join('\n');
+
+    const converted = serializeObsidian(parseTiddlyWiki(source));
+
+    expect(converted.text).toBe(
+      [
+        '1. first',
+        '    - child',
+        '        - grandchild',
+        '    - second child',
+        '2. second',
+      ].join('\n'),
+    );
+
+    expect(
+      normalizeSemanticBlocks(parseObsidianBlocks(converted.text)),
+    ).toEqual(normalizeSemanticBlocks(parseTiddlyWiki(source).blocks));
+  });
+
+  test('keeps mixed nested list kinds adjacent without empty lines', () => {
+    const source = [
+      '* content',
+      '*# ordered child',
+      '*#* unordered grandchild',
+      '*## ordered grandchild',
+    ].join('\n');
+
+    const converted = serializeObsidian(parseTiddlyWiki(source));
+
+    expect(converted.text).toBe(
+      [
+        '- content',
+        '    1. ordered child',
+        '        - unordered grandchild',
+        '        1. ordered grandchild',
+      ].join('\n'),
+    );
+
+    expect(
+      normalizeSemanticBlocks(parseObsidianBlocks(converted.text)),
+    ).toEqual(normalizeSemanticBlocks(parseTiddlyWiki(source).blocks));
   });
 
   test.each([true, false])(

@@ -1,13 +1,13 @@
-import type { ParsedDocument } from '../../../model/ParsedDocument';
-import { createObsidianParser } from './createObsidianParser';
-import type { ConversionDiagnostic } from '../../../conversion/ConversionDiagnostic';
-import type { ParseContext } from '../types/ParseContext';
-import { collectBlocks } from './blocks/collectBlocks';
-import { collectPreservationDiagnostics } from './collectPreservationDiagnostics';
-import { lexSource } from '../../../lexing/lexSource';
+import { ParsedDocument } from '@/modules/conversion-core/model/ParsedDocument';
+import { createObsidianParser } from '@/modules/conversion-core/syntax/obsidian/parsing/createObsidianParser';
+import { ConversionDiagnostic } from '@/modules/conversion-core/conversion/ConversionDiagnostic';
+import { ParseContext } from '@/modules/conversion-core/syntax/obsidian/types/ParseContext';
+import { collectBlocks } from '@/modules/conversion-core/syntax/obsidian/parsing/blocks/collectBlocks';
+import { collectPreservationDiagnostics } from '@/modules/conversion-core/syntax/obsidian/parsing/collectPreservationDiagnostics';
+import { lexSource } from '@/modules/conversion-core/lexing/lexSource';
 
 export function parseObsidian(source: string): ParsedDocument {
-  const markdown = createObsidianParser();
+  const obsidianParser = createObsidianParser();
   const lineOffsets = [0];
 
   for (let position = 0; position < source.length; position++) {
@@ -17,20 +17,20 @@ export function parseObsidian(source: string): ParsedDocument {
   }
 
   const diagnostics: ConversionDiagnostic[] = [];
-  const environment = {};
+  const parserEnvironment = {};
 
-  const context: ParseContext = {
+  const parsingContext: ParseContext = {
     source,
     lineOffsets,
     diagnostics,
-    markdown,
-    environment,
+    obsidianParser,
+    parserEnvironment,
   };
 
-  const markdownTokens = markdown.parse(source, environment);
-  const blocks = collectBlocks(markdownTokens, { position: 0 }, context);
+  const obsidianTokens = obsidianParser.parse(source, parserEnvironment);
+  const blocks = collectBlocks(obsidianTokens, { position: 0 }, parsingContext);
 
-  collectPreservationDiagnostics(blocks, context);
+  collectPreservationDiagnostics(blocks, parsingContext);
 
   return {
     dialect: 'obsidian',

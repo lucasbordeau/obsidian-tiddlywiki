@@ -1,12 +1,12 @@
-import { exportObsidianNote } from '../../../../modules/conversion-core/notes/exportObsidianNote';
-import { importTiddler } from '../../../../modules/conversion-core/notes/importTiddler';
-import { parseObsidianFrontMatter } from '../../../../modules/conversion-core/codecs/obsidian/parseObsidianFrontMatter';
-import { extractPreservationComment } from '../../../../modules/conversion-core/preservation/metadata/extractPreservationComment';
-import { parseTiddlyWikiJson } from '../../../../modules/conversion-core/codecs/tiddlywiki/parseTiddlyWikiJson';
-import { TiddlerFields } from '../../../../modules/conversion-core/codecs/tiddlywiki/TiddlerFields';
-import { getCodecValue } from '../../../support/getCodecValue';
-import { wikitextContentTypes } from './wikitextContentTypes';
-import { invalidContentTypes } from './invalidContentTypes';
+import { exportObsidianNote } from '@/modules/conversion-core/notes/exportObsidianNote';
+import { importTiddler } from '@/modules/conversion-core/notes/importTiddler';
+import { parseObsidianFrontMatter } from '@/modules/conversion-core/codecs/obsidian/parseObsidianFrontMatter';
+import { extractPreservationComment } from '@/modules/conversion-core/preservation/metadata/extractPreservationComment';
+import { parseTiddlyWikiJson } from '@/modules/conversion-core/codecs/tiddlywiki/parseTiddlyWikiJson';
+import { TiddlerFields } from '@/modules/conversion-core/codecs/tiddlywiki/TiddlerFields';
+import { getCodecValue } from '@/tests/support/getCodecValue';
+import { wikitextContentTypes } from '@/tests/codecs/media/contentTypes/wikitextContentTypes';
+import { invalidContentTypes } from '@/tests/codecs/media/contentTypes/invalidContentTypes';
 
 describe('textual and extension content types', () => {
   it.each(['text/x-markdown', 'text/markdown'])(

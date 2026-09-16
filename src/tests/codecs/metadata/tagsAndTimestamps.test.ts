@@ -1,7 +1,7 @@
-import { parseTiddlyWikiTags } from '../../../modules/conversion-core/metadata/parseTiddlyWikiTags';
-import { normalizeObsidianTags } from '../../../modules/conversion-core/metadata/normalizeObsidianTags';
-import { formatTiddlyWikiTimestamp } from '../../../modules/conversion-core/metadata/formatTiddlyWikiTimestamp';
-import { timestampValues } from './timestampValues';
+import { parseTiddlyWikiTags } from '@/modules/conversion-core/metadata/parseTiddlyWikiTags';
+import { normalizeObsidianTags } from '@/modules/conversion-core/metadata/normalizeObsidianTags';
+import { formatTiddlyWikiTimestamp } from '@/modules/conversion-core/metadata/formatTiddlyWikiTimestamp';
+import { timestampValues } from '@/tests/codecs/metadata/timestampValues';
 
 describe('structural front matter and metadata values', () => {
   it('normalizes tags reversibly across spaces, case, Unicode and name collisions', () => {

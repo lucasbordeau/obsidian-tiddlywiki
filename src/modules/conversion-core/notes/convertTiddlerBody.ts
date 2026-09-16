@@ -1,12 +1,14 @@
-import { convertText } from '../conversion/convertText';
-import type { SerializationResult } from '../conversion/SerializationResult';
-import { createCodecDiagnostic } from '../codecs/createCodecDiagnostic';
-import { isMarkdownContentType } from './isMarkdownContentType';
+import { convertText } from '@/modules/conversion-core/conversion/convertText';
+import { ConversionOptions } from '@/modules/conversion-core/conversion/ConversionOptions';
+import { SerializationResult } from '@/modules/conversion-core/conversion/SerializationResult';
+import { createCodecDiagnostic } from '@/modules/conversion-core/codecs/createCodecDiagnostic';
+import { isMarkdownContentType } from '@/modules/conversion-core/notes/isMarkdownContentType';
 
 export function convertTiddlerBody(
   text: string,
   contentType: string | undefined,
   toMarkdown: boolean,
+  options: ConversionOptions = {},
 ): SerializationResult {
   const isWikitext =
     contentType === undefined ||
@@ -16,8 +18,8 @@ export function convertTiddlerBody(
 
   if (isWikitext) {
     return toMarkdown
-      ? convertText(text, 'tiddlywiki', 'obsidian')
-      : convertText(text, 'obsidian', 'tiddlywiki');
+      ? convertText(text, 'tiddlywiki', 'obsidian', options)
+      : convertText(text, 'obsidian', 'tiddlywiki', options);
   }
 
   if (isMarkdownContentType(contentType)) {

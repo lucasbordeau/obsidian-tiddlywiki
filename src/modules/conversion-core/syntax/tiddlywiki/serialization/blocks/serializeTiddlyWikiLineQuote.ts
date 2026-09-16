@@ -1,5 +1,5 @@
-import type { BlockNode } from '../../../../model/blocks/BlockNode';
-import type { TiddlyWikiSerializationContext } from '../context/TiddlyWikiSerializationContext';
+import { BlockNode } from '@/modules/conversion-core/model/blocks/BlockNode';
+import { TiddlyWikiSerializationContext } from '@/modules/conversion-core/syntax/tiddlywiki/serialization/context/TiddlyWikiSerializationContext';
 
 export function serializeTiddlyWikiLineQuote(
   this: TiddlyWikiSerializationContext,

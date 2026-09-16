@@ -1,4 +1,4 @@
-import type { BlockNode } from '../../../model/blocks/BlockNode';
+import { BlockNode } from '@/modules/conversion-core/model/blocks/BlockNode';
 
 export function removeRanges(blocks: BlockNode[]): void {
   for (const block of blocks) {
@@ -9,10 +9,10 @@ export function removeRanges(blocks: BlockNode[]): void {
     }
 
     if (block.type === 'list') {
-      for (const entry of block.children) {
-        delete entry.range;
+      for (const listItem of block.children) {
+        delete listItem.range;
 
-        removeRanges(entry.blocks);
+        removeRanges(listItem.blocks);
       }
     }
   }

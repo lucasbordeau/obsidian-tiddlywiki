@@ -1,4 +1,4 @@
-import { BlockNode } from '../../../modules/conversion-core/model/blocks/BlockNode';
+import { BlockNode } from '@/modules/conversion-core/model/blocks/BlockNode';
 
 export function stripSourceRanges(blocks: BlockNode[]): unknown {
   return JSON.parse(

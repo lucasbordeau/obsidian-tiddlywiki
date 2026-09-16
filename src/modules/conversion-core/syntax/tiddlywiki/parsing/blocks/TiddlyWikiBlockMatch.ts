@@ -1,3 +1,3 @@
-import type { BlockNode } from '../../../../model/blocks/BlockNode';
+import { BlockNode } from '@/modules/conversion-core/model/blocks/BlockNode';
 
 export type TiddlyWikiBlockMatch = { blocks: BlockNode[]; nextLine: number };

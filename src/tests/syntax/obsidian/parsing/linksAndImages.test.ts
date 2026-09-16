@@ -1,4 +1,4 @@
-import { parseObsidianBlocks } from '../../../support/parseObsidianBlocks';
+import { parseObsidianBlocks } from '@/tests/support/parseObsidianBlocks';
 
 describe('Obsidian structural parsing', () => {
   test('handles image dimensions, markdown titles and formatted link labels separately', () => {
@@ -16,7 +16,12 @@ describe('Obsidian structural parsing', () => {
           width: '320',
           height: '200',
         },
-        { type: 'embed', target: 'Other#^block', kind: 'note', alt: '' },
+        {
+          type: 'embed',
+          target: 'Other#^block',
+          kind: 'transclusion',
+          alt: '',
+        },
         {
           type: 'embed',
           target: 'image.png',

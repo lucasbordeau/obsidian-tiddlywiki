@@ -1,8 +1,8 @@
 import { parseDocument } from 'yaml';
-import type { CodecResult } from '../CodecResult';
-import { createCodecDiagnostic } from '../createCodecDiagnostic';
-import type { FrontMatterDocument } from './FrontMatterDocument';
-import { isRecord } from '../../validation/isRecord';
+import { CodecResult } from '@/modules/conversion-core/codecs/CodecResult';
+import { createCodecDiagnostic } from '@/modules/conversion-core/codecs/createCodecDiagnostic';
+import { FrontMatterDocument } from '@/modules/conversion-core/codecs/obsidian/FrontMatterDocument';
+import { isRecord } from '@/modules/conversion-core/validation/isRecord';
 
 export function parseObsidianFrontMatter(
   source: string,

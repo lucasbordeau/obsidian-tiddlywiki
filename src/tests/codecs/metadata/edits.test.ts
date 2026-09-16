@@ -1,11 +1,11 @@
-import { exportObsidianNote } from '../../../modules/conversion-core/notes/exportObsidianNote';
-import { importTiddler } from '../../../modules/conversion-core/notes/importTiddler';
-import { parseTidFile } from '../../../modules/conversion-core/codecs/tiddlywiki/parseTidFile';
-import { parseObsidianFrontMatter } from '../../../modules/conversion-core/codecs/obsidian/parseObsidianFrontMatter';
-import { serializeObsidianFrontMatter } from '../../../modules/conversion-core/codecs/obsidian/serializeObsidianFrontMatter';
-import { extractPreservationComment } from '../../../modules/conversion-core/preservation/metadata/extractPreservationComment';
-import { getCodecValue } from '../../support/getCodecValue';
-import { readMetadataSample as fixture } from '../../support/samples/readMetadataSample';
+import { exportObsidianNote } from '@/modules/conversion-core/notes/exportObsidianNote';
+import { importTiddler } from '@/modules/conversion-core/notes/importTiddler';
+import { parseTidFile } from '@/modules/conversion-core/codecs/tiddlywiki/parseTidFile';
+import { parseObsidianFrontMatter } from '@/modules/conversion-core/codecs/obsidian/parseObsidianFrontMatter';
+import { serializeObsidianFrontMatter } from '@/modules/conversion-core/codecs/obsidian/serializeObsidianFrontMatter';
+import { extractPreservationComment } from '@/modules/conversion-core/preservation/metadata/extractPreservationComment';
+import { getCodecValue } from '@/tests/support/getCodecValue';
+import { readMetadataSample as fixture } from '@/tests/support/samples/readMetadataSample';
 
 describe('metadata-aware, edit-aware interchange', () => {
   it('retains edited Markdown body and properties while restoring surviving original tag identities', () => {

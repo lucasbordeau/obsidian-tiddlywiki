@@ -1,11 +1,11 @@
-import { exportObsidianNote } from '../../../modules/conversion-core/notes/exportObsidianNote';
-import { importTiddler } from '../../../modules/conversion-core/notes/importTiddler';
-import { parseTidFile } from '../../../modules/conversion-core/codecs/tiddlywiki/parseTidFile';
-import { parseObsidianFrontMatter } from '../../../modules/conversion-core/codecs/obsidian/parseObsidianFrontMatter';
-import { PRESERVATION_FIELD } from '../../../modules/conversion-core/preservation/metadata/PreservationField.const';
-import { PRESERVATION_PROPERTY } from '../../../modules/conversion-core/preservation/metadata/PreservationProperty.const';
-import { getCodecValue } from '../../support/getCodecValue';
-import { readMetadataSample as fixture } from '../../support/samples/readMetadataSample';
+import { exportObsidianNote } from '@/modules/conversion-core/notes/exportObsidianNote';
+import { importTiddler } from '@/modules/conversion-core/notes/importTiddler';
+import { parseTidFile } from '@/modules/conversion-core/codecs/tiddlywiki/parseTidFile';
+import { parseObsidianFrontMatter } from '@/modules/conversion-core/codecs/obsidian/parseObsidianFrontMatter';
+import { PRESERVATION_FIELD } from '@/modules/conversion-core/preservation/metadata/PreservationField.const';
+import { PRESERVATION_PROPERTY } from '@/modules/conversion-core/preservation/metadata/PreservationProperty.const';
+import { getCodecValue } from '@/tests/support/getCodecValue';
+import { readMetadataSample as fixture } from '@/tests/support/samples/readMetadataSample';
 
 describe('metadata-aware, edit-aware interchange', () => {
   it('restores complex Markdown exactly, including YAML spelling and collided namespace fields', () => {

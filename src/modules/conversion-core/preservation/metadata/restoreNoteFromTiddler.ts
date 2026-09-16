@@ -1,22 +1,24 @@
-import { applyTiddlerFieldEdits } from './applyTiddlerFieldEdits';
-import { prependPreservationComment } from './prependPreservationComment';
-import { areMetadataValuesEqual } from './areMetadataValuesEqual';
-import type { CodecResult } from '../../codecs/CodecResult';
-import { convertTiddlerBody } from '../../notes/convertTiddlerBody';
-import { createCodecDiagnostic } from '../../codecs/createCodecDiagnostic';
+import { applyTiddlerFieldEdits } from '@/modules/conversion-core/preservation/metadata/applyTiddlerFieldEdits';
+import { prependPreservationComment } from '@/modules/conversion-core/preservation/metadata/prependPreservationComment';
+import { areMetadataValuesEqual } from '@/modules/conversion-core/preservation/metadata/areMetadataValuesEqual';
+import { CodecResult } from '@/modules/conversion-core/codecs/CodecResult';
+import { convertTiddlerBody } from '@/modules/conversion-core/notes/convertTiddlerBody';
+import { createCodecDiagnostic } from '@/modules/conversion-core/codecs/createCodecDiagnostic';
 
-import { getTiddlerProperties } from '../../metadata/getTiddlerProperties';
-import type { MarkdownNote } from '../../notes/MarkdownNote';
-import { normalizeObsidianTags } from '../../metadata/normalizeObsidianTags';
-import { parseTiddlyWikiTags } from '../../metadata/parseTiddlyWikiTags';
-import type { PreservationRecord } from './PreservationRecord';
-import { serializeObsidianFrontMatter } from '../../codecs/obsidian/serializeObsidianFrontMatter';
-import type { TiddlerFields } from '../../codecs/tiddlywiki/TiddlerFields';
+import { getTiddlerProperties } from '@/modules/conversion-core/metadata/getTiddlerProperties';
+import { ImportTiddlerOptions } from '@/modules/conversion-core/notes/ImportTiddlerOptions';
+import { MarkdownNote } from '@/modules/conversion-core/notes/MarkdownNote';
+import { normalizeObsidianTags } from '@/modules/conversion-core/metadata/normalizeObsidianTags';
+import { parseTiddlyWikiTags } from '@/modules/conversion-core/metadata/parseTiddlyWikiTags';
+import { PreservationRecord } from '@/modules/conversion-core/preservation/metadata/PreservationRecord';
+import { serializeObsidianFrontMatter } from '@/modules/conversion-core/codecs/obsidian/serializeObsidianFrontMatter';
+import { TiddlerFields } from '@/modules/conversion-core/codecs/tiddlywiki/TiddlerFields';
 
 export function restoreNoteFromTiddler(
   tiddler: TiddlerFields,
   record: PreservationRecord,
   preservationKey: string,
+  options: ImportTiddlerOptions = {},
 ): CodecResult<MarkdownNote> {
   const properties = Object.fromEntries(
     Object.entries(record.sourceProperties),
@@ -39,9 +41,15 @@ export function restoreNoteFromTiddler(
 
   const canRestoreBody = sameIdentity && sameContentType && sameBody;
 
-  const converted = convertTiddlerBody(tiddler.text, tiddler.type, true);
-  const body = canRestoreBody ? record.sourceBody : converted.text;
-  const diagnostics = canRestoreBody ? [] : converted.diagnostics;
+  const bodyConversion = convertTiddlerBody(
+    tiddler.text,
+    tiddler.type,
+    true,
+    options,
+  );
+
+  const body = canRestoreBody ? record.sourceBody : bodyConversion.text;
+  const diagnostics = canRestoreBody ? [] : bodyConversion.diagnostics;
 
   if (!sameIdentity) {
     diagnostics.push(
@@ -57,29 +65,33 @@ export function restoreNoteFromTiddler(
   const hasEdits = !sameIdentity || !sameBody || !sameFields;
 
   if (hasEdits) {
-    const originalTags = normalizeObsidianTags(
-      parseTiddlyWikiTags(tiddler.tags ?? ''),
-    );
+    const preserveRoundTripMetadata =
+      options.preserveRoundTripMetadata !== false;
 
-    const nextRecord: PreservationRecord = {
-      kind: 'obsidian-tiddlywiki-preservation',
-      version: 1,
-      origin: 'tiddlywiki',
-      identity: tiddler.title,
-      sourceBody: tiddler.text,
-      targetBody: body,
-      sourceProperties: currentFields,
-      targetProperties: Object.fromEntries(Object.entries(properties)),
-      sourceFrontMatter: '',
-      originalTags,
-    };
+    let targetBody = body;
 
-    const bodyWithPreservation = prependPreservationComment(body, nextRecord);
+    if (preserveRoundTripMetadata) {
+      const originalTags = normalizeObsidianTags(
+        parseTiddlyWikiTags(tiddler.tags ?? ''),
+      );
 
-    const content = serializeObsidianFrontMatter(
-      properties,
-      bodyWithPreservation,
-    );
+      const nextRecord: PreservationRecord = {
+        kind: 'obsidian-tiddlywiki-preservation',
+        version: 1,
+        origin: 'tiddlywiki',
+        identity: tiddler.title,
+        sourceBody: tiddler.text,
+        targetBody: body,
+        sourceProperties: currentFields,
+        targetProperties: Object.fromEntries(Object.entries(properties)),
+        sourceFrontMatter: '',
+        originalTags,
+      };
+
+      targetBody = prependPreservationComment(body, nextRecord);
+    }
+
+    const content = serializeObsidianFrontMatter(properties, targetBody);
 
     return {
       value: {

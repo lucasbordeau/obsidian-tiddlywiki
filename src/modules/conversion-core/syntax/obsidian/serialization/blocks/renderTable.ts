@@ -1,9 +1,9 @@
-import type { BlockNode } from '../../../../model/blocks/BlockNode';
-import type { SerializationContext } from '../../types/SerializationContext';
-import type { InlineNode } from '../../../../model/inlines/InlineNode';
-import { escapeHtml } from '../escaping/escapeHtml';
-import { renderInline } from '../inlines/renderInline';
-import { escapeTablePipes } from '../escaping/escapeTablePipes';
+import { BlockNode } from '@/modules/conversion-core/model/blocks/BlockNode';
+import { SerializationContext } from '@/modules/conversion-core/syntax/obsidian/types/SerializationContext';
+import { InlineNode } from '@/modules/conversion-core/model/inlines/InlineNode';
+import { escapeHtml } from '@/modules/conversion-core/syntax/obsidian/serialization/escaping/escapeHtml';
+import { renderInline } from '@/modules/conversion-core/syntax/obsidian/serialization/inlines/renderInline';
+import { escapeTablePipes } from '@/modules/conversion-core/syntax/obsidian/serialization/escaping/escapeTablePipes';
 
 export function renderTable(
   block: Extract<BlockNode, { type: 'table' }>,

@@ -1,16 +1,16 @@
-import { convertTiddlerBody } from '../../../../modules/conversion-core/notes/convertTiddlerBody';
-import { exportObsidianNote } from '../../../../modules/conversion-core/notes/exportObsidianNote';
-import { importTiddler } from '../../../../modules/conversion-core/notes/importTiddler';
-import { parseObsidianFrontMatter } from '../../../../modules/conversion-core/codecs/obsidian/parseObsidianFrontMatter';
-import { parseTiddlyWikiJson } from '../../../../modules/conversion-core/codecs/tiddlywiki/parseTiddlyWikiJson';
-import { parseTidFile } from '../../../../modules/conversion-core/codecs/tiddlywiki/parseTidFile';
-import { serializeTiddlyWikiJson } from '../../../../modules/conversion-core/codecs/tiddlywiki/serializeTiddlyWikiJson';
-import { serializeTidFile } from '../../../../modules/conversion-core/codecs/tiddlywiki/serializeTidFile';
-import { TiddlerFields } from '../../../../modules/conversion-core/codecs/tiddlywiki/TiddlerFields';
-import { extractPreservationComment } from '../../../../modules/conversion-core/preservation/metadata/extractPreservationComment';
-import { readSampleBytes } from '../../../support/samples/readSampleBytes';
-import { attachmentCases } from './attachmentCases';
-import { getCodecValue } from '../../../support/getCodecValue';
+import { convertTiddlerBody } from '@/modules/conversion-core/notes/convertTiddlerBody';
+import { exportObsidianNote } from '@/modules/conversion-core/notes/exportObsidianNote';
+import { importTiddler } from '@/modules/conversion-core/notes/importTiddler';
+import { parseObsidianFrontMatter } from '@/modules/conversion-core/codecs/obsidian/parseObsidianFrontMatter';
+import { parseTiddlyWikiJson } from '@/modules/conversion-core/codecs/tiddlywiki/parseTiddlyWikiJson';
+import { parseTidFile } from '@/modules/conversion-core/codecs/tiddlywiki/parseTidFile';
+import { serializeTiddlyWikiJson } from '@/modules/conversion-core/codecs/tiddlywiki/serializeTiddlyWikiJson';
+import { serializeTidFile } from '@/modules/conversion-core/codecs/tiddlywiki/serializeTidFile';
+import { TiddlerFields } from '@/modules/conversion-core/codecs/tiddlywiki/TiddlerFields';
+import { extractPreservationComment } from '@/modules/conversion-core/preservation/metadata/extractPreservationComment';
+import { readSampleBytes } from '@/tests/support/samples/readSampleBytes';
+import { attachmentCases } from '@/tests/codecs/media/attachments/attachmentCases';
+import { getCodecValue } from '@/tests/support/getCodecValue';
 
 describe('attachment payload and MIME transport', () => {
   it.each(attachmentCases)(

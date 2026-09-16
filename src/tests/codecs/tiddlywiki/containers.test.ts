@@ -1,7 +1,7 @@
-import { parseTiddlyWikiJson } from '../../../modules/conversion-core/codecs/tiddlywiki/parseTiddlyWikiJson';
-import { serializeTiddlyWikiJson } from '../../../modules/conversion-core/codecs/tiddlywiki/serializeTiddlyWikiJson';
-import { getCodecValue } from '../../support/getCodecValue';
-import { invalidContainerSources } from './invalidContainerSources';
+import { parseTiddlyWikiJson } from '@/modules/conversion-core/codecs/tiddlywiki/parseTiddlyWikiJson';
+import { serializeTiddlyWikiJson } from '@/modules/conversion-core/codecs/tiddlywiki/serializeTiddlyWikiJson';
+import { getCodecValue } from '@/tests/support/getCodecValue';
+import { invalidContainerSources } from '@/tests/codecs/tiddlywiki/invalidContainerSources';
 
 describe('TiddlyWiki containers', () => {
   it('validates all string fields and supplies an absent optional body', () => {

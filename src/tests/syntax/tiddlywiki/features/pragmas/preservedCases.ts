@@ -1,4 +1,4 @@
-import { FeatureCase } from '../FeatureCase';
+import { FeatureCase } from '@/tests/syntax/tiddlywiki/features/FeatureCase';
 
 export const preservedCases: FeatureCase[] = [
   {

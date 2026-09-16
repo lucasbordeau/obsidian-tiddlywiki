@@ -1,5 +1,5 @@
-import { encodePreservationComment } from './encodePreservationComment';
-import type { PreservationRecord } from './PreservationRecord';
+import { encodePreservationComment } from '@/modules/conversion-core/preservation/metadata/encodePreservationComment';
+import { PreservationRecord } from '@/modules/conversion-core/preservation/metadata/PreservationRecord';
 
 export function prependPreservationComment(
   content: string,

@@ -1,6 +1,6 @@
-import { findDelimitedEnd } from './findDelimitedEnd';
-import { findQuotedEnd } from './findQuotedEnd';
-import { findLiteralEnd } from './findLiteralEnd';
+import { findDelimitedEnd } from '@/modules/conversion-core/lexing/boundaries/findDelimitedEnd';
+import { findQuotedEnd } from '@/modules/conversion-core/lexing/boundaries/findQuotedEnd';
+import { findLiteralEnd } from '@/modules/conversion-core/lexing/boundaries/findLiteralEnd';
 
 export function findTiddlyWikiImageEnd(
   source: string,
