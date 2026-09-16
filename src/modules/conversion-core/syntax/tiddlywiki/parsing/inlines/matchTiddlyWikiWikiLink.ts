@@ -8,18 +8,39 @@ export function matchTiddlyWikiWikiLink(
   end: number,
   depth: number,
 ): TiddlyWikiInlineMatch | undefined {
-  const tail = this.source.slice(start, end);
+  const external = this.source.startsWith('[ext[', start);
 
-  if (tail.startsWith('[[') || tail.startsWith('[ext[')) {
-    const external = tail.startsWith('[ext[');
+  if (this.source.startsWith('[[', start) || external) {
     const contentStart = start + (external ? 5 : 2);
-    const closing = this.source.indexOf(']]', contentStart);
-    const hasClosing = closing >= 0 && closing + 2 <= end;
+    let closing = -1;
+    let linkEnd = end;
 
-    if (!hasClosing) {
+    for (let cursor = contentStart; cursor < end; cursor++) {
+      const character = this.source[cursor];
+      const isLineBreak = character === '\r' || character === '\n';
+
+      const hasClosingDelimiter =
+        cursor + 1 < end &&
+        character === ']' &&
+        this.source[cursor + 1] === ']';
+
+      if (!external && isLineBreak) {
+        linkEnd = cursor;
+
+        break;
+      }
+
+      if (hasClosingDelimiter) {
+        closing = cursor;
+
+        break;
+      }
+    }
+
+    if (closing < 0) {
       return {
-        node: this.rawInline(start, end, 'The wiki link is unfinished.'),
-        end,
+        node: this.rawInline(start, linkEnd, 'The wiki link is unfinished.'),
+        end: linkEnd,
       };
     }
 

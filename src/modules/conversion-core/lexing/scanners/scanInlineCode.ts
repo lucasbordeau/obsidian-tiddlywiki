@@ -17,30 +17,57 @@ import { TokenMatch } from '@/modules/conversion-core/lexing/TokenMatch';
  * ```
  */
 export function scanInlineCode(context: LexingContext): TokenMatch | undefined {
-  const { source, cursor, rest } = context;
+  const { source, cursor, rest, scanState } = context;
   const codeDelimiter = /^`+/.exec(rest);
 
   if (codeDelimiter) {
     const delimiter = codeDelimiter[0];
-    let closing = source.indexOf(delimiter, cursor + delimiter.length);
 
-    while (closing >= 0) {
-      const sharesLongerRun =
-        source[closing - 1] === '`' ||
-        source[closing + delimiter.length] === '`';
+    const closingEnds =
+      scanState?.inlineCodeClosingEnds ?? indexBacktickRunClosers(source);
 
-      if (!sharesLongerRun) {
-        break;
-      }
-
-      closing = source.indexOf(delimiter, closing + delimiter.length);
+    if (scanState) {
+      scanState.inlineCodeClosingEnds = closingEnds;
     }
 
-    return {
-      kind: closing < 0 ? 'text' : 'code',
-      end: closing < 0 ? cursor + delimiter.length : closing + delimiter.length,
-    };
+    const closingEnd = closingEnds.get(cursor);
+
+    return closingEnd === undefined
+      ? { kind: 'text', end: cursor + delimiter.length }
+      : { kind: 'code', end: closingEnd };
   }
 
   return undefined;
+}
+
+function indexBacktickRunClosers(source: string): Map<number, number> {
+  const closingEnds = new Map<number, number>();
+  const nextRunStartsByLength = new Map<number, number>();
+  let cursor = source.length - 1;
+
+  while (cursor >= 0) {
+    if (source[cursor] !== '`') {
+      cursor--;
+
+      continue;
+    }
+
+    const runEnd = cursor + 1;
+
+    while (cursor >= 0 && source[cursor] === '`') {
+      cursor--;
+    }
+
+    const runStart = cursor + 1;
+    const runLength = runEnd - runStart;
+    const matchingStart = nextRunStartsByLength.get(runLength);
+
+    if (matchingStart !== undefined) {
+      closingEnds.set(runStart, matchingStart + runLength);
+    }
+
+    nextRunStartsByLength.set(runLength, runStart);
+  }
+
+  return closingEnds;
 }

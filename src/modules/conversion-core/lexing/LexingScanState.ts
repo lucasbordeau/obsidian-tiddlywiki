@@ -3,6 +3,8 @@
  * A failed wiki opener records its line end, so later openers on that line can
  * fail immediately. A macro scanner records the final raw `>>` position, so
  * later `<<` openers cannot repeatedly search a suffix without any closer.
+ * Inline code pre-indexes exact-length closing backtick runs so unmatched
+ * openers do not repeatedly search the suffix.
  *
  * ```ts
  * const obsidianSource = '[[bad\n[[good]]';
@@ -23,4 +25,5 @@
 export type LexingScanState = {
   wikiUnclosedLineEnd?: number;
   macroLastRawCloser?: number;
+  inlineCodeClosingEnds?: Map<number, number>;
 };

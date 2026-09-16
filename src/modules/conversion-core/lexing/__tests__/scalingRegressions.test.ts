@@ -45,4 +45,22 @@ describe('lexer scaling regressions', () => {
     },
     20_000,
   );
+
+  test('distinct unmatched backtick runs scale with source length', () => {
+    const createSource = (runCount: number) =>
+      Array.from({ length: runCount }, (_, index) =>
+        '`'.repeat(index + 1),
+      ).join('x');
+
+    const shorterSource = createSource(240);
+    const longerSource = createSource(480);
+
+    measureMedianLexingMilliseconds(shorterSource);
+
+    const shorterMilliseconds = measureMedianLexingMilliseconds(shorterSource);
+    const longerMilliseconds = measureMedianLexingMilliseconds(longerSource);
+    const growthRatio = longerMilliseconds / shorterMilliseconds;
+
+    expect(growthRatio).toBeLessThan(6);
+  }, 20_000);
 });

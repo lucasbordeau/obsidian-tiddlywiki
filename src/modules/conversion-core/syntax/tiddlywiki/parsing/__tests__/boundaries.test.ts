@@ -45,6 +45,30 @@ describe('TiddlyWiki structural parsing and serialization', () => {
     );
   });
 
+  test.each(['\n', '\r\n'])(
+    'an unfinished wiki link does not consume a valid link after %j',
+    (lineBreak) => {
+      const source = `[[bad${lineBreak}[[good]]`;
+
+      const document = parseTiddlyWiki(source);
+
+      expect(document.blocks[0]).toMatchObject({
+        type: 'paragraph',
+        children: [
+          { type: 'raw', value: '[[bad' },
+          { type: 'break' },
+          { type: 'link', target: 'good' },
+        ],
+      });
+
+      expect(document.diagnostics).toEqual(
+        expect.arrayContaining([
+          expect.objectContaining({ code: 'tw-preserved-source' }),
+        ]),
+      );
+    },
+  );
+
   test('lexical coverage and UTF-16 source spans remain exact on CRLF and astral Unicode', () => {
     const source = '!🙂é\r\n\r\n* one\r\n*# [[Unicode|路径/💡]]\r\n';
 
