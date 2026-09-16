@@ -26,8 +26,12 @@ jest.mock(
 
       constructor(public app: App) {}
     },
+    Modal: class {},
+    Notice: jest.fn(),
     PluginSettingTab: class {},
     Setting: jest.fn(),
+    TFile: class {},
+    TFolder: class {},
   }),
   { virtual: true },
 );

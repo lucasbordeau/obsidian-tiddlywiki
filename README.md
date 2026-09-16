@@ -5,7 +5,7 @@ Import and export from TiddlyWiki with JSON files.
 ## How to use
 
 Install and enable **Import/Export TiddlyWiki** from Obsidian's community plugins.
-For a manual installation, copy `main.js` and `manifest.json` into
+For a manual installation, copy `main.js`, `manifest.json`, and `styles.css` into
 `VaultFolder/.obsidian/plugins/tiddlywiki-import-export/`, then enable the plugin.
 
 Open Obsidian's command palette with **Cmd+P** on macOS or **Ctrl+P** on
@@ -22,8 +22,11 @@ Windows/Linux, then search for **TiddlyWiki**. The plugin provides two commands:
   to import that file.
 
 The import and export buttons are also available under **Settings →
-Import/Export TiddlyWiki**. To assign a direct keyboard shortcut to either
-command, open **Settings → Hotkeys** and search for **TiddlyWiki**.
+Import/Export TiddlyWiki**. The settings export includes a tree for choosing
+specific folders and files. Before downloading, it warns when links point outside
+the selected scope and replaces those links with their visible text. To assign a
+direct keyboard shortcut to either command, open **Settings → Hotkeys** and search
+for **TiddlyWiki**.
 
 ## Try the conversion demo
 
@@ -69,11 +72,12 @@ Community plugins**, turn on community plugins and enable **Hot Reload** and
 **Import/Export TiddlyWiki**. Restart the development vault once if the newly
 installed plugins are not listed.
 
-Keep `npm run dev` running. Each successful build copies `manifest.json`, a
-`.hotreload` marker and `main.js` into the plugin folder. Hot Reload watches the
-marker and reloads the enabled plugin after the bundle changes; Obsidian displays
-a reload notice. Failed builds leave the last working vault bundle in place.
-The marker belongs in the vault's plugin folder, next to `main.js`.
+Keep `npm run dev` running. Each successful build copies `manifest.json`,
+`styles.css`, a `.hotreload` marker and `main.js` into the plugin folder. Hot
+Reload watches the marker and reloads the enabled plugin after the bundle changes;
+Obsidian displays a reload notice. Failed builds leave the last working vault
+bundle in place. The marker belongs in the vault's plugin folder, next to
+`main.js`.
 
 If a reload does not occur, check that the vault matches `.env`, both plugins are
 enabled, and `.hotreload` exists in the installed plugin folder. Then run **Hot

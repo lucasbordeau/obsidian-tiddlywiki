@@ -1,21 +1,14 @@
 import { App } from 'obsidian';
-import { Setting } from 'obsidian';
-import { exportVaultToJson } from '@/modules/plugin-core/settings/exportVaultToJson';
+import { ExportSelectionController } from '@/modules/plugin-core/settings/ExportSelectionController';
 
 export function renderExportJsonButton(
   app: App,
   pluginContainerElement: HTMLElement,
 ): void {
-  pluginContainerElement.createEl('h2', { text: 'Export' });
+  const exportSelectionController = new ExportSelectionController(
+    app,
+    pluginContainerElement,
+  );
 
-  new Setting(pluginContainerElement)
-    .setName('Export JSON')
-    .setDesc(
-      'The JSON file exported from this plugin can then be imported in TiddlyWiki. In TiddlyWiki go to Tools->Import',
-    )
-    .addButton((button) =>
-      button
-        .setButtonText('Export .json')
-        .onClick(() => exportVaultToJson(app)),
-    );
+  exportSelectionController.render();
 }

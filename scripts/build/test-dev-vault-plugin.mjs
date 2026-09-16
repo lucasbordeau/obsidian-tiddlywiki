@@ -19,11 +19,13 @@ test('deploys successful builds, preserves the working bundle on failure, and re
   const sourcePath = path.join(projectFolder, 'source.js');
   const installedBundlePath = path.join(pluginFolder, 'main.js');
   const manifest = JSON.stringify({ id: 'example', version: '1.0.0' });
+  const stylesheet = '.example { color: var(--text-normal); }';
   let esbuildContext;
 
   try {
     await writeFile(sourcePath, 'console.log("initial build");');
     await writeFile(path.join(projectFolder, 'manifest.json'), manifest);
+    await writeFile(path.join(projectFolder, 'styles.css'), stylesheet);
 
     esbuildContext = await esbuild.context({
       absWorkingDir: projectFolder,
@@ -46,6 +48,11 @@ test('deploys successful builds, preserves the working bundle on failure, and re
     assert.equal(
       await readFile(path.join(pluginFolder, '.hotreload'), 'utf8'),
       '',
+    );
+
+    assert.equal(
+      await readFile(path.join(pluginFolder, 'styles.css'), 'utf8'),
+      stylesheet,
     );
 
     await writeFile(sourcePath, 'console.log("second build");');
