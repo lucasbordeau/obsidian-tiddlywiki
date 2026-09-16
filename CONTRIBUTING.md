@@ -104,7 +104,17 @@ the repository's existing Git author configuration.
 
 ## Plugin releases
 
-Use `npm version <version>` to update the package version and invoke the existing
-version lifecycle script. Build and distribute `main.js` and `manifest.json` as
-release assets; include `styles.css` if the plugin gains one. Release tags must
-match `manifest.json`. Keep Obsidian imports external in the application bundle.
+Finish the changelog and verify `minAppVersion` before the version bump. On a
+release branch, run `npm version <version> --no-git-tag-version`, then commit
+`package.json`, `package-lock.json`, `manifest.json` and `versions.json`. The
+existing version lifecycle script updates the latter two files. Preserve the
+historical minimum-version entries in `versions.json`.
+
+After the branch is merged into the default branch, run `npm ci`, `npm run format`
+and `npm run check` on the merged commit. Follow the
+[manual conversion test](./docs/development/manual-testing.md) in Obsidian and
+TiddlyWiki. Tag that commit with the exact `manifest.json` version, without a
+`v` prefix. Create a GitHub release with the built `main.js` and `manifest.json`
+as assets; include `styles.css` if the plugin gains one. Keep Obsidian imports
+external in the application bundle. See the
+[Obsidian release guide](https://docs.obsidian.md/plugins/releasing/submit-plugin).

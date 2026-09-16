@@ -6,8 +6,11 @@ Dates below are the published release dates in UTC.
 
 ## Unreleased
 
+## [2.0.0] - Pending release
+
 ### Breaking changes
 
+- The minimum supported Obsidian desktop version is now 1.13.7.
 - Import and export move from the plugin settings tab to command palette
   actions; the settings buttons are removed.
 - Import omits unsupported dynamic WikiText from generated Markdown notes;
@@ -31,6 +34,13 @@ Dates below are the published release dates in UTC.
 - Carry local media attachments and retain external media references in the
   JSON workflow, including URL-backed audio and video players on import.
 
+### Migration
+
+- Run import and export from Obsidian's command palette. The settings-tab
+  buttons from earlier versions are gone.
+- Keep the original TiddlyWiki JSON when importing a wiki with dynamic
+  WikiText, because unsupported dynamic source is omitted from Markdown notes.
+
 ## [1.1.0] - 2024-12-23
 
 - Added media file handling for import and export.
@@ -51,6 +61,7 @@ Dates below are the published release dates in UTC.
 - Introduced TiddlyWiki JSON import into Obsidian and Obsidian export to
   TiddlyWiki JSON.
 
+[2.0.0]: https://github.com/lucasbordeau/obsidian-tiddlywiki/releases/tag/2.0.0
 [1.1.0]: https://github.com/lucasbordeau/obsidian-tiddlywiki/releases/tag/1.1.0
 [1.0.3]: https://github.com/lucasbordeau/obsidian-tiddlywiki/releases/tag/1.0.3
 [1.0.2]: https://github.com/lucasbordeau/obsidian-tiddlywiki/releases/tag/1.0.2

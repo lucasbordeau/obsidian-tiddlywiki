@@ -7,7 +7,8 @@ release.
 
 ## Install
 
-The plugin runs on desktop Obsidian. Its declared minimum version is 0.15.0.
+The plugin runs on desktop Obsidian. Version 2.0.0 requires Obsidian 1.13.7 or
+newer. Earlier plugin releases remain available to older app versions.
 
 ### Community plugin
 
@@ -32,7 +33,7 @@ Windows/Linux, then search for **TiddlyWiki**.
   `TiddlyWiki-Import-*` folder at the root of the vault.
 - **Obsidian → TiddlyWiki:** Run **Import/Export TiddlyWiki: Export vault to
   TiddlyWiki JSON**. The plugin downloads `tiddlywiki-export.json` for the whole
-  visible vault. In TiddlyWiki, use **Tools → Import** to inport that file.
+  visible vault. In TiddlyWiki, use **Tools → Import** to import that file.
 
 ## Scope of this plugin
 
@@ -42,8 +43,18 @@ Windows/Linux, then search for **TiddlyWiki**.
   tables, code, links, and inline formatting. Some features use static HTML
   representations in the other format.
 - Whole-note transclusions and local image, audio, and video attachments.
-  External media references are embedded in HTML tags.
+  External images use Markdown embeds; external audio and video use HTML players.
 - Tags, authored fields, and timestamps in the JSON exchange.
+
+### File access and network use
+
+The import command reads the TiddlyWiki JSON file you select, including when it
+is outside the vault, then writes converted notes and attachments into the
+vault. Export reads visible vault files and saves a JSON download.
+
+Imported notes can contain remote image, audio, video, and YouTube embeds.
+Displaying those embeds or playing their media requests content from the source
+URLs and contacts the corresponding hosts.
 
 ### Intentionally out of scope
 

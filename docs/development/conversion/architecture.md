@@ -57,7 +57,7 @@ validation/                       Shared value guards
 Each dialect owns its context, recognition rules, escaping and preservation
 helpers alongside its handlers. Related handlers share a folder, and small groups
 stay flat. Functions and utility files start with an operation verb. Shared
-contracts use type-only imports.
+contracts use regular imports for both type and runtime bindings.
 Internal consumers import the owning file directly; `src/conversion.ts` remains
 the public package entry point.
 
@@ -138,4 +138,5 @@ containers and comparison with the official TiddlyWiki renderer. The local
 portable bundle construction.
 
 CI, issue-by-issue host integration, outreach, a TiddlyWiki companion and the VS
-Code `.tid` extension remain in the [roadmap](../../plans/bidirectional-tooling-roadmap.md).
+Code `.tid` extension are discussed in the
+[historical roadmap](../../plans/bidirectional-tooling-roadmap.md).

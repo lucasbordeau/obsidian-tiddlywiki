@@ -24,3 +24,6 @@ data.json
 
 dist/
 coverage/
+
+# Local release handoff
+.release-handoff.md

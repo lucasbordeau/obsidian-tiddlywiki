@@ -1,8 +1,17 @@
 # Bidirectional conversion and tooling roadmap
 
+This is a historical planning snapshot. Its baseline observations and delivery
+sequence describe the state on 2026-09-09; several planned converter and tooling
+changes have since been implemented. Use the current
+[conversion architecture](../development/conversion/architecture.md) and source
+tests for present behavior. The companion-app and outreach sections remain
+proposals for future work.
+
 Planning snapshot: 2026-09-09. Baseline: `d98f7f0` on `master`. Exploration branch: `plan/bidirectional-conversion`.
 
-This is a proposed implementation plan. This planning pass adds documentation; the converter replacement, CI, refactor, releases and extensions remain to be implemented.
+At the snapshot date, this proposed implementation plan added documentation
+while the converter replacement, CI, refactor, releases and extensions remained
+to be implemented.
 
 ## Direction
 
